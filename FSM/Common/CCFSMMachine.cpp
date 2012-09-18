@@ -29,7 +29,7 @@ void CCFSMMachine::addState(CCFSMState* state ,CCObject* key)
 	
 }
 
-void CCFSMMachine::addState(CCFSMState* state ,CCString* name)
+void CCFSMMachine::addState(CCFSMState* state ,const std::string& name)
 {
 	
 }
@@ -44,7 +44,7 @@ void CCFSMMachine::removeStateWithKey(CCObject* key)
 	
 }
 
-void CCFSMMachine::removeStateWithName(CCString* name)
+void CCFSMMachine::removeStateWithName(const std::string& name)
 {
 	
 }
@@ -59,7 +59,7 @@ CCFSMState* CCFSMMachine::stateForKey(CCObject* key)
 	
 }
 
-CCFSMState* CCFSMMachine::stateForName(CCString* name)
+CCFSMState* CCFSMMachine::stateForName(const std::string& name)
 {
 	
 }

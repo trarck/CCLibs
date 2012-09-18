@@ -15,15 +15,15 @@ public:
 	//     virtual void setCurrentState(CCFSMState* state);
     
     virtual void addState(CCFSMState* state ,CCObject* key);
-    virtual void addState(CCFSMState* state ,CCString* name);
+    virtual void addState(CCFSMState* state ,const std::string& name);
     virtual void addState(CCFSMState* state ,unsigned int guid);
     
     virtual void removeStateWithKey(CCObject* key);
-    virtual void removeStateWithName(CCString* name);
+    virtual void removeStateWithName(const std::string& name);
     virtual void removeStateWithGuid(unsigned int guid);
     
     virtual CCFSMState* stateForKey(CCObject* key);
-    virtual CCFSMState* stateForName(CCString* name);
+    virtual CCFSMState* stateForName(const std::string& name);
     virtual CCFSMState* stateForGuid(unsigned int guid);
     
     virtual void update();
