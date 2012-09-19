@@ -64,6 +64,7 @@ public:
 protected:
     CCDictionary* m_messages;
 	CCObject* m_globalObject;
+private:
 	static CCCompleteMessageManager* s_sharedCompleteMessageManagerInstance;
 };
 
