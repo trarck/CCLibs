@@ -45,7 +45,7 @@ void CCSimpleMessageManager::init()
 //使receiver可以接收sender发送过来的叫type的消息，并用handle来处理
 //关注的对象是receiver
 //type,sender,receiver,handle唯一，同一接收者的同一个消息只有一个处理函数
-void CCSimpleMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,MessageType type ,CCObject* sender ,CCObject*  handleObject)
+bool CCSimpleMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,MessageType type ,CCObject* sender ,CCObject*  handleObject)
 {
 	CCAssert(receiver!=NULL,"SimpleMessageManager:registerReceiver:receiver can't be null");
 	CCAssert(handle!=NULL,"SimpleMessageManager:registerReceiver:handle");
@@ -72,25 +72,29 @@ void CCSimpleMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHand
 	//register for receiver
 	//检查是否已经注册过
 	CCMessageHandler* handler=(CCMessageHandler*)senderMap->objectForKey(receiver->m_uID);
-	CCAssert(!handler,"SimpleMessageManager:registerReceiver:Handle has register");
+//	CCAssert(!handler,"SimpleMessageManager:registerReceiver:Handle has register");
+    bool isRegisted=false;
 	if(!handler){
 		//register for handler
 		handler=new CCMessageHandler();
 		handler->initWithTarget(handleObject,handle);
 		senderMap->setObject(handler ,receiver->m_uID);
 		handler->release();
-	}
+	}else {
+        isRegisted=true;
+    }
+    return !isRegisted;
 }
 
-void CCSimpleMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle,MessageType type ,CCObject* sender)
+bool CCSimpleMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle,MessageType type ,CCObject* sender)
 {
-	registerReceiver(receiver ,handle,type ,sender ,receiver);
+	return registerReceiver(receiver ,handle,type ,sender ,receiver);
 }
 
-void CCSimpleMessageManager::removeReceiver(CCObject* receiver ,SEL_MessageHandler handle ,MessageType type ,CCObject* sender)
+
+void CCSimpleMessageManager::removeReceiver(MessageType type ,CCObject* sender,CCObject* receiver)
 {
 	CCAssert(receiver!=NULL,"SimpleMessageManager:removeReceiver:receiver can't be null!");
-	CCAssert(handle!=NULL,"SimpleMessageManager:registerReceiver:handle");
 	
 	//message for type
 	CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(type);

@@ -21,7 +21,7 @@ CCNormalMessageManager* CCNormalMessageManager::sharedNormalMessageManager(void)
 	return s_sharedNormalMessageManagerInstance;
 }
 
-void CCNormalMessageManager::dispatchMessage(Message* message)
+void CCNormalMessageManager::dispatchMessage(CCMessage* message)
 {
 	//NSAssert(message.type!=0,)
 	//message for type

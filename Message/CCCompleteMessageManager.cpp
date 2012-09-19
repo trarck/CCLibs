@@ -43,7 +43,7 @@ void CCCompleteMessageManager::init()
 	m_globalObject=new CCObject();
 }
 
-void CCCompleteMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,MessageType type ,CCObject* sender ,CCObject*  handleObject)
+bool CCCompleteMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,MessageType type ,CCObject* sender ,CCObject*  handleObject)
 {
 	CCAssert(receiver!=NULL,"MessageManage:registerReceiver:receiver can't be null");
 	CCAssert(handle!=NULL,"MessageManage:registerReceiver:handle");
@@ -99,16 +99,18 @@ void CCCompleteMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHa
         receiverList->addObject(handler);
         handler->release();
     }
+    
+    return !isRegisted;
 }
 
 //使receiver可以接收sender发送过来的叫type的消息，并用handle来处理
 //关注的对象是receiver
-void CCCompleteMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle,MessageType type ,CCObject* sender)
+bool CCCompleteMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle,MessageType type ,CCObject* sender)
 {
-	registerReceiver(receiver ,handle,type ,sender ,receiver);
+	return registerReceiver(receiver ,handle,type ,sender ,receiver);
 }
 
-void CCCompleteMessageManager::removeReceiver(CCObject* receiver ,SEL_MessageHandler handle ,MessageType type ,CCObject* sender)
+void CCCompleteMessageManager::removeReceiver(MessageType type ,CCObject* sender,CCObject* receiver ,SEL_MessageHandler handle)
 {
 	CCAssert(receiver!=NULL,"CompleteMessageManage:removeReceiver:receiver can't be null!");
 	CCAssert(handle!=NULL,"CompleteMessageManage:registerReceiver:handle");
@@ -128,6 +130,33 @@ void CCCompleteMessageManager::removeReceiver(CCObject* receiver ,SEL_MessageHan
                 if (handler->getHandle()==handle) {
                     receiverList->removeObject(handler);
                 }
+            }
+		}
+	}
+}
+
+//void CCCompleteMessageManager::removeReceiver(CCObject* receiver ,SEL_MessageHandler handle ,MessageType type ,CCObject* sender)
+//{
+//	
+//}
+
+void CCCompleteMessageManager::removeReceiver(MessageType type ,CCObject* sender,CCObject* receiver)
+{
+	CCAssert(receiver!=NULL,"CompleteMessageManage:removeReceiver:receiver can't be null!");
+	
+	//message for type
+	CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(type);
+	if (msgMap) {
+		//message for sender
+		sender=sender?sender:m_globalObject;
+		CCDictionary *senderMap=(CCDictionary*)msgMap->objectForKey(sender->m_uID);
+		if (senderMap) {
+			//message for receiver
+			CCArray* receiverList=(CCArray*)senderMap->objectForKey(receiver->m_uID);
+//            receiverList->release();
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(receiverList,pObject){
+                receiverList->removeObject(pObject);
             }
 		}
 	}

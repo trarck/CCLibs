@@ -17,12 +17,14 @@
 
 NS_CC_BEGIN
 
-class CCNormalMessageManager: public CCCompleteMessageManager {
+class CCNormalMessageManager: public CCCompleteMessageManager 
+{
 public:
 	static CCNormalMessageManager* sharedNormalMessageManager();
+    void dispatchMessage(CCMessage* message);
 private:
 	static CCNormalMessageManager* s_sharedNormalMessageManagerInstance;
-}
+};
 
 NS_CC_END
 

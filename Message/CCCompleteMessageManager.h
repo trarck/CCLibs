@@ -36,12 +36,16 @@ public:
      * sender   消息发送者
      */
     //receiver对sender发来的type消息可以有多个响应方法，实际中情况会很少
-      
-    void registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,MessageType type ,CCObject* sender ,CCObject*  handleObject);
+    //返回注册是成功还是失败。true--成功，false--失败  
+    bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,MessageType type ,CCObject* sender ,CCObject*  handleObject);
 
-	void registerReceiver(CCObject* receiver,SEL_MessageHandler handle,MessageType type ,CCObject* sender);
-                                                                                                                              
-    void removeReceiver(CCObject* receiver ,SEL_MessageHandler handle ,MessageType type ,CCObject* sender);
+	bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle,MessageType type ,CCObject* sender);
+                                                             
+    void removeReceiver(MessageType type ,CCObject* sender,CCObject* receiver ,SEL_MessageHandler handle);
+    void removeReceiver(CCObject* receiver ,SEL_MessageHandler handle ,MessageType type ,CCObject* sender){
+        removeReceiver(type,sender,receiver,handle);
+    };
+    void removeReceiver(MessageType type ,CCObject* sender,CCObject* receiver);
                                                                            
 	void execRegisterReceiverList(CCArray* receiverList ,CCMessage* message);
 
@@ -57,7 +61,7 @@ public:
                                                                                      
     void dispatchMessage(CCMessage* message ,CCObject*  receiver);
                                                                                                     
-private:
+protected:
     CCDictionary* m_messages;
 	CCObject* m_globalObject;
 	static CCCompleteMessageManager* s_sharedCompleteMessageManagerInstance;
