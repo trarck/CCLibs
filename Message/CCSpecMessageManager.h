@@ -34,7 +34,10 @@ public:
     void removeReceiver(CCObject* receiver,MessageType type ,CCObject* sender);
     void removeReceiver(CCObject* receiver,MessageType type);
     void removeReceiver(CCObject* receiver);
-
+	void removeReceiverList(CCArray* list,SEL_MessageHandler handle);
+	void removeReceiverList(CCArray* list);
+	void removeReceiverMap(CCDictionary* map,SEL_MessageHandler handle);
+	void removeReceiverMap(CCDictionary* map);
 protected:
     CCDictionary* m_regiesterMap;
     
