@@ -20,8 +20,11 @@
 NS_CC_BEGIN
 
 class CCMessageManager : public CCObject {
+
 public:
+
     CCMessageManager();
+
     ~CCMessageManager();
 
     static CCMessageManager* defaultManager();
@@ -37,9 +40,34 @@ public:
     void registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,MessageType type ,CCObject* sender ,CCObject*  handleObject);
 
 	void registerReceiver(CCObject* receiver,SEL_MessageHandler handle,MessageType type ,CCObject* sender);
-                                                                                                                              
-    void removeReceiver(CCObject* receiver ,SEL_MessageHandler handle ,MessageType type ,CCObject* sender);
-                                                                                                                                                                        
+																															  
+	void removeReceiver(CCObject* receiver,MessageType type ,CCObject* sender,SEL_MessageHandler handle);
+
+    void removeReceiver(CCObject* receiver,MessageType type ,CCObject* sender);
+
+    void removeReceiver(CCObject* receiver,MessageType type);
+
+    void removeReceiver(CCObject* receiver);
+                                                      
+	void dispatchMessage(CCMessage* message ,CCObject*  receiver);
+
+	void dispatchMessage(CCMessage* message);
+
+    void dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCDictionary* data);
+    
+                                                                                                    
+protected:
+
+	void addReceiverMap(CCObject* receiver,SEL_MessageHandler handle ,MessageType type ,CCObject* sender ,CCObject*  handleObject);
+
+	void removeReceiverList(CCArray* list,SEL_MessageHandler handle);
+
+	void removeReceiverList(CCArray* list);
+
+	void removeReceiverMap(CCDictionary* map,SEL_MessageHandler handle);
+
+	void removeReceiverMap(CCDictionary* map);
+
 	void execRegisterReceiverList(CCArray* receiverList ,CCMessage* message);
 
 	void execAllRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message);
@@ -47,18 +75,17 @@ public:
     void execRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message);
 
 	void execRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message,CCObject*  receiver);
-                                                                                     
-	void dispatchMessage(CCMessage* message);
-                                                                                             
-    void dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCDictionary* data);
 
-    void dispatchMessage(CCMessage* message ,CCObject*  receiver);
-                                                      
-    
-                                                                                                    
-private:
     CCDictionary* m_messages;
+
 	CCObject* m_globalObject;
+
+	CCDictionary* m_regiesterMap;
+
+private:
+
+	static CCMessageManager* s_sharedMessageManagerInstance;
+
 };
 
 NS_CC_END

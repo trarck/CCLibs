@@ -38,16 +38,16 @@ bool CCSpecMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandle
     bool result=CCCompleteMessageManager::registerReceiver(receiver, handle, type, sender,handleObject);
     //注册成功
     if(result){
-        CCDictionary *regiesterMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
-        if (regiesterMap==NULL) {
-            regiesterMap=new CCDictionary();
-            m_regiesterMap->setObject(regiesterMap,receiver->m_uID);
-            regiesterMap->release();
+        CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
+        if (receiverMap==NULL) {
+            receiverMap=new CCDictionary();
+            m_regiesterMap->setObject(receiverMap,receiver->m_uID);
+            receiverMap->release();
         }
-        CCDictionary *msgMap=(CCDictionary*) regiesterMap->objectForKey(type);
+        CCDictionary *msgMap=(CCDictionary*) receiverMap->objectForKey(type);
         if (msgMap==NULL) {
             msgMap=new CCDictionary();
-            regiesterMap->setObject(msgMap,type);
+            receiverMap->setObject(msgMap,type);
             msgMap->release();
         }
         
@@ -81,9 +81,9 @@ bool CCSpecMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandle
 void CCSpecMessageManager::removeReceiver(CCObject* receiver,MessageType type ,CCObject* sender,SEL_MessageHandler handle)
 {
     CCAssert(receiver!=NULL,"CompleteMessageManage:removeReceiver:receiver can't be null!");
-	CCDictionary *regiesterMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
-	if (regiesterMap) {
-		CCDictionary *msgMap=(CCDictionary*) regiesterMap->objectForKey(type);
+	CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
+	if (receiverMap) {
+		CCDictionary *msgMap=(CCDictionary*) receiverMap->objectForKey(type);
 		if(msgMap){
 			if(sender){
 				CCArray *senderList=(CCArray*)msgMap->objectForKey(sender->m_uID);
@@ -107,9 +107,9 @@ void CCSpecMessageManager::removeReceiver(CCObject* receiver,MessageType type ,C
 void CCSpecMessageManager::removeReceiver(CCObject* receiver,MessageType type ,CCObject* sender)
 {
     CCAssert(receiver!=NULL,"CompleteMessageManage:removeReceiver:receiver can't be null!");
-	CCDictionary *regiesterMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
-	if (regiesterMap) {
-		CCDictionary *msgMap=(CCDictionary*) regiesterMap->objectForKey(type);
+	CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
+	if (receiverMap) {
+		CCDictionary *msgMap=(CCDictionary*) receiverMap->objectForKey(type);
 		if(msgMap){
 			if(sender){
 				CCArray *senderList=(CCArray*)msgMap->objectForKey(sender->m_uID);
@@ -124,9 +124,9 @@ void CCSpecMessageManager::removeReceiver(CCObject* receiver,MessageType type ,C
 void CCSpecMessageManager::removeReceiver(CCObject* receiver,MessageType type)
 {
     CCAssert(receiver!=NULL,"CompleteMessageManage:removeReceiver:receiver can't be null!");
-	CCDictionary *regiesterMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
-	if (regiesterMap) {
-		CCDictionary *msgMap=(CCDictionary*) regiesterMap->objectForKey(type);
+	CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
+	if (receiverMap) {
+		CCDictionary *msgMap=(CCDictionary*) receiverMap->objectForKey(type);
 		if(msgMap){
 			removeReceiverMap(msgMap);
 		}
@@ -136,8 +136,8 @@ void CCSpecMessageManager::removeReceiver(CCObject* receiver,MessageType type)
 void CCSpecMessageManager::removeReceiver(CCObject* receiver)
 {
     CCAssert(receiver!=NULL,"CompleteMessageManage:removeReceiver:receiver can't be null!");
-	CCDictionary *regiesterMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
-	if (regiesterMap) {
+	CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
+	if (receiverMap) {
 		CCDictElement* pElement = NULL;
 		CCDICT_FOREACH(senderMap,pElement){
 			removeReceiverMap((CCDictionary*)pElement->getObject());
@@ -164,14 +164,14 @@ void CCSpecMessageManager::removeReceiverList(CCArray* list){
 
 void CCSpecMessageManager::removeReceiverMap(CCDictionary* map,SEL_MessageHandler handle){
 	CCDictElement* pElement = NULL;
-	CCDICT_FOREACH(senderMap,pElement){
+	CCDICT_FOREACH(map,pElement){
 		removeReceiverList((CCArray*)pElement->getObject(),handle);
 	}
 }
 
 void CCSpecMessageManager::removeReceiverMap(CCDictionary* map){
 	CCDictElement* pElement = NULL;
-	CCDICT_FOREACH(senderMap,pElement){
+	CCDICT_FOREACH(map,pElement){
 		removeReceiverList((CCArray*)pElement->getObject());
 	}
 }
