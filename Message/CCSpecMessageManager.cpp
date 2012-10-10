@@ -139,7 +139,7 @@ void CCSpecMessageManager::removeReceiver(CCObject* receiver)
 	CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
 	if (receiverMap) {
 		CCDictElement* pElement = NULL;
-		CCDICT_FOREACH(senderMap,pElement){
+		CCDICT_FOREACH(receiverMap,pElement){
 			removeReceiverMap((CCDictionary*)pElement->getObject());
 		}
 	}

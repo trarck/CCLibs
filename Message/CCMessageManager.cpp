@@ -29,7 +29,7 @@ CCMessageManager::~CCMessageManager()
 
 CCMessageManager* CCMessageManager::s_sharedMessageManagerInstance=NULL;
 
-CCMessageManager* CCMessageManager::sharedCompleteMessageManager(void)
+CCMessageManager* CCMessageManager::defaultManager(void)
 {
 	if (!s_sharedMessageManagerInstance) {
 		s_sharedMessageManagerInstance=new CCMessageManager();
@@ -210,7 +210,7 @@ void CCMessageManager::removeReceiver(CCObject* receiver)
 	CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
 	if (receiverMap) {
 		CCDictElement* pElement = NULL;
-		CCDICT_FOREACH(senderMap,pElement){
+		CCDICT_FOREACH(receiverMap,pElement){
 			removeReceiverMap((CCDictionary*)pElement->getObject());
 		}
 	}
