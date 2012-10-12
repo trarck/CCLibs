@@ -1,4 +1,4 @@
-//
+    //
 //  MessageManager.m
 //  Message
 //
@@ -259,13 +259,14 @@ void CCMessageManager::execRegisterReceiverList(CCArray* receiverList ,CCMessage
     }
 }
 
+
 void CCMessageManager::execAllRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message)
 {
 	CCAssert(senderMap!=NULL,"CCMessageManager:execAllRegisterWithSenderMap:senderMap can't be null!");
 	//send to all
 	CCDictElement* pElement = NULL;
 	CCDICT_FOREACH(senderMap,pElement){
-		execRegisterReceiverList((CCArray*)pElement,message);
+		execRegisterReceiverList((CCArray*)pElement->getObject(),message);
 	}
 }
 

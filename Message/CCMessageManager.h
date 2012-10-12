@@ -69,7 +69,7 @@ protected:
 	void removeReceiverMap(CCDictionary* map);
 
 	void execRegisterReceiverList(CCArray* receiverList ,CCMessage* message);
-
+    
 	void execAllRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message);
 
     void execRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message);
