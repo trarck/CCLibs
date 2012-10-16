@@ -19,9 +19,9 @@ CCMessageHandler::CCMessageHandler()
 
 CCMessageHandler::~CCMessageHandler()
 {
-	CCLOG("CCMessageHandler before destroy");
+	CCLOG("CCMessageHandler destroy begin ");
     CC_SAFE_RELEASE(m_target);
-    CCLOG("CCMessageHandler after destroy");
+    CCLOG("CCMessageHandler destroy end ");
 }
 
 CCObject* CCMessageHandler::getTarget()

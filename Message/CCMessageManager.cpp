@@ -101,7 +101,7 @@ bool CCMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler ha
         receiverList->addObject(handler);
         handler->release();
 
-		addReceiverMap(receiver,handle,type,sender,handleObject);
+//		addReceiverMap(receiver,handle,type,sender,handleObject);
     }
 	return !isRegisted;
 }
@@ -152,68 +152,170 @@ void CCMessageManager::addReceiverMap(CCObject* receiver,SEL_MessageHandler hand
 void CCMessageManager::removeReceiver(CCObject* receiver,MessageType type ,CCObject* sender,SEL_MessageHandler handle)
 {
     CCAssert(receiver!=NULL,"CCMessageManager:removeReceiver:receiver can't be null!");
-	CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
-	if (receiverMap) {
-		CCDictionary *msgMap=(CCDictionary*) receiverMap->objectForKey(type);
-		if(msgMap){
-			if(sender){
-				CCArray *senderList=(CCArray*)msgMap->objectForKey(sender->m_uID);
-				if(handle){
-					removeReceiverList(senderList,handle);
-				}else{
-					removeReceiverList(senderList);
-				}
-			}else{
-				//删除所有
-				if(handle){
-					removeReceiverMap(msgMap,handle);
-				}else{
-					removeReceiverMap(msgMap);
-				}
-			}
-		}
-	}
+    
+    
+    if(sender==NULL){
+        removeReceiver(receiver, type, handle);
+    }else if(handle==NULL){
+        removeReceiver(receiver,type,sender);
+    }else {
+        CCDictionary *msgMap=(CCDictionary*) m_messages->objectForKey(type);
+
+        if(msgMap){
+            CCDictionary *senderMap=(CCDictionary*)msgMap->objectForKey(sender->m_uID);
+            removeReceiverMap(receiver, senderMap, handle);
+        }
+    }
+        
+    
+//	CCDictionary *msgMap=(CCDictionary*) m_messages->objectForKey(type);
+//
+//    if(msgMap){
+//        
+//        if(sender){
+//            CCDictionary *senderMap=(CCDictionary*)msgMap->objectForKey(sender->m_uID);
+//            if(senderMap){
+//                CCArray *receiverList=(CCArray*)senderMap->objectForKey(receiver->m_uID);
+//                if(receiverList){
+//                    if(handle){
+//                        removeReceiverList(receiverList,handle);
+//                    }else{
+//                        removeReceiverList(receiverList);
+//                    }
+//                }
+//            }
+//        }else{
+//            //删除消息type中接收者为ceceiver的注册信息
+//            CCDictElement* pElement = NULL;
+//            CCDICT_FOREACH(msgMap,pElement){
+//                CCDictionary *senderMap=(CCDictionary*)pElement->getObject();
+//                
+//                CCArray *receiverList=(CCArray*)senderMap->objectForKey(receiver->m_uID);
+//                if(receiverList){
+//                    if(handle){
+//                        removeReceiverList(receiverList,handle);
+//                    }else{
+//                        removeReceiverList(receiverList);
+//                    }
+//                }
+//            }
+//        }
+//    }
+
 }
 
 void CCMessageManager::removeReceiver(CCObject* receiver,MessageType type ,CCObject* sender)
 {
     CCAssert(receiver!=NULL,"CCMessageManager:removeReceiver:receiver can't be null!");
-	CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
-	if (receiverMap) {
-		CCDictionary *msgMap=(CCDictionary*) receiverMap->objectForKey(type);
-		if(msgMap){
-			if(sender){
-				CCArray *senderList=(CCArray*)msgMap->objectForKey(sender->m_uID);
-				removeReceiverList(senderList);
-			}else{
-				removeReceiverMap(msgMap);
-			}
-		}
-	}
+    
+    if(sender==NULL){
+        removeReceiver(receiver,type);
+    }else {
+        CCDictionary *msgMap=(CCDictionary*) m_messages->objectForKey(type);
+        if(msgMap){
+            CCDictionary *senderMap=(CCDictionary*)msgMap->objectForKey(sender->m_uID);
+            removeReceiverMap(receiver, senderMap);
+        }
+    }
+}
+
+void CCMessageManager::removeReceiver(CCObject* receiver,MessageType type ,SEL_MessageHandler handle)
+{
+    CCAssert(receiver!=NULL,"CCMessageManager:removeReceiver:receiver can't be null!");
+    
+    if(handle==NULL){
+        removeReceiver(receiver,type);
+    }else {
+        CCDictionary *msgMap=(CCDictionary*) m_messages->objectForKey(type);
+        if(msgMap){
+            CCDictElement* pElement = NULL;
+            CCDICT_FOREACH(msgMap,pElement){
+                CCDictionary *senderMap=(CCDictionary*)pElement->getObject();
+                removeReceiverMap(receiver, senderMap,handle);
+            }
+        }
+    }
 }
 
 void CCMessageManager::removeReceiver(CCObject* receiver,MessageType type)
 {
     CCAssert(receiver!=NULL,"CCMessageManager:removeReceiver:receiver can't be null!");
-	CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
-	if (receiverMap) {
-		CCDictionary *msgMap=(CCDictionary*) receiverMap->objectForKey(type);
-		if(msgMap){
-			removeReceiverMap(msgMap);
-		}
-	}
+	CCDictionary *msgMap=(CCDictionary*) m_messages->objectForKey(type);
+	if(msgMap){
+        //删除消息type中接收者为ceceiver的注册信息
+        CCDictElement* pElement = NULL;
+        CCDICT_FOREACH(msgMap,pElement){
+            CCDictionary *senderMap=(CCDictionary*)pElement->getObject();
+            removeReceiverMap(receiver, senderMap);
+        }
+    }
 }
 
 void CCMessageManager::removeReceiver(CCObject* receiver)
 {
     CCAssert(receiver!=NULL,"CCMessageManager:removeReceiver:receiver can't be null!");
-	CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
-	if (receiverMap) {
-		CCDictElement* pElement = NULL;
-		CCDICT_FOREACH(receiverMap,pElement){
-			removeReceiverMap((CCDictionary*)pElement->getObject());
-		}
-	}
+    
+    CCDictElement* msgMapElement = NULL;
+    CCDictElement* senderMapElement = NULL;
+    
+    CCDICT_FOREACH(m_messages,msgMapElement){
+        CCDictionary *msgMap=(CCDictionary*) msgMapElement->getObject();
+        
+        CCDICT_FOREACH(msgMap,senderMapElement){
+            CCDictionary *senderMap=(CCDictionary*)senderMapElement->getObject();
+            
+            removeReceiverMap(receiver, senderMap);
+        }
+    }
+}
+
+
+void CCMessageManager::removeReceiver(CCObject* receiver,CCObject* sender,SEL_MessageHandler handle)
+{
+    CCAssert(receiver!=NULL,"CCMessageManager:removeReceiver:receiver can't be null!");
+
+    if(sender==NULL){
+        removeReceiver(receiver, handle);
+    }else if(handle==NULL){
+        removeReceiver(receiver,sender);
+    }else{
+        CCDictElement* msgMapElement = NULL;
+        
+        CCDICT_FOREACH(m_messages,msgMapElement){
+            CCDictionary *msgMap=(CCDictionary*) msgMapElement->getObject();
+            CCDictionary *senderMap=(CCDictionary*)msgMap->objectForKey(sender->m_uID);
+            removeReceiverMap(receiver, senderMap,handle);
+        }
+    }
+    
+}
+
+void CCMessageManager::removeReceiver(CCObject* receiver,CCObject* sender)
+{
+    CCAssert(receiver!=NULL,"CCMessageManager:removeReceiver:receiver can't be null!");
+    
+    if(sender==NULL){
+        removeReceiver(receiver);
+    }else {
+        CCDictElement* msgMapElement = NULL;
+        
+        CCDICT_FOREACH(m_messages,msgMapElement){
+            CCDictionary *msgMap=(CCDictionary*) msgMapElement->getObject();
+            CCDictionary *senderMap=(CCDictionary*)msgMap->objectForKey(sender->m_uID);
+            removeReceiverMap(receiver, senderMap);
+//            if (senderMap) {
+//                CCArray *receiverList=(CCArray*)senderMap->objectForKey(receiver->m_uID);
+//                if(receiverList){
+//                    removeReceiverList(receiverList);
+//                }
+//            }
+        }
+    }
+}
+
+void CCMessageManager::removeReceiver(CCObject* receiver,SEL_MessageHandler handle)
+{
+    
 }
 
 void CCMessageManager::removeReceiverList(CCArray* list,SEL_MessageHandler handle){
@@ -233,18 +335,23 @@ void CCMessageManager::removeReceiverList(CCArray* list){
 	}
 }
 
-void CCMessageManager::removeReceiverMap(CCDictionary* map,SEL_MessageHandler handle){
-	CCDictElement* pElement = NULL;
-	CCDICT_FOREACH(map,pElement){
-		removeReceiverList((CCArray*)pElement->getObject(),handle);
-	}
+void CCMessageManager::removeReceiverMap(CCObject* receiver,CCDictionary* map,SEL_MessageHandler handle){
+	if (map) {
+        CCArray *receiverList=(CCArray*)map->objectForKey(receiver->m_uID);
+        if(receiverList){
+            removeReceiverList(receiverList,handle);
+        }
+    }
+
 }
 
-void CCMessageManager::removeReceiverMap(CCDictionary* map){
-	CCDictElement* pElement = NULL;
-	CCDICT_FOREACH(map,pElement){
-		removeReceiverList((CCArray*)pElement->getObject());
-	}
+void CCMessageManager::removeReceiverMap(CCObject* receiver,CCDictionary* map){
+	if (map) {
+        CCArray *receiverList=(CCArray*)map->objectForKey(receiver->m_uID);
+        if(receiverList){
+            removeReceiverList(receiverList);
+        }
+    }
 }
 
 
@@ -351,6 +458,15 @@ void CCMessageManager::dispatchMessage(CCMessage* message)
 	}
 }
 
+
+void CCMessageManager::dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCObject* data)
+{
+	CCMessage* message=new CCMessage();
+	message->initWithType(type ,sender ,receiver ,data);
+	dispatchMessage(message);
+	message->release();
+}
+
 void CCMessageManager::dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCDictionary* data)
 {
 	CCMessage* message=new CCMessage();
@@ -358,6 +474,15 @@ void CCMessageManager::dispatchMessageWithType(MessageType type ,CCObject* sende
 	dispatchMessage(message);
 	message->release();
 }
+
+void CCMessageManager::dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver)
+{
+	CCMessage* message=new CCMessage();
+	message->initWithType(type ,sender ,receiver);
+	dispatchMessage(message);
+	message->release();
+}
+
 
 //适应message中没有receiver的情况
 void CCMessageManager::dispatchMessage(CCMessage* message ,CCObject*  receiver)

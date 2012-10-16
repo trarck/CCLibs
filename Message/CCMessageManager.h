@@ -48,13 +48,27 @@ public:
     void removeReceiver(CCObject* receiver,MessageType type);
 
     void removeReceiver(CCObject* receiver);
+    
+    void removeReceiver(CCObject* receiver,MessageType type ,SEL_MessageHandler handle);
+    
+    void removeReceiver(CCObject* receiver,CCObject* sender,SEL_MessageHandler handle);
+    
+    void removeReceiver(CCObject* receiver,CCObject* sender);
+
+    void removeReceiver(CCObject* receiver,SEL_MessageHandler handle);
+    
+    
+    
                                                       
 	void dispatchMessage(CCMessage* message ,CCObject*  receiver);
 
 	void dispatchMessage(CCMessage* message);
 
+    void dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCObject* data);
+    
     void dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCDictionary* data);
     
+    void dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver);
                                                                                                     
 protected:
 
@@ -64,9 +78,9 @@ protected:
 
 	void removeReceiverList(CCArray* list);
 
-	void removeReceiverMap(CCDictionary* map,SEL_MessageHandler handle);
+	void removeReceiverMap(CCObject* receiver,CCDictionary* map,SEL_MessageHandler handle);
 
-	void removeReceiverMap(CCDictionary* map);
+	void removeReceiverMap(CCObject* receiver,CCDictionary* map);
 
 	void execRegisterReceiverList(CCArray* receiverList ,CCMessage* message);
     
