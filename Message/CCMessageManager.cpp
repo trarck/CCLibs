@@ -83,7 +83,7 @@ bool CCMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler ha
     CCObject* pObject = NULL;
     CCARRAY_FOREACH(receiverList,pObject){
         CCMessageHandler* handler=(CCMessageHandler*) pObject;
-        if (handler->getHandle()==handle) {
+        if (handler->getHandle()==handle && handler->getTarget()==handleObject) {
 			CCAssert(0,"Handle has register");
             isRegisted=true;
             break;
