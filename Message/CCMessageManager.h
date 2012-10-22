@@ -66,7 +66,7 @@ public:
 
     void dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCObject* data);
     
-    void dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCDictionary* data);
+//    void dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCDictionary* data);
     
     void dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver);
                                                                                                     

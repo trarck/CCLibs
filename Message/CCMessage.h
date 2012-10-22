@@ -40,10 +40,11 @@ public:
     void setData(CCObject* data);
     CCObject* getData();
     
-    void setObjectData(CCObject* data);
-    CCObject* getObjectData();
+//    void setObjectData(CCObject* data);
+//    CCObject* getObjectData();
+//    
+//    void setData(CCDictionary* data);
     
-    void setData(CCDictionary* data);
     void setDictionary(CCDictionary* data);
     CCDictionary* getDictionary();
     
@@ -51,8 +52,8 @@ public:
     bool initWithType(MessageType type,MessageParty sender ,MessageParty receiver);
     bool initWithType(MessageType type,MessageParty sender);
 
-    bool initWithType(MessageType type,MessageParty sender ,MessageParty receiver ,CCDictionary *data);
-    bool initWithType(MessageType type,MessageParty sender,CCDictionary *data);
+//    bool initWithType(MessageType type,MessageParty sender ,MessageParty receiver ,CCDictionary *data);
+//    bool initWithType(MessageType type,MessageParty sender,CCDictionary *data);
     
     
 
@@ -61,7 +62,7 @@ private:
     MessageParty m_sender;//消息的发送者
 	MessageParty m_receiver;//消息的接收者
     float m_timeStamp;//发送时间
-	CCDictionary *m_dData;
+//	CCDictionary *m_dData;
     CCObject* m_oData;
 };
 

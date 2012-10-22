@@ -467,13 +467,13 @@ void CCMessageManager::dispatchMessageWithType(MessageType type ,CCObject* sende
 	message->release();
 }
 
-void CCMessageManager::dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCDictionary* data)
-{
-	CCMessage* message=new CCMessage();
-	message->initWithType(type ,sender ,receiver ,data);
-	dispatchMessage(message);
-	message->release();
-}
+//void CCMessageManager::dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCDictionary* data)
+//{
+//	CCMessage* message=new CCMessage();
+//	message->initWithType(type ,sender ,receiver ,data);
+//	dispatchMessage(message);
+//	message->release();
+//}
 
 void CCMessageManager::dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver)
 {
