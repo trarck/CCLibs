@@ -10,6 +10,7 @@
 //
 #ifndef __CCMessage_H__
 #define __CCMessage_H__
+
 #include "cocos2d.h"
 
 NS_CC_BEGIN
