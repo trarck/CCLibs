@@ -1,14 +1,5 @@
-//
-//  Astar.m
-//  Dungeons
-//  世界坐标从0开始，必免负值用数组不好表示
-//  
-//  Created by trarck trarck on 11-10-14.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
-
-#import "Astar.h"
-#import "AstarNode.h"
+#import "CCAstar.h"
+#import "CCAstarNode.h"
 
 int defaultNears[][2]={
 		{-1 ,-1},{0 ,-1},{1,-1},
@@ -17,15 +8,68 @@ int defaultNears[][2]={
 	};
 
 
-@implementation Astar
 
-//search bounding
-@synthesize minX=minX_;
-@synthesize minY=minY_;
-@synthesize maxX=maxX_;
-@synthesize maxY=maxY_;
-@synthesize barrierColumn=barrierColumn_;
-@synthesize barriers=barriers_;
+void CCAstar::setMinX(int minX)
+{
+    m_minX = minX;
+}
+
+int CCAstar::getMinX()
+{
+    return m_minX;
+}
+
+void CCAstar::setMinY(int minY)
+{
+    m_minY = minY;
+}
+
+int CCAstar::getMinY()
+{
+    return m_minY;
+}
+
+void CCAstar::setMaxX(int maxX)
+{
+    m_maxX = maxX;
+}
+
+int CCAstar::getMaxX()
+{
+    return m_maxX;
+}
+
+void CCAstar::setMaxY(int maxY)
+{
+    m_maxY = maxY;
+}
+
+int CCAstar::getMaxY()
+{
+    return m_maxY;
+}
+
+void CCAstar::setBarriers(MapInfo* barriers)
+{
+    CC_SAFE_RETAIN(barriers);
+    CC_SAFE_RELEASE(m_barriers);
+    m_barriers = barriers;
+}
+
+MapInfo* CCAstar::getBarriers()
+{
+    return m_barriers;
+}
+
+void CCAstar::setBarrierColumn(int barrierColumn)
+{
+    m_barrierColumn = barrierColumn;
+}
+
+int CCAstar::getBarrierColumn()
+{
+    return m_barrierColumn;
+}
 
 static Astar * _astar=nil;
 
@@ -135,7 +179,7 @@ static Astar * _astar=nil;
 	
 	AstarNode *searchedNode;
 	
-	for(;k<defaultNearsLength;k++){
+	for(;k<DEFAULT_NEARS_LENGTH;k++){
 		//near=defaultNears[k];
 		i=defaultNears[k][0];
 		j=defaultNears[k][1];
