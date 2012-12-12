@@ -1,11 +1,47 @@
 #import "CCAstar.h"
 #import "CCAstarNode.h"
 
+NS_CC_BEGIN
+
 int defaultNears[][2]={
 		{-1 ,-1},{0 ,-1},{1,-1},
 		{-1 , 0},        {1, 0},
 		{-1 , 1},{0 , 1},{1, 1}
 	};
+
+CCAstar::CCAstar(void)
+:m_minX(0)
+,m_minY(0)
+,m_maxX(0)
+,m_maxY(0)
+,m_barriers(null)
+,m_barrierColumn(0)
+,m_start(null)
+,m_end(null)
+,m_current(null)
+{
+	
+}
+
+void CCAstar::~CCAstar(void)
+{
+	CC_SAFE_RELEASE(m_opens);
+	CC_SAFE_RELEASE(m_closes);
+	CC_SAFE_RELEASE(m_openSeq);
+	CC_SAFE_RELEASE(m_start);
+	CC_SAFE_RELEASE(m_end);
+	
+}
+
+bool CCAstar::init
+{
+
+	m_openSeq=new CCArray(10);
+	m_opens=new CCDictionary(10);
+	m_closes=new CCDictionary(10);
+	
+	return true;
+}
 
 
 
@@ -71,51 +107,35 @@ int CCAstar::getBarrierColumn()
     return m_barrierColumn;
 }
 
-static Astar * _astar=nil;
+static CCAstar * astarInstance=null;
 
-+(id) sharedAstar
+CCAstar* CCAstar::sharedCCAstar()
 {
-	if(_astar==nil){
-		_astar=[[self alloc] init];
+	if(astarInstance==null){
+		astarInstance=new CCAstar();
+		astarInstance->init();
 	}
-	return _astar;
+	return astarInstance;
 }
 
--(id) init
+
+void CCAstar::reset
 {
-	if ((self=[super init])) {
-		start_=nil;
-		end_=nil;
-		opens_=nil;
-		closes_=nil;
-		openSeq_=nil;
-	}
-	return self;
-}
--(void) dealloc
-{
-	[opens_ release];
-	[closes_ release];
-	[openSeq_ release];
-	[start_	release];
-	[end_	release];
-	[super dealloc];
-}
--(void) reset
-{
-	[opens_ release];
-	[closes_ release];
-	[openSeq_ release];
-	
-	openSeq_=[[NSMutableArray alloc] initWithCapacity:10];
-	opens_=[[NSMutableDictionary alloc] initWithCapacity:10];
-	closes_=[[NSMutableDictionary alloc] initWithCapacity:10];
+    CC_SAFE_RELEASE(m_opens);
+	CC_SAFE_RELEASE(m_closes);
+	CC_SAFE_RELEASE(m_openSeq);
+
+
+	m_openSeq=new CCArray(10);
+	m_opens=new CCDictionary(10);
+	m_closes=new CCDictionary(10);
+
 	
 }
 /*
  * 搜索范围
  */
--(void) setBounding:(int) minX minY:(int) minY maxX:(int) maxX maxY:(int) maxY
+void CCAstar::setBounding(int minX ,int minY,int maxX,int maxY)
 {
 	self.minX=minX;
 	self.minY=minY;
@@ -126,39 +146,39 @@ static Astar * _astar=nil;
 /**
  * 开始点
  */
--(void) setStart:(int) x y:(int) y
+void CCAstar::setStart(int x ,int y)
 {
-	[start_ release];
-	start_=[[AstarNode alloc] initWithX:x y:y];
-	[self addToOpen:start_];
+	[m_start release];
+	m_start=[[CCAstarNode alloc] initWithX:x y:y];
+	[self addToOpen:m_start];
 } 
 
 /**
  * 结束点
  */
--(void) setEnd:(int)x y:(int)y
+void CCAstar::setEnd(int x ,int y)
 {
-	[end_ release];
-	end_=[[AstarNode alloc] initWithX:x y:y];	
+	[m_end release];
+	m_end=[[CCAstarNode alloc] initWithX:x y:y];	
 }
 
 
 
--(void) setBarrier:(MapInfo *) barriers column:(int) column
+void CCAstar::setBarrier(MapInfo* barriers ,int column)
 {
 	barriers_=barriers;
 	barrierColumn_=column;
 }
 
--(BOOL) search
+bool CCAstar::search()
 {
 	
 	//如果开始和结束点是同一点、终点超出范围,不必寻路。
-	if ([self isEnd:start_.x y:start_.y] || [self isOut:end_.x y:end_.y]) {
+	if ([self isEnd:m_start.x y:m_start.y] || [self isOut:m_end.x y:m_end.y]) {
 		return NO;
 	}
 	
-	while ([openSeq_ count]) {
+	while ([m_openSeq count]) {
 		//取得下一个搜索点 
 		[self getNext];
 		[self removeFromOpen:current_];
@@ -173,11 +193,11 @@ static Astar * _astar=nil;
 	return NO;
 }
 
--(BOOL) checkNearby
+bool CCAstar::checkNearby()
 {
 	int i=0,j=0,x=0,y=0,k=0,g=0,h=0;
 	
-	AstarNode *searchedNode;
+	CCAstarNode *searchedNode;
 	
 	for(;k<DEFAULT_NEARS_LENGTH;k++){
 		//near=defaultNears[k];
@@ -205,7 +225,7 @@ static Astar * _astar=nil;
 				}else {
 					//没有搜索过，直接添加到开起列表中
 					h=[self getH:x y:y];
-					[self addToOpen:[[AstarNode alloc] initWithParent:current_ 
+					[self addToOpen:[[CCAstarNode alloc] initWithParent:current_ 
 																	x:x 
 																	y:y
 																	g:g
@@ -218,42 +238,42 @@ static Astar * _astar=nil;
 	return NO;
 }
 
--(void) getNext
+void CCAstar::getNext()
 {
 	[current_ release];
-	current_=[openSeq_ objectAtIndex:0];
+	current_=[m_openSeq objectAtIndex:0];
 	[current_ retain];
 }
 
--(void) setOpenSeqNodeWithG:(AstarNode *) node g:(int) g
+void CCAstar::setOpenSeqNodeWithG(CCAstarNode* node ,int g)
 {
 	[node retain];
-	[openSeq_ removeObject:node];
+	[m_openSeq removeObject:node];
 	node.g=g;
 	node.f=node.g+node.h;
 	int i=0;
-	for(AstarNode *it in openSeq_){
+	for(CCAstarNode *it in m_openSeq){
 		if(node.f<it.f) break;
 		i++;
 	}
-	[openSeq_ insertObject:node atIndex:i];
+	[m_openSeq insertObject:node atIndex:i];
 	[node release];
 }
 
--(void) addToOpen:(AstarNode *) node
+void CCAstar::addToOpen(CCAstarNode* node)
 {
 	int i=0;
-	for(AstarNode *it in openSeq_){
+	for(CCAstarNode *it in m_openSeq){
 		if(node.f<it.f) break;
 		i++;
 	}
-	[openSeq_ insertObject:node atIndex:i];
+	[m_openSeq insertObject:node atIndex:i];
 	
 	NSNumber *yKey=[[NSNumber alloc] initWithInt:node.y];
-	NSMutableDictionary * ymd=[opens_ objectForKey:yKey];
+	NSMutableDictionary * ymd=[m_opens objectForKey:yKey];
 	if (ymd==nil) {
 		ymd=[[NSMutableDictionary alloc] initWithCapacity:10];
-		[opens_ setObject:ymd forKey:yKey];
+		[m_opens setObject:ymd forKey:yKey];
 		[ymd release];
 	}
 	
@@ -264,22 +284,22 @@ static Astar * _astar=nil;
 	[yKey release];
 }
 
--(void) removeFromOpen:(AstarNode *) node
+void CCAstar::removeFromOpen(CCAstarNode* node)
 {
-	[openSeq_ removeObject:node];
+	[m_openSeq removeObject:node];
 	
 	NSNumber *yKey=[[NSNumber alloc] initWithInt:node.y];
-	NSMutableDictionary * ymd=[opens_ objectForKey:yKey];
+	NSMutableDictionary * ymd=[m_opens objectForKey:yKey];
 	NSNumber *xKey=[[NSNumber alloc] initWithInt:node.x];
 	[ymd removeObjectForKey:xKey];
 	[yKey release];
 	[xKey release];
 }
 
--(BOOL) isInOpen:(int)x y:(int)y
+bool CCAstar::isInOpen(int x ,int y)
 {
 	NSNumber *yKey=[[NSNumber alloc] initWithInt:y];
-	NSMutableDictionary * ymd=[opens_ objectForKey:yKey];
+	NSMutableDictionary * ymd=[m_opens objectForKey:yKey];
 	NSNumber *xKey=[[NSNumber alloc] initWithInt:x];
 	NSNumber *data=[ymd objectForKey:xKey];
 	
@@ -289,12 +309,12 @@ static Astar * _astar=nil;
 	return data!=nil;
 }
 
--(AstarNode *) getFromOpen:(int) x y:(int) y
+-(CCAstarNode *) CCAstar::getFromOpen(int x ,int y)
 {
 	NSNumber *yKey=[[NSNumber alloc] initWithInt:y];
-	NSMutableDictionary * ymd=[opens_ objectForKey:yKey];
+	NSMutableDictionary * ymd=[m_opens objectForKey:yKey];
 	NSNumber *xKey=[[NSNumber alloc] initWithInt:x];
-	AstarNode *node=[ymd objectForKey:xKey];
+	CCAstarNode *node=[ymd objectForKey:xKey];
 	
 	[xKey release];
 	[yKey release];
@@ -302,13 +322,13 @@ static Astar * _astar=nil;
 	return node;
 }
 
--(void) addToClose:(int) x y:(int) y
+void CCAstar::addToClose(int x,int y)
 {
 	NSNumber *yKey=[[NSNumber alloc] initWithInt:y];
-	NSMutableDictionary * ymd=[closes_ objectForKey:yKey];
+	NSMutableDictionary * ymd=[m_closes objectForKey:yKey];
 	if (ymd==nil) {
 		ymd=[[NSMutableDictionary alloc] initWithCapacity:10];
-		[closes_ setObject:ymd forKey:yKey];
+		[m_closes setObject:ymd forKey:yKey];
 		[ymd release];
 	}
 	
@@ -321,10 +341,10 @@ static Astar * _astar=nil;
 	[yKey release];
 }
 
--(BOOL) isInClose:(int)x y:(int)y
+bool CCAstar::isInClose(int x ,int y)
 {
 	NSNumber *yKey=[[NSNumber alloc] initWithInt:y];
-	NSMutableDictionary * ymd=[closes_ objectForKey:yKey];
+	NSMutableDictionary * ymd=[m_closes objectForKey:yKey];
 	NSNumber *xKey=[[NSNumber alloc] initWithInt:x];
 	NSNumber *data=[ymd objectForKey:xKey];
 	
@@ -335,24 +355,24 @@ static Astar * _astar=nil;
 	
 }
 
--(int) getH:(int)x y:(int)y
+int CCAstar::getH(int x ,int y)
 {
-	return abs(end_.x-x)*ASTAR_G_LINE+abs(end_.y-y)*ASTAR_G_LINE;
+	return abs(m_end.x-x)*ASTAR_G_LINE+abs(m_end.y-y)*ASTAR_G_LINE;
 }
 
--(BOOL) isOut:(int)x y:(int)y
+bool CCAstar::isOut:(int)x y:(int)y
 {
 	//return y<minY_||y>=maxY_ ||x<minX_ || x>=maxX_;
 	return y<minY_||y>maxY_ ||x<minX_ || x>maxX_;
 }
 //本身是否可以通过
--(BOOL) isWorkable:(int) x y:(int) y 
+bool CCAstar::isWorkable:(int) x y:(int) y 
 {
 	unsigned short barrier = (*(barriers_+y*barrierColumn_+x)).barrier;
 	return barrier==0;
 }
 //本身和到达时斜对角是否可以通过
--(BOOL) isWorkableWithCrossSide:(int) x y:(int) y stepX:(int) stepX stepY:(int) stepY
+bool CCAstar::isWorkableWithCrossSide:(int) x y:(int) y stepX:(int) stepX stepY:(int) stepY
 {
 	BOOL ret=[self isWorkable:x y:y];
 	if (stepX!=0 && stepY !=0) {
@@ -362,27 +382,27 @@ static Astar * _astar=nil;
 }
 //到达x,y时，斜对角是否可以通过
 //x,y搜索点，当前点为x-stepX,y-stepY
--(BOOL) isCrossSideWorkable:(int) x y:(int) y stepX:(int) stepX stepY:(int) stepY
+bool CCAstar::isCrossSideWorkable:(int) x y:(int) y stepX:(int) stepX stepY:(int) stepY
 {
 	return stepX==0 || stepY ==0 || ([self isWorkable:x y:y-stepY] && [self isWorkable:x-stepX y:y]);
 }
 
--(BOOL) isEnd:(int) x y:(int) y
+bool CCAstar::isEnd:(int) x y:(int) y
 {
-	return end_.x==x && end_.y==y;
+	return m_end.x==x && m_end.y==y;
 }
 
--(BOOL) isEnd:(int) x y:(int) y stepX:(int) stepX stepY:(int) stepY
+bool CCAstar::isEnd:(int) x y:(int) y stepX:(int) stepX stepY:(int) stepY
 {
-	return end_.x==x && end_.y==y && [self isCrossSideWorkable:x y:y stepX:stepX stepY:stepY];
+	return m_end.x==x && m_end.y==y && [self isCrossSideWorkable:x y:y stepX:stepX stepY:stepY];
 }
 
 #if (TARGET_OS_EMBEDDED || TARGET_OS_IPHONE)
 //取得路径  路径是反向的，从终点指向起点，不包含终点和起点。
--(NSMutableArray *) getPath
+CCArray* CCAstar::getPath
 {
 	NSMutableArray * paths=[[NSMutableArray alloc] initWithCapacity:10];
-	AstarNode * node=current_;
+	CCAstarNode * node=current_;
 	
 	while (node && node.parent) {
 		CGPoint p;
@@ -395,10 +415,10 @@ static Astar * _astar=nil;
 }
 
 //取得路径  路径是反向的，从终点指向起点，包含起点，不包含终点。
--(NSMutableArray *) getPathWithStart
+CCArray* CCAstar::getPathWithStart
 {
 	NSMutableArray * paths=[[NSMutableArray alloc] initWithCapacity:10];
-	AstarNode * node=current_;
+	CCAstarNode * node=current_;
 	
 	while (node) {
 		CGPoint p;
@@ -411,34 +431,34 @@ static Astar * _astar=nil;
 }
 
 //取得路径  路径是反向的，从终点指向起点，包含终点，不包含起点。
--(NSMutableArray *) getPathWithEnd
+CCArray* CCAstar::getPathWithEnd
 {
 	NSMutableArray * paths=[self getPath];
 	CGPoint p;
-	p.x=end_.x;
-	p.y=end_.y;
+	p.x=m_end.x;
+	p.y=m_end.y;
 	[paths insertObject: [NSValue valueWithCGPoint:p] atIndex:0];
 	
 	return paths;
 }
 
 //取得路径  路径是反向的，从终点指向起点，包含终点和起点。
--(NSMutableArray *) getPathWithStartEnd
+CCArray* CCAstar::getPathWithStartEnd
 {
 	NSMutableArray * paths=[self getPathWithStart];
 	CGPoint p;
-	p.x=end_.x;
-	p.y=end_.y;
+	p.x=m_end.x;
+	p.y=m_end.y;
 	[paths insertObject: [NSValue valueWithCGPoint:p] atIndex:0];
 	
 	return paths;
 }
 #elif TARGET_OS_MAC
 //取得路径  路径是反向的，从终点指向起点，不包含终点和起点。
--(NSMutableArray *) getPath
+CCArray* CCAstar::getPath
 {
 	NSMutableArray * paths=[[NSMutableArray alloc] initWithCapacity:10];
-	AstarNode * node=current_;
+	CCAstarNode * node=current_;
 	
 	while (node && node.parent) {
 		NSPoint p;
@@ -451,10 +471,10 @@ static Astar * _astar=nil;
 }
 
 //取得路径  路径是反向的，从终点指向起点，包含起点，不包含终点。
--(NSMutableArray *) getPathWithStart
+CCArray* CCAstar::getPathWithStart
 {
 	NSMutableArray * paths=[[NSMutableArray alloc] initWithCapacity:10];
-	AstarNode * node=current_;
+	CCAstarNode * node=current_;
 	
 	while (node) {
 		NSPoint p;
@@ -467,24 +487,24 @@ static Astar * _astar=nil;
 }
 
 //取得路径  路径是反向的，从终点指向起点，包含终点,不包含起点。
--(NSMutableArray *) getPathWithEnd
+CCArray* CCAstar::getPathWithEnd
 {
 	NSMutableArray * paths=[self getPath];
 	NSPoint p;
-	p.x=end_.x;
-	p.y=end_.y;
+	p.x=m_end.x;
+	p.y=m_end.y;
 	[paths insertObject: [NSValue valueWithPoint:p] atIndex:0];
 	
 	return paths;
 }
 
 //取得路径  路径是反向的，从终点指向起点，包含终点和起点。
--(NSMutableArray *) getPathWithStartEnd
+CCArray* CCAstar::getPathWithStartEnd
 {
 	NSMutableArray * paths=[self getPathWithStart];
 	NSPoint p;
-	p.x=end_.x;
-	p.y=end_.y;
+	p.x=m_end.x;
+	p.y=m_end.y;
 	[paths insertObject: [NSValue valueWithPoint:p] atIndex:0];
 	
 	return paths;
@@ -496,18 +516,17 @@ static Astar * _astar=nil;
 
 
 
--(NSString *) description
+CCString* CCAstar::description()
 {
 	NSString *desc=[NSString stringWithFormat:
 					@" Astar**********\n\
 minX=%d,minY=%d,maxX=%d,maxY=%d\n\
 start:x:%d,y:%d  end:x:%d,y:%d\n\
 barriercolumn:%d",self.minX,self.minY,self.maxX,self.maxY,
-					start_.x,start_.y,end_.x,end_.y,
+					m_start.x,m_start.y,m_end.x,m_end.y,
 					barrierColumn_
 					];
 	return desc;
 }
 
-
-@end //Astar
+NS_CC_END

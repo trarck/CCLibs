@@ -29,7 +29,7 @@ typedef struct MapInfo{
 #endif
 
 
-class AstarNode;
+class CCAstarNode;
 
 
 class CCAstar : CCObject {
@@ -49,17 +49,18 @@ public:
 	virtual int getBarrierColumn();
 
 	static CCAstar* sharedAstar();
-	void setBounding(int minX ,int minY,int maxX,int,maxY);
+	void setBounding(int minX ,int minY,int maxX,int maxY);
 	void setStart(int x ,int y);
 	void setEnd(int x ,int y);
 	void setBarrier(MapInfo* barriers ,int column);
 	void reset();
 
 	void getNext();
+    void setOpenSeqNodeWithG(CCAstarNode* node ,int g);
 	void addToOpen(CCAstarNode* node);
-	void removeFromOpen(AstarNode* node);
+	void removeFromOpen(CCAstarNode* node);
 	bool isInOpen(int x ,int y);
-	void setOpenSeqNodeWithG(AstarNode* node ,int g);
+	
 	CCAstarNode* getFromOpen(int x ,int y);
 
 	void addToClose(int x,int y);
@@ -68,19 +69,21 @@ public:
 	int getH(int x ,int y);
 
 	bool isOut(int x ,int y);
-	bool isWorkable(int x ,int y ;
+	bool isWorkable(int x ,int y) ;
 	bool isWorkableWithCrossSide(int x ,int y ,int stepX ,int stepY);
-	bool isCrossSideWorkable(int x int)y stepX:(int)stepX stepY:(int)stepY;
-	bool isEnd:(int)x y:(int) y ;
-	bool isEnd:(int) x y:(int) y stepX:(int) stepX stepY:(int) stepY;
+	bool isCrossSideWorkable(int x ,int y ,int stepX,int stepY);
+	bool isEnd(int x ,int  y) ;
+	bool isEnd(int x,int y ,int stepX ,int stepY);
 
-	bool search;
-	bool checkNearby;
+	bool search();
+	bool checkNearby();
 
-	CCArray* getPath;
-	CCArray* getPathWithStart;
-	CCArray* getPathWithEnd;
-	CCArray* getPathWithStartEnd;
+	CCArray* getPath();
+	CCArray* getPathWithStart();
+	CCArray* getPathWithEnd();
+	CCArray* getPathWithStartEnd();
+    
+    CCString* description();
 
 protected:	
 	int m_minX;
@@ -90,9 +93,9 @@ protected:
 	MapInfo* m_barriers;//二维数组
 	int m_barrierColumn;//数组的列数 
 	
-	AstarNode* m_start;
-	AstarNode* m_end;
-	AstarNode* m_current;
+	CCAstarNode* m_start;
+	CCAstarNode* m_end;
+	CCAstarNode* m_current;
 	
 	CCArray* m_openSeq;//开启队列，存放每个结点。结点属性,parent 父结点，x,y地图坐,f,g,h路径评分
 	
