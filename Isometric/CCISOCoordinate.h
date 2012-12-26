@@ -35,6 +35,16 @@
 #endif
 //tileWidth=64,tileHeight=32
 
+typedef struct T_CCPointF{
+	float x;
+    float y;
+} ISOPointF;
+
+typedef struct T_CCPointI{
+	int x;
+    int y;
+} ISOPointI;
+
 static inline CCPoint isoViewToGame2F(float x,float y)
 {
 	CCPoint p;
@@ -45,7 +55,7 @@ static inline CCPoint isoViewToGame2F(float x,float y)
 	return p;
 }
 
-static inline CCPoint isoViewToGameCGPoint(CCPoint point)
+static inline CCPoint isoViewToGamePoint(CCPoint point)
 {
 	return isoViewToGame2F(point.x,point.y);
 }
@@ -58,10 +68,19 @@ static inline CCPoint isoViewToGameGrid2F (float x,float  y)
 	return p;
 }
 
-static inline CCPoint isoViewToGameGridCGPoint (CCPoint point)
+static inline CCPoint isoViewToGameGridPoint (CCPoint point)
 {
 	return isoViewToGameGrid2F(point.x,point.y);
 }
+
+static inline CCPoint isoViewToGameCell2F (float x,float  y)
+{
+	CCPoint p=isoViewToGame2F(x,y);
+	p.x=(int)p.x;
+	p.y=(int)p.y;
+	return p;
+}
+
 
 static inline CCPoint isoGameToView3F(float x ,float y ,float z)
 {
@@ -81,7 +100,7 @@ static inline CCPoint isoGameToView2F(float x, float y)
 	return p;
 }
 
-static inline CCPoint isoGameToViewCGPoint(CCPoint  point)
+static inline CCPoint isoGameToViewPoint(CCPoint  point)
 {
 	return isoGameToView2F(point.x,point.y);
 }
