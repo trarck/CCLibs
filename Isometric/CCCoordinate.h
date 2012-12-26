@@ -1,46 +1,61 @@
-//
-//  Coordinate.h
-//  Dungeons
-//
-//  Created by trarck trarck on 11-10-14.
-//  Copyright 2011 trarck. All rights reserved.
-//
 
-#import <Foundation/Foundation.h>
+
+#ifndef ISO_CCCoordinate_H_
+#define ISO_CCCoordinate_H_
+
+#include "cocos2d.h"
+
+NS_CC_BEGIN
 
 typedef struct {
 	int x;
 	int y;
-} CCell;
+} CCCell;
 
-@interface Coordinate : NSObject {
-	int xUnit_;
-	int yUnit_;
-	int zUnit_;
+class CCCoordinate : CCObject {
+
+public:
+    
+    CCCoordinate();
+    ~CCCoordinate(void);
+    
+	static CCCoordinate* sharedCoordinate();
 	
-	int tileWidth_;
-	int tileHeight_;
-}
-+(id) sharedCoordinate;
+    bool init();
+    
+	bool init(int width,int height);
+	bool init(int xUnit,int yUnit,int zUnit);
 
--(id) initWithTileWidth:(int)width height:(int)height;
--(id) initWithCoordinateUnit:(int)xUnit yUnit:(int)yUnit zUint:(int)zUnit;
+	void setTileSize(int width ,int height);
+	void setCoordinateUnit(int xUnit ,int yUnit ,int zUnit);
+	void setCoordinateUnit(int xUnit ,int yUnit);
 
--(void) setTileWidth:(int) width height:(int) height;
--(void) setCoordinateUnit:(int) xUnit yUnit:(int) yUnit zUint:(int) zUnit;
--(void) setCoordinateUnit:(int) xUnit yUnit:(int) yUnit;
+	CCPoint screenToMap(float x ,float y);
+	CCPoint screenToMap(CCPoint point);
+	CCPoint screenToMapGrid(float x ,float y);
+	CCPoint screenToMapGrid(CCPoint point);
+	CCCell screenToMapCell(float x ,float y);
 
--(CGPoint) screenToMap:(float) x y:(float) y;
--(CGPoint) screenToMap:(CGPoint) point;
--(CGPoint) screenToMapGrid:(float) x y:(float) y;
--(CGPoint) screenToMapGrid:(CGPoint) point;
--(CCell) screenToMapCell:(float) x y:(float) y;
+	CCPoint mapToScreen(float x ,float y ,float z);
+	CCPoint mapToScreen(float x ,float y);
+	CCPoint mapToScreen(CCPoint point);
 
--(CGPoint) mapToScreen:(float) x y:(float) y z:(float) z;
--(CGPoint) mapToScreen:(float) x y:(float) y;
--(CGPoint) mapToScreen:(CGPoint) point;
+	CCSize mapToscreenSize(int l ,int b ,int h);
+	CCPoint mapToscreenAnchor(int l ,int b ,int h);
 
--(CGSize) mapToscreenSize:(int) l b:(int) b h:(int) h;
--(CGPoint) mapToscreenAnchor:(int) l b:(int) b h:(int) h;
+private:
+	int m_xUnit;
+	int m_yUnit;
+	int m_zUnit;
+	
+	int m_tileWidth;
+	int m_tileHeight;
+};
 
-@end
+
+
+
+
+NS_CC_END
+
+#endif //ISO_CCCoordinate_H_

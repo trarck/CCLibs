@@ -2,28 +2,52 @@
 //  AstarNode.h
 //  isometric
 //
-//  Created by trarck trarck on 11-10-20.
-//  Copyright 2011 yitengku.com. All rights reserved.
-//
+#ifndef ISO_CCAstarNode_H_
+#define ISO_CCAstarNode_H_
 
-#import <Foundation/Foundation.h>
+#include "cocos2d.h"
+
+NS_CC_BEGIN
 
 
-@interface AstarNode : NSObject {
-	AstarNode *_parent;
-	int _x;
-	int _y;
-	int _g;
-	int _h;
-	int _f;
-}
-@property(nonatomic) int x;
-@property(nonatomic) int y;
-@property(nonatomic) int g;
-@property(nonatomic) int h;
-@property(nonatomic) int f;
-@property(nonatomic,retain) AstarNode *parent;
+class CCAstarNode : CCObject {
 
--(id) initWithParent:(AstarNode *)parent x:(int)x y:(int)y g:(int)g h:(int)h;
--(id) initWithX:(int)x y:(int)y;
-@end //AstarNode
+public:
+	
+	CCAstarNode();
+	~CCAstarNode(void);
+	
+    bool init();
+    bool init(int x,int y);
+	bool init(CCAstarNode* parent ,int x ,int y ,int g ,int h);
+    
+	virtual void setX(int x);
+	virtual int getX();
+	virtual void setY(int y);
+	virtual int getY();
+	virtual void setG(int g);
+	virtual int getG();
+	virtual void setH(int h);
+	virtual int getH();
+	virtual void setF(int f);
+	virtual int getF();
+	virtual void setParent(CCAstarNode* parent);
+	virtual CCAstarNode* getParent();
+
+    
+	
+
+protected:
+	CCAstarNode* m_parent;
+	int m_x;
+	int m_y;
+	int m_g;
+	int m_h;
+	int m_f;
+};
+
+
+
+NS_CC_END
+
+#endif //ISO_CCAstarNode_H_

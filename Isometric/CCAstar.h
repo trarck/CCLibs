@@ -26,7 +26,7 @@ typedef struct MapInfo{
 	int state;
 	CCObject* entity;
 } MapInfo;
-#endif
+#endif //ISO_MapInfo
 
 
 class CCAstarNode;
@@ -34,6 +34,9 @@ class CCAstarNode;
 
 class CCAstar : CCObject {
 public:
+	
+	CCAstar();
+	~CCAstar(void);
 	
 	virtual void setMinX(int minX);
 	virtual int getMinX();
@@ -56,7 +59,7 @@ public:
 	void reset();
 
 	void getNext();
-    void setOpenSeqNodeWithG(CCAstarNode* node ,int g);
+    void setOpenSeqNode(CCAstarNode* node ,int g);
 	void addToOpen(CCAstarNode* node);
 	void removeFromOpen(CCAstarNode* node);
 	bool isInOpen(int x ,int y);
@@ -109,5 +112,7 @@ protected:
 };
 
 NS_CC_END
+
+#endif // ISO_CCAstar_H_
 
 #endif  // ISO_CCAstar_H_

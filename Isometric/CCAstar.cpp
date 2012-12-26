@@ -14,11 +14,11 @@ CCAstar::CCAstar(void)
 ,m_minY(0)
 ,m_maxX(0)
 ,m_maxY(0)
-,m_barriers(null)
+,m_barriers(NULL)
 ,m_barrierColumn(0)
-,m_start(null)
-,m_end(null)
-,m_current(null)
+,m_start(NULL)
+,m_end(NULL)
+,m_current(NULL)
 {
 	
 }
@@ -107,11 +107,11 @@ int CCAstar::getBarrierColumn()
     return m_barrierColumn;
 }
 
-static CCAstar * astarInstance=null;
+static CCAstar * astarInstance=NULL;
 
 CCAstar* CCAstar::sharedCCAstar()
 {
-	if(astarInstance==null){
+	if(astarInstance==NULL){
 		astarInstance=new CCAstar();
 		astarInstance->init();
 	}
@@ -148,383 +148,288 @@ void CCAstar::setBounding(int minX ,int minY,int maxX,int maxY)
  */
 void CCAstar::setStart(int x ,int y)
 {
-	[m_start release];
-	m_start=[[CCAstarNode alloc] initWithX:x y:y];
-	[self addToOpen:m_start];
-} 
+	CC_SAFE_RELEASE(m_start);
+	CCAstarNode* m_start=new CCAstarNode();
+	m_start->init(x,y);
+	addToOpen(m_start);
+}
 
 /**
  * 结束点
  */
 void CCAstar::setEnd(int x ,int y)
 {
-	[m_end release];
-	m_end=[[CCAstarNode alloc] initWithX:x y:y];	
+	CC_SAFE_RELEASE(m_end);
+	CCAstarNode* m_end=new CCAstarNode();
+	m_end->init(x,y);	
 }
 
 
 
 void CCAstar::setBarrier(MapInfo* barriers ,int column)
 {
-	barriers_=barriers;
-	barrierColumn_=column;
+	m_barriers=barriers;
+	m_barrierColumn=column;
 }
 
 bool CCAstar::search()
 {
 	
 	//如果开始和结束点是同一点、终点超出范围,不必寻路。
-	if ([self isEnd:m_start.x y:m_start.y] || [self isOut:m_end.x y:m_end.y]) {
-		return NO;
+	if (isEnd(m_start->getX(),m_start->getY()|| isOut(m_end->getX(),m_end->getY())){
+		return false;
 	}
 	
-	while ([m_openSeq count]) {
+	while (m_openSeq->count()) {
 		//取得下一个搜索点 
-		[self getNext];
-		[self removeFromOpen:current_];
+		getNext();
+		removeFromOpen(m_current);
 		//添加到closes
-		[self addToClose:current_.x y:current_.y];
+		addToClose(m_current->getX(),m_current->getY());
 		
 		//处理相邻结点
-		if([self checkNearby]){
-			return YES;
+		if(checkNearby()){
+			return true;
 		}
 	}
-	return NO;
+	return false;
 }
 
 bool CCAstar::checkNearby()
 {
 	int i=0,j=0,x=0,y=0,k=0,g=0,h=0;
 	
-	CCAstarNode *searchedNode;
+	CCAstarNode* searchedNode;
 	
 	for(;k<DEFAULT_NEARS_LENGTH;k++){
 		//near=defaultNears[k];
 		i=defaultNears[k][0];
 		j=defaultNears[k][1];
 		
-		x=current_.x+i;
-		y=current_.y+j;
+		x=m_current.x+i;
+		y=m_current.y+j;
 		
 		//结束提前，可对目标是障碍物进行寻路。(例:人物要对某个建筑进行操作，比如攻击，要走到建筑旁边才可以)
-		if ([self isEnd:x y:y stepX:i stepY:j]) {//如果是斜着寻路，则要对旁边是否有障碍物进行判断。
-			return YES;//查找成功
+		if (isEnd(x,y ,i ,j)) {//如果是斜着寻路，则要对旁边是否有障碍物进行判断。
+			return true;//查找成功
 		}
 		
-		if(![self isOut:x y:y] && [self isWorkableWithCrossSide:x y:y stepX:i stepY:j]){
-			if(![self isInClose:x y:y]){
-				g=current_.g+(i==0||j==0?ASTAR_G_LINE:ASTAR_G_CROSS);
-				searchedNode=[self getFromOpen:x y:y];
+		if(!isOut(x,y) && isWorkableWithCrossSide(x ,y ,i ,j)){
+			if(!isInClose(x ,y)){
+				g=m_current.g+(i==0||j==0?ASTAR_G_LINE:ASTAR_G_CROSS);
+				searchedNode=getFromOpen(x ,y);
 				if(searchedNode!=nil){
 					//在开起列表中，比较G值
 					if (g < searchedNode.g) {
 						//有最小F值，重新排序
-						[self setOpenSeqNodeWithG:searchedNode g:g];
+						setOpenSeqNode(searchedNode,g);
 					}
 				}else {
 					//没有搜索过，直接添加到开起列表中
-					h=[self getH:x y:y];
-					[self addToOpen:[[CCAstarNode alloc] initWithParent:current_ 
-																	x:x 
-																	y:y
-																	g:g
-																	h:h]];
+					h=getH(x ,y);
+					addToOpen(new CCAstarNode()->initWithParent(m_current,x ,y,g,h));
 				}
-				
 			}
 		}
 	}
-	return NO;
+	return false;
 }
 
 void CCAstar::getNext()
 {
-	[current_ release];
-	current_=[m_openSeq objectAtIndex:0];
-	[current_ retain];
+	CC_SAFE_RELEASE(m_current);
+	m_current=m_openSeq->objectAtIndex(0);
+	m_current->retain();
 }
 
-void CCAstar::setOpenSeqNodeWithG(CCAstarNode* node ,int g)
+void CCAstar::setOpenSeqNode(CCAstarNode* node ,int g)
 {
-	[node retain];
-	[m_openSeq removeObject:node];
-	node.g=g;
-	node.f=node.g+node.h;
+	node->retain();
+	m_openSeq->removeObject(node);
+	node->setG(g);
+	node->setF(node.g+node.h);
+
 	int i=0;
-	for(CCAstarNode *it in m_openSeq){
-		if(node.f<it.f) break;
+	CCObject* pObject = NULL;
+	CCARRAY_FOREACH(m_openSeq,pObject){
+		CCAstarNode* it=(CCAstarNode*)pObject;
+		if(node->getF()<it->getF()) break;
 		i++;
 	}
-	[m_openSeq insertObject:node atIndex:i];
-	[node release];
+
+	m_openSeq->insertObject(node,i);
+	CC_SAFE_RELEASE(node);
 }
 
 void CCAstar::addToOpen(CCAstarNode* node)
 {
 	int i=0;
-	for(CCAstarNode *it in m_openSeq){
-		if(node.f<it.f) break;
+	CCObject* pObject = NULL;
+	CCARRAY_FOREACH(m_openSeq,pObject){
+		CCAstarNode* it=(CCAstarNode*)pObject;
+		if(node->getF()<it->getF()) break;
 		i++;
 	}
-	[m_openSeq insertObject:node atIndex:i];
+	m_openSeq->insertObject(node,i);
 	
-	NSNumber *yKey=[[NSNumber alloc] initWithInt:node.y];
-	NSMutableDictionary * ymd=[m_opens objectForKey:yKey];
-	if (ymd==nil) {
-		ymd=[[NSMutableDictionary alloc] initWithCapacity:10];
-		[m_opens setObject:ymd forKey:yKey];
-		[ymd release];
+	CCDictionary* ymd=(CCDictionary*)m_opens->objectForKey(node.getY());
+	if (ymd==NULL) {
+		ymd=new CCDictionary()->initWithCapacity(10);
+		m_opens->setObject(ymd,node.getY());
+		CC_SAFE_RELEASE(ymd);
 	}
 	
-	NSNumber *xKey=[[NSNumber alloc] initWithInt:node.x];
-	[ymd setObject: node forKey:xKey];
-	
-	[xKey release];
-	[yKey release];
+	ymd->setObject(node,node.getX());
 }
 
 void CCAstar::removeFromOpen(CCAstarNode* node)
 {
-	[m_openSeq removeObject:node];
-	
-	NSNumber *yKey=[[NSNumber alloc] initWithInt:node.y];
-	NSMutableDictionary * ymd=[m_opens objectForKey:yKey];
-	NSNumber *xKey=[[NSNumber alloc] initWithInt:node.x];
-	[ymd removeObjectForKey:xKey];
-	[yKey release];
-	[xKey release];
+	m_openSeq->removeObject(node);
+
+	CCDictionary* ymd=(CCDictionary*)m_opens->objectForKey(node.getY());
+	ymd->removeObjectForKey(node->getX());
 }
 
 bool CCAstar::isInOpen(int x ,int y)
 {
-	NSNumber *yKey=[[NSNumber alloc] initWithInt:y];
-	NSMutableDictionary * ymd=[m_opens objectForKey:yKey];
-	NSNumber *xKey=[[NSNumber alloc] initWithInt:x];
-	NSNumber *data=[ymd objectForKey:xKey];
-	
-	[xKey release];
-	[yKey release];
-	
-	return data!=nil;
+	CCDictionary* ymd=(CCDictionary*)m_opens->objectForKey(y);
+	CCAstarNode* node=(CCAstarNode*)ymd->objectForKey(x);
+
+	return node!=NULL;
 }
 
 -(CCAstarNode *) CCAstar::getFromOpen(int x ,int y)
 {
-	NSNumber *yKey=[[NSNumber alloc] initWithInt:y];
-	NSMutableDictionary * ymd=[m_opens objectForKey:yKey];
-	NSNumber *xKey=[[NSNumber alloc] initWithInt:x];
-	CCAstarNode *node=[ymd objectForKey:xKey];
-	
-	[xKey release];
-	[yKey release];
-	
+	CCDictionary* ymd=(CCDictionary*)m_opens->objectForKey(y);
+	CCAstarNode* node=(CCAstarNode*)ymd->objectForKey(x);
+
 	return node;
 }
 
 void CCAstar::addToClose(int x,int y)
 {
-	NSNumber *yKey=[[NSNumber alloc] initWithInt:y];
-	NSMutableDictionary * ymd=[m_closes objectForKey:yKey];
-	if (ymd==nil) {
-		ymd=[[NSMutableDictionary alloc] initWithCapacity:10];
-		[m_closes setObject:ymd forKey:yKey];
-		[ymd release];
+
+	CCDictionary* ymd=(CCDictionary*)m_closes->objectForKey(y);
+	if (ymd==NULL) {
+		ymd=new CCDictionary()->initWithCapacity(10);
+		m_closes->setObject(ymd,y);
+		ymd->release();
 	}
 	
-	NSNumber *xKey=[[NSNumber alloc] initWithInt:x];
-	NSNumber *data=[[NSNumber alloc] initWithBool:YES];
-	[ymd setObject: data forKey:xKey];
-	
-	[data release];
-	[xKey release];
-	[yKey release];
+	CCInteger* data=CCInteger::create(1);
+	ymd->setObject(data,x);
 }
 
 bool CCAstar::isInClose(int x ,int y)
 {
-	NSNumber *yKey=[[NSNumber alloc] initWithInt:y];
-	NSMutableDictionary * ymd=[m_closes objectForKey:yKey];
-	NSNumber *xKey=[[NSNumber alloc] initWithInt:x];
-	NSNumber *data=[ymd objectForKey:xKey];
-	
-	[xKey release];
-	[yKey release];
-	
-	return data!=nil;
-	
+	CCDictionary* ymd=(CCDictionary*)m_closes->objectForKey(y);
+	CCInteger* data=(CCInteger*)ymd->objectForKey(x);
+
+	return data!=NULL;
 }
 
 int CCAstar::getH(int x ,int y)
 {
-	return abs(m_end.x-x)*ASTAR_G_LINE+abs(m_end.y-y)*ASTAR_G_LINE;
+	return abs(m_end.getX()-x)*ASTAR_G_LINE+abs(m_end.getY()-y)*ASTAR_G_LINE;
 }
 
-bool CCAstar::isOut:(int)x y:(int)y
+bool CCAstar::isOut(int x ,int y)
 {
-	//return y<minY_||y>=maxY_ ||x<minX_ || x>=maxX_;
-	return y<minY_||y>maxY_ ||x<minX_ || x>maxX_;
+	//return y<m_minX||y>=m_maxY ||x<m_minX || x>=m_maxX;
+	return y<m_minY||y>m_maxY ||x<m_minX || x>m_maxX;
 }
 //本身是否可以通过
-bool CCAstar::isWorkable:(int) x y:(int) y 
+bool CCAstar::isWorkable(int x,int y) 
 {
-	unsigned short barrier = (*(barriers_+y*barrierColumn_+x)).barrier;
+	unsigned short barrier = (*(m_barriers+y*m_barrierColumn+x)).barrier;
 	return barrier==0;
 }
 //本身和到达时斜对角是否可以通过
-bool CCAstar::isWorkableWithCrossSide:(int) x y:(int) y stepX:(int) stepX stepY:(int) stepY
+bool CCAstar::isWorkableWithCrossSide(int x ,int y ,int stepX ,int stepY)
 {
-	BOOL ret=[self isWorkable:x y:y];
+	bool ret=isWorkable(x,y);
 	if (stepX!=0 && stepY !=0) {
-		ret&=[self isWorkable:x y:y-stepY] && [self isWorkable:x-stepX y:y];
+		ret&=isWorkable(x,y-stepY) && isWorkable(x-stepX ,y);
 	}
 	return ret;
 }
 //到达x,y时，斜对角是否可以通过
 //x,y搜索点，当前点为x-stepX,y-stepY
-bool CCAstar::isCrossSideWorkable:(int) x y:(int) y stepX:(int) stepX stepY:(int) stepY
+bool CCAstar::isCrossSideWorkable(int x ,int y ,int stepX ,int stepY)
 {
-	return stepX==0 || stepY ==0 || ([self isWorkable:x y:y-stepY] && [self isWorkable:x-stepX y:y]);
+	return stepX==0 || stepY ==0 || (isWorkable(x,y-stepY) && (isWorkable(x-stepX,y));
 }
 
-bool CCAstar::isEnd:(int) x y:(int) y
+bool CCAstar::isEnd(int x ,int y)
 {
-	return m_end.x==x && m_end.y==y;
+	return m_end->getX()==x && m_end->getY()==y;
 }
 
-bool CCAstar::isEnd:(int) x y:(int) y stepX:(int) stepX stepY:(int) stepY
+bool CCAstar::isEnd(int x ,int y ,int stepX ,int stepY)
 {
-	return m_end.x==x && m_end.y==y && [self isCrossSideWorkable:x y:y stepX:stepX stepY:stepY];
+	return m_end->getX()==x && m_end->getY()==y && isCrossSideWorkable(x,y ,stepX ,stepY);
 }
 
-#if (TARGET_OS_EMBEDDED || TARGET_OS_IPHONE)
 //取得路径  路径是反向的，从终点指向起点，不包含终点和起点。
-CCArray* CCAstar::getPath
+CCArray* CCAstar::getPath()
 {
-	NSMutableArray * paths=[[NSMutableArray alloc] initWithCapacity:10];
-	CCAstarNode * node=current_;
+	CCArray* paths=new CCArray()->initWithCapacity(10);
+	CCAstarNode* node=m_current;
 	
-	while (node && node.parent) {
-		CGPoint p;
-		p.x=node.x;
-		p.y=node.y;
-		[paths addObject:[NSValue valueWithCGPoint:p]];
-		node=node.parent;
+	while (node && node->getParent()) {
+		CCPoint* p=new CCPoint(node.getX(),node.getY());
+		paths->addObject(p);
+		p->realse();
+		node=node->getParent();
 	}
 	return paths;
 }
 
 //取得路径  路径是反向的，从终点指向起点，包含起点，不包含终点。
-CCArray* CCAstar::getPathWithStart
+CCArray* CCAstar::getPathWithStart()
 {
-	NSMutableArray * paths=[[NSMutableArray alloc] initWithCapacity:10];
-	CCAstarNode * node=current_;
+	CCArray* paths=new CCArray()->initWithCapacity(10);
+	CCAstarNode* node=m_current;
 	
 	while (node) {
-		CGPoint p;
-		p.x=node.x;
-		p.y=node.y;
-		[paths addObject:[NSValue valueWithCGPoint:p]];
-		node=node.parent;
+		CCPoint* p=new CCPoint(node.getX(),node.getY());
+		paths->addObject(p);
+		p->realse();
+		node=node->getParent();
 	}
 	return paths;
 }
 
 //取得路径  路径是反向的，从终点指向起点，包含终点，不包含起点。
-CCArray* CCAstar::getPathWithEnd
+CCArray* CCAstar::getPathWithEnd()
 {
-	NSMutableArray * paths=[self getPath];
-	CGPoint p;
-	p.x=m_end.x;
-	p.y=m_end.y;
-	[paths insertObject: [NSValue valueWithCGPoint:p] atIndex:0];
-	
+	CCArray* paths=getPath();
+	CCPoint* p=new CCPoint(m_end.getX(),m_end.getY());
+	paths->insertObject(p,0);
+	p->realse();
 	return paths;
 }
 
 //取得路径  路径是反向的，从终点指向起点，包含终点和起点。
-CCArray* CCAstar::getPathWithStartEnd
+CCArray* CCAstar::getPathWithStartEnd()
 {
-	NSMutableArray * paths=[self getPathWithStart];
-	CGPoint p;
-	p.x=m_end.x;
-	p.y=m_end.y;
-	[paths insertObject: [NSValue valueWithCGPoint:p] atIndex:0];
-	
+	CCArray* paths=getPathWithStart();
+	CCPoint* p=new CCPoint(m_end.getX(),m_end.getY());
+	paths->insertObject(p,0);
+	p->realse();
+	paths->insertObject(p,0);
 	return paths;
 }
-#elif TARGET_OS_MAC
-//取得路径  路径是反向的，从终点指向起点，不包含终点和起点。
-CCArray* CCAstar::getPath
-{
-	NSMutableArray * paths=[[NSMutableArray alloc] initWithCapacity:10];
-	CCAstarNode * node=current_;
-	
-	while (node && node.parent) {
-		NSPoint p;
-		p.x=node.x;
-		p.y=node.y;
-		[paths addObject:[NSValue valueWithPoint:p]];
-		node=node.parent;
-	}
-	return paths;
-}
-
-//取得路径  路径是反向的，从终点指向起点，包含起点，不包含终点。
-CCArray* CCAstar::getPathWithStart
-{
-	NSMutableArray * paths=[[NSMutableArray alloc] initWithCapacity:10];
-	CCAstarNode * node=current_;
-	
-	while (node) {
-		NSPoint p;
-		p.x=node.x;
-		p.y=node.y;
-		[paths addObject:[NSValue valueWithPoint:p]];
-		node=node.parent;
-	}
-	return paths;
-}
-
-//取得路径  路径是反向的，从终点指向起点，包含终点,不包含起点。
-CCArray* CCAstar::getPathWithEnd
-{
-	NSMutableArray * paths=[self getPath];
-	NSPoint p;
-	p.x=m_end.x;
-	p.y=m_end.y;
-	[paths insertObject: [NSValue valueWithPoint:p] atIndex:0];
-	
-	return paths;
-}
-
-//取得路径  路径是反向的，从终点指向起点，包含终点和起点。
-CCArray* CCAstar::getPathWithStartEnd
-{
-	NSMutableArray * paths=[self getPathWithStart];
-	NSPoint p;
-	p.x=m_end.x;
-	p.y=m_end.y;
-	[paths insertObject: [NSValue valueWithPoint:p] atIndex:0];
-	
-	return paths;
-}
-
-#elif TARGET_OS_WIN32
-
-#endif
-
-
 
 CCString* CCAstar::description()
 {
-	NSString *desc=[NSString stringWithFormat:
-					@" Astar**********\n\
+	CCString* desc=CCString::createWithFormat:
+					" Astar**********\n\
 minX=%d,minY=%d,maxX=%d,maxY=%d\n\
 start:x:%d,y:%d  end:x:%d,y:%d\n\
-barriercolumn:%d",self.minX,self.minY,self.maxX,self.maxY,
-					m_start.x,m_start.y,m_end.x,m_end.y,
-					barrierColumn_
+barriercolumn:%d",m_minX,m_minY,m_maxX,m_maxY,
+					m_start.getX(),m_start.getY(),m_end.getX(),m_end.getY(),
+					m_barrierColumn
 					];
 	return desc;
 }

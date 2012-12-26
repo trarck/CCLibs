@@ -6,154 +6,161 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "Coordinate.h"
+#include "CCCoordinate.h"
 
+NS_CC_BEGIN
 
-@implementation Coordinate
+static CCCoordinate* l_coordinate=NULL;
 
-static Coordinate *_coordinate=nil;
-
-+(id) sharedCoordinate
+CCCoordinate::CCCoordinate()
+:m_xUnit(0)
+,m_yUnit(0)
+,m_zUnit(0)
+,m_tileWidth(0)
+,m_tileHeight(0)
 {
-	if(!_coordinate){
-		_coordinate=[[self alloc] init];
-	}
-	return _coordinate;	
+    
 }
 
--(id) initWithTileWidth:(int) width height:(int) height
+CCCoordinate::~CCCoordinate()
 {
-	if((self=[super	init])){
-		[self setTileWidth:width height:height];
+    
+}
+
+
+CCCoordinate* CCCoordinate::sharedCoordinate()
+{
+	if(!l_coordinate){
+		l_coordinate=new CCCoordinate();
+        l_coordinate->init();
 	}
+	return l_coordinate;	
+}
+
+bool CCCoordinate::init()
+{
+    return true;
+}
+
+bool CCCoordinate::init(int width,int height)
+{
+
+    setTileSize(width ,height);
+	
+	return true;
+}
+
+bool CCCoordinate::init(int xUnit,int yUnit,int zUnit)
+{
+	setCoordinateUnit(xUnit ,yUnit ,zUnit);
+	
 	return self;
 }
 
--(id) initWithCoordinateUnit:(int)xUnit yUnit:(int)yUnit zUint:(int) zUnit 
-{
-	if((self=[super	init])){
-		[self setCoordinateUnit:xUnit yUnit:yUnit zUint:zUnit];
-	}
-	return self;
-}
 
--(void) dealloc
+void CCCoordinate::setTileSize(int width ,int height)
 {
-	_coordinate=nil;
-	[super dealloc];
-}
-
--(void) setTileWidth:(int)width height:(int)height
-{
-	tileWidth_=width;
-	tileHeight_=height;
+	m_tileWidth=width;
+	m_tileHeight=height;
 	
-	xUnit_=width/2;
-	yUnit_=height/2;
-	zUnit_=height;
+	m_xUnit=width/2;
+	m_yUnit=height/2;
+	m_zUnit=height;
 }
 
--(void) setCoordinateUnit:(int)xUnit yUnit:(int)yUnit zUint:(int) zUnit
+void CCCoordinate::setCoordinateUnit(int xUnit ,int yUnit ,int zUnit)
 {
-	xUnit_=xUnit;
-	yUnit_=yUnit;
-	zUnit_=zUnit;
+	m_xUnit=xUnit;
+	m_yUnit=yUnit;
+	m_zUnit=zUnit;
 	
-	tileWidth_=xUnit*2;
-	tileHeight_=yUnit*2;
+	m_tileWidth=xUnit*2;
+	m_tileHeight=yUnit*2;
 }
 
--(void) setCoordinateUnit:(int)xUnit yUnit:(int)yUnit
+void CCCoordinate::setCoordinateUnit(int xUnit ,int yUnit)
 {
-	[self setCoordinateUnit:xUnit yUnit:yUnit zUint:yUnit*2];
+	setCoordinateUnit(xUnit ,yUnit ,yUnit*2);
 }
 
 
--(CGPoint) screenToMap:(float)x y:(float)y
+CCPoint CCCoordinate::screenToMap(float x ,float y)
 {
-	x=x/tileWidth_;
-	y=y/tileHeight_;
-	CGPoint p;
-	p.x=x+y;
-	p.y=y-x;
-	return p;
+	x=x/m_tileWidth;
+	y=y/m_tileHeight;
+    return CCPointMake(x+y,y-x);
+//	CCPoint p;
+//	p.x=x+y;
+//	p.y=y-x;
+//	return p;
 }
 
--(CGPoint) screenToMap:(CGPoint) point
+CCPoint CCCoordinate::screenToMap(CCPoint point)
 {
-	return [self screenToMap:point.x y:point.y];
+	return screenToMap(point.x,point.y);
 }
 
--(CGPoint) screenToMapGrid:(float) x y:(float) y
+CCPoint CCCoordinate::screenToMapGrid(float x ,float y)
 {
-	CGPoint p=[self screenToMap:x y:y];
+	CCPoint p=screenToMap(x,y);
 	p.x=floor(p.x);
 	p.y=floor(p.y);
 	return p;
 }
 
--(CGPoint) screenToMapGrid:(CGPoint) point
+CCPoint CCCoordinate::screenToMapGrid(CCPoint point)
 {
-	return [self screenToMapGrid:point.x y:point.y];
+	return screenToMapGrid(point.x ,point.y);
 }
 
--(CCell) screenToMapCell:(float) x y:(float) y
+CCCell CCCoordinate::screenToMapCell(float x ,float y)
 {
-	CGPoint p=[self screenToMap:x y:y];
-	CCell cell;
+	CCPoint p=screenToMap(x ,y);
+	CCCell cell;
 	cell.x=(int) p.x;
 	cell.y=(int) p.y;
 	return cell;
 }
 
--(CGPoint) mapToScreen:(float)x y:(float)y z:(float) z
+CCPoint CCCoordinate::mapToScreen(float x ,float y ,float z)
 {
 	double sx=x-y,sy=x+y;
-	CGPoint p;
-	p.x=sx*xUnit_;
-	p.y=sy*yUnit_-z*zUnit_;
+	CCPoint p;
+	p.x=sx*m_xUnit;
+	p.y=sy*m_yUnit-z*m_zUnit;
 	return p;
 }
 
--(CGPoint) mapToScreen:(float)x y:(float)y
+CCPoint CCCoordinate::mapToScreen(float x ,float y)
 {
-	return [self mapToScreen:x y:y z:0];
+	return mapToScreen(x ,y ,0);
 }
 
--(CGPoint) mapToScreen:(CGPoint) point
+CCPoint CCCoordinate::mapToScreen(CCPoint point)
 {
-	return [self mapToScreen:point.x y:point.y z:0];
+	return mapToScreen(point.x ,point.y ,0);
 }
 
--(CGSize) mapToscreenSize:(int)l b:(int)b h:(int)h
+CCSize CCCoordinate::mapToscreenSize(int l ,int b ,int h)
 {
 	int s;
 	float width,height;
-	CGSize size;
+	CCSize size;
 	
 	s=l+b;
-	width=s*xUnit_;
-	height=s*yUnit_+h*zUnit_;
+	width=s*m_xUnit;
+	height=s*m_yUnit+h*m_zUnit;
 	size.width=width;
 	size.height=height;
 	return size;
 }
 
--(CGPoint) mapToscreenAnchor:(int)l b:(int)b h:(int)h
+CCPoint CCCoordinate::mapToscreenAnchor(int l ,int b ,int h)
 {
-	CGPoint p;
-	p.x=b*xUnit_;
-	p.y=h*zUnit_;
+	CCPoint p;
+	p.x=b*m_xUnit;
+	p.y=h*m_zUnit;
 	return p;
 }
 
--(NSString *) description
-{
-	NSString *desc=[NSString stringWithFormat:@"unit:%d,%d,%d",xUnit_,yUnit_,zUnit_];
-	return desc;
-}
--(void) release
-{
-	
-}
-@end
+NS_CC_END

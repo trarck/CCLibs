@@ -6,9 +6,9 @@
 //  Copyright 2011 yitengku.com. All rights reserved.
 //
 
-#import "cocos2d.h"
+#include "cocos2d.h"
 #import "GameEntity.h"
-#import "Coordinate.h";
+#import "CCCoordinate.h";
 
 typedef enum zindex_type {
 	ZIndex_Static,
@@ -19,7 +19,7 @@ typedef enum zindex_type {
 //	
 //}
 
-@interface ZIndex : NSObject {
+@interface CCZIndex : NSObject {
 	NSMutableArray *statics_;
 	NSMutableArray *dynamics_;
 	CCLayer *sortLayer_;

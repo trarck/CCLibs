@@ -8,10 +8,10 @@
  *
  */
 
-#ifndef __C_ISO_Coordinate_H
-#define __C_ISO_Coordinate_H
+#ifndef ISO_CCISOCoordinate_H_
+#define ISO_CCISOCoordinate_H_
 
-#import <Foundation/Foundation.h>
+#include "cocos2d.h"
 
 //tile width 
 #ifndef TileWidth
@@ -35,9 +35,9 @@
 #endif
 //tileWidth=64,tileHeight=32
 
-static inline CGPoint isoViewToGame2F(float x,float y)
+static inline CCPoint isoViewToGame2F(float x,float y)
 {
-	CGPoint p;
+	CCPoint p;
 	x=x/TileWidth;//x=x/64
 	y=y/TileHeight;//y=y/32
 	p.x=x+y;
@@ -45,44 +45,44 @@ static inline CGPoint isoViewToGame2F(float x,float y)
 	return p;
 }
 
-static inline CGPoint isoViewToGameCGPoint(CGPoint point)
+static inline CCPoint isoViewToGameCGPoint(CCPoint point)
 {
 	return isoViewToGame2F(point.x,point.y);
 }
 
-static inline CGPoint isoViewToGameGrid2F (float x,float  y)
+static inline CCPoint isoViewToGameGrid2F (float x,float  y)
 {
-	CGPoint p=isoViewToGame2F(x,y);
+	CCPoint p=isoViewToGame2F(x,y);
 	p.x=floor(p.x);
 	p.y=floor(p.y);
 	return p;
 }
 
-static inline CGPoint isoViewToGameGridCGPoint (CGPoint point)
+static inline CCPoint isoViewToGameGridCGPoint (CCPoint point)
 {
 	return isoViewToGameGrid2F(point.x,point.y);
 }
 
-static inline CGPoint isoGameToView3F(float x ,float y ,float z)
+static inline CCPoint isoGameToView3F(float x ,float y ,float z)
 {
 	double sx=x-y,sy=x+y;
-	CGPoint p;
+	CCPoint p;
 	p.x=sx*XUnit;//sx*32
 	p.y=sy*YUnit-z*ZUnit;//sy*16-z*32
 	return p;
 }
 
-static inline CGPoint isoGameToView2F(float x, float y)
+static inline CCPoint isoGameToView2F(float x, float y)
 {
 	double sx=x-y,sy=x+y;
-	CGPoint p;
+	CCPoint p;
 	p.x=sx*XUnit;//sx*32
 	p.y=sy*YUnit;//sy*16
 	return p;
 }
 
-static inline CGPoint isoGameToViewCGPoint(CGPoint  point)
+static inline CCPoint isoGameToViewCGPoint(CCPoint  point)
 {
 	return isoGameToView2F(point.x,point.y);
 }
-#endif //__C_ISO_Coordinate_H
+#endif //ISO_CCISOCoordinate_H_
