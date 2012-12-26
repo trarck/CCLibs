@@ -2,8 +2,6 @@
 //  AstarNode.m
 //  isometric
 //
-//  Created by trarck trarck on 11-10-20.
-//  Copyright 2011 yitengku.com. All rights reserved.
 //
 
 #include "CCAstarNode.h"
@@ -11,6 +9,7 @@
 NS_CC_BEGIN
 
 CCAstarNode::CCAstarNode()
+:m_parent(NULL)
 {
 	
 }
@@ -28,15 +27,13 @@ bool CCAstarNode::init()
 	m_g=0;
 	m_h=0;
 	m_f=0;
-	m_parent=NULL;
 
 	return true;
 }
 
-bool CCAstarNode::init(CCAstarNode* parent ,int x ,int y ,int g ,int h)
+bool CCAstarNode::init(int x ,int y ,int g ,int h)
 {
 	
-	m_parent=parent;
 	m_x=x;
 	m_y=y;
 	m_g=g;
@@ -48,7 +45,7 @@ bool CCAstarNode::init(CCAstarNode* parent ,int x ,int y ,int g ,int h)
 
 bool CCAstarNode::init(int x ,int y)
 {
-	return init(NULL,x,y,0,0);
+	return init(x,y,0,0);
 }
 
 void CCAstarNode::setX(int x)

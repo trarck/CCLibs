@@ -2,6 +2,7 @@
 #define ISO_CCAstar_H_
 
 #include "cocos2d.h"
+#include "CCAstarNode.h"
 
 NS_CC_BEGIN
 
@@ -29,14 +30,13 @@ typedef struct MapInfo{
 #endif //ISO_MapInfo
 
 
-class CCAstarNode;
-
-
-class CCAstar : CCObject {
+class CCAstar : public CCObject {
 public:
 	
 	CCAstar();
 	~CCAstar(void);
+
+	bool init();
 	
 	virtual void setMinX(int minX);
 	virtual int getMinX();
@@ -52,6 +52,7 @@ public:
 	virtual int getBarrierColumn();
 
 	static CCAstar* sharedAstar();
+
 	void setBounding(int minX ,int minY,int maxX,int maxY);
 	void setStart(int x ,int y);
 	void setEnd(int x ,int y);
@@ -85,8 +86,6 @@ public:
 	CCArray* getPathWithStart();
 	CCArray* getPathWithEnd();
 	CCArray* getPathWithStartEnd();
-    
-    CCString* description();
 
 protected:	
 	int m_minX;
@@ -114,5 +113,3 @@ protected:
 NS_CC_END
 
 #endif // ISO_CCAstar_H_
-
-#endif  // ISO_CCAstar_H_

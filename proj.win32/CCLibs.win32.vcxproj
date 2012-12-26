@@ -46,7 +46,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;..\Classes;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir)cocos2dx\kazmath\include;$(SolutionDir)cocos2dx\platform\win32;$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)CocosDenshion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\Classes;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir)cocos2dx\kazmath\include;$(SolutionDir)cocos2dx\platform\win32;$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)CocosDenshion\include;$(ProjectDir)\Isometric;..\Isometric;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -134,9 +134,14 @@
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\controller.h" />
     <ClInclude Include="..\Classes\IsometricTest\IsometricTest.h" />
+    <ClInclude Include="..\Classes\IsometricTest\TestData.h" />
     <ClInclude Include="..\Classes\testBasic.h" />
     <ClInclude Include="..\Classes\testResource.h" />
     <ClInclude Include="..\Classes\tests.h" />
+    <ClInclude Include="..\Isometric\CCAstar.h" />
+    <ClInclude Include="..\Isometric\CCAstarNode.h" />
+    <ClInclude Include="..\Isometric\CCCoordinate.h" />
+    <ClInclude Include="..\Isometric\CCISOCoordinate.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -145,6 +150,9 @@
     <ClCompile Include="..\Classes\controller.cpp" />
     <ClCompile Include="..\Classes\IsometricTest\IsometricTest.cpp" />
     <ClCompile Include="..\Classes\testBasic.cpp" />
+    <ClCompile Include="..\Isometric\CCAstar.cpp" />
+    <ClCompile Include="..\Isometric\CCAstarNode.cpp" />
+    <ClCompile Include="..\Isometric\CCCoordinate.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -14,6 +14,9 @@
     <Filter Include="Classes\IsometricTest">
       <UniqueIdentifier>{164c32ae-485b-4a5d-9b67-f9fa32c22c08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Isometric">
+      <UniqueIdentifier>{eabb6811-e796-4803-916c-f2b7eb02fe9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\CCLibs.ico">
@@ -59,6 +62,21 @@
     <ClInclude Include="..\Classes\IsometricTest\IsometricTest.h">
       <Filter>Classes\IsometricTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\Isometric\CCAstar.h">
+      <Filter>Isometric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Isometric\CCAstarNode.h">
+      <Filter>Isometric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Isometric\CCCoordinate.h">
+      <Filter>Isometric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Isometric\CCISOCoordinate.h">
+      <Filter>Isometric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\IsometricTest\TestData.h">
+      <Filter>Classes\IsometricTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -75,6 +93,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\IsometricTest\IsometricTest.cpp">
       <Filter>Classes\IsometricTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Isometric\CCAstar.cpp">
+      <Filter>Isometric</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Isometric\CCAstarNode.cpp">
+      <Filter>Isometric</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Isometric\CCCoordinate.cpp">
+      <Filter>Isometric</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

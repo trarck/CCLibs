@@ -10,7 +10,7 @@
 NS_CC_BEGIN
 
 
-class CCAstarNode : CCObject {
+class CCAstarNode : public CCObject {
 
 public:
 	
@@ -19,7 +19,7 @@ public:
 	
     bool init();
     bool init(int x,int y);
-	bool init(CCAstarNode* parent ,int x ,int y ,int g ,int h);
+	bool init(int x ,int y ,int g ,int h);
     
 	virtual void setX(int x);
 	virtual int getX();

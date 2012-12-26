@@ -12,7 +12,7 @@ typedef struct {
 	int y;
 } CCCell;
 
-class CCCoordinate : CCObject {
+class CCCoordinate : public CCObject {
 
 public:
     

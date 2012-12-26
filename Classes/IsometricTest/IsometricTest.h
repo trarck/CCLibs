@@ -4,6 +4,7 @@
 ////----#include "cocos2d.h"
 #include "../testBasic.h"
 
+
 class IsometricTestScene : public TestScene
 {
 public:

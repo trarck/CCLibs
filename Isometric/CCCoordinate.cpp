@@ -54,7 +54,7 @@ bool CCCoordinate::init(int xUnit,int yUnit,int zUnit)
 {
 	setCoordinateUnit(xUnit ,yUnit ,zUnit);
 	
-	return self;
+	return true;
 }
 
 
