@@ -101,7 +101,7 @@ void IsometricTestScene::runThisTest()
 		}
 		free(bs);
 	}
-	CCLOG("test end *********");
+	CCLOG("test Astart end *********");
 		
 	
 	CCCoordinate* coordinate=new CCCoordinate();
@@ -134,9 +134,13 @@ void IsometricTestScene::runThisTest()
 			CCLOG("x=%d,y=%d",col,row);
 			CCLOG("x=%d,y=%d",mapCell.x,mapCell.y);
 			
+		}else{
+			CCLOG("transform success at:%d %f,%f",k,x,y);
 		}
 		k++;
 	}
+
+	CCLOG("test coord Class end *********");
 	//c only
 	k=0;
 	while(coords[k][0]!=-99999){
@@ -155,9 +159,14 @@ void IsometricTestScene::runThisTest()
 			CCLOG("transform failed at:%d %f,%f",k,x,y);
 			CCLOG("x=%f,y=%f",mapCoord.x,mapCoord.y);
 			CCLOG("x=%d,y=%d",col,row);
+		}else{
+			CCLOG("transform success at:%d %f,%f",k,x,y);
 		}
 		k++;
 	}
+	CCLOG("test coord macro end *********");
 
+	CCLOG("test All end *********");
+	
     CCDirector::sharedDirector()->replaceScene(this);
 }
