@@ -1,5 +1,3 @@
-#import <Foundation/Foundation.h>
-
 #import "AstarNode.h"
 #import "Astar.h"
 #import "Coordinate.h"

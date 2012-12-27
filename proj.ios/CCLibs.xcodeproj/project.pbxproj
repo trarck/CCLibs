@@ -1,0 +1,530 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		57A523BF168C111600E07482 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A523BE168C111600E07482 /* QuartzCore.framework */; };
+		57A523C1168C111600E07482 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A523C0168C111600E07482 /* OpenGLES.framework */; };
+		57A523C3168C111600E07482 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A523C2168C111600E07482 /* OpenAL.framework */; };
+		57A523C5168C111600E07482 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A523C4168C111600E07482 /* AudioToolbox.framework */; };
+		57A523C7168C111600E07482 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A523C6168C111600E07482 /* AVFoundation.framework */; };
+		57A523C9168C111600E07482 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A523C8168C111600E07482 /* UIKit.framework */; };
+		57A523CB168C111600E07482 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A523CA168C111600E07482 /* Foundation.framework */; };
+		57A523CD168C111600E07482 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A523CC168C111600E07482 /* CoreGraphics.framework */; };
+		57A5268B168C119300E07482 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57A5267C168C119300E07482 /* AppDelegate.cpp */; };
+		57A5268C168C119300E07482 /* controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57A5267E168C119300E07482 /* controller.cpp */; };
+		57A5268D168C119300E07482 /* IsometricTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57A52681168C119300E07482 /* IsometricTest.cpp */; };
+		57A5268E168C119300E07482 /* testBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57A52684168C119300E07482 /* testBasic.cpp */; };
+		57A52699168C11AC00E07482 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A52698168C11A400E07482 /* libcocos2dx.a */; };
+		57A526A3168C11D200E07482 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A5269A168C11D200E07482 /* Default.png */; };
+		57A526A4168C11D200E07482 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A5269B168C11D200E07482 /* Icon-72.png */; };
+		57A526A5168C11D200E07482 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A5269C168C11D200E07482 /* Icon-Small-50.png */; };
+		57A526A6168C11D200E07482 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A5269D168C11D200E07482 /* Icon-Small.png */; };
+		57A526A7168C11D200E07482 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A5269E168C11D200E07482 /* Icon-Small@2x.png */; };
+		57A526A8168C11D200E07482 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A5269F168C11D200E07482 /* Icon.png */; };
+		57A526A9168C11D200E07482 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A526A0168C11D200E07482 /* Icon@2x.png */; };
+		57A526C3168C124300E07482 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 57A526BF168C124300E07482 /* AppController.mm */; };
+		57A526C4168C124300E07482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A526C0168C124300E07482 /* main.m */; };
+		57A526C5168C124300E07482 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 57A526C2168C124300E07482 /* RootViewController.mm */; };
+		57A526D2168C128600E07482 /* CCAstar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57A526C7168C128600E07482 /* CCAstar.cpp */; };
+		57A526D3168C128600E07482 /* CCAstarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57A526C9168C128600E07482 /* CCAstarNode.cpp */; };
+		57A526D4168C128600E07482 /* CCCoordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57A526CB168C128600E07482 /* CCCoordinate.cpp */; };
+		57A5276B168C145E00E07482 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A52706168C145E00E07482 /* CDAudioManager.m */; };
+		57A5276C168C145E00E07482 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A52709168C145E00E07482 /* CDOpenALSupport.m */; };
+		57A5276D168C145E00E07482 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A5270B168C145E00E07482 /* CocosDenshion.m */; };
+		57A5276E168C145E00E07482 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 57A5270C168C145E00E07482 /* SimpleAudioEngine.mm */; };
+		57A5276F168C145E00E07482 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A5270E168C145E00E07482 /* SimpleAudioEngine_objc.m */; };
+		57A52791168C523C00E07482 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 57A52790168C523C00E07482 /* Images */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		57A52697168C11A400E07482 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 57A52690168C11A300E07482 /* cocos2dx.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1551A33F158F2AB200E66CFE;
+			remoteInfo = cocos2dx;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		57A523BA168C111600E07482 /* CCLibs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCLibs.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		57A523BE168C111600E07482 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		57A523C0168C111600E07482 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		57A523C2168C111600E07482 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		57A523C4168C111600E07482 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		57A523C6168C111600E07482 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		57A523C8168C111600E07482 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		57A523CA168C111600E07482 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		57A523CC168C111600E07482 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		57A5267C168C119300E07482 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
+		57A5267D168C119300E07482 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		57A5267E168C119300E07482 /* controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = controller.cpp; sourceTree = "<group>"; };
+		57A5267F168C119300E07482 /* controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controller.h; sourceTree = "<group>"; };
+		57A52681168C119300E07482 /* IsometricTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IsometricTest.cpp; sourceTree = "<group>"; };
+		57A52682168C119300E07482 /* IsometricTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IsometricTest.h; sourceTree = "<group>"; };
+		57A52683168C119300E07482 /* TestData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestData.h; sourceTree = "<group>"; };
+		57A52684168C119300E07482 /* testBasic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testBasic.cpp; sourceTree = "<group>"; };
+		57A52685168C119300E07482 /* testBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testBasic.h; sourceTree = "<group>"; };
+		57A52686168C119300E07482 /* testResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testResource.h; sourceTree = "<group>"; };
+		57A52687168C119300E07482 /* tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tests.h; sourceTree = "<group>"; };
+		57A52690168C11A300E07482 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
+		57A5269A168C11D200E07482 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = SOURCE_ROOT; };
+		57A5269B168C11D200E07482 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "Resources/Icon-72.png"; sourceTree = SOURCE_ROOT; };
+		57A5269C168C11D200E07482 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50.png"; path = "Resources/Icon-Small-50.png"; sourceTree = SOURCE_ROOT; };
+		57A5269D168C11D200E07482 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "Resources/Icon-Small.png"; sourceTree = SOURCE_ROOT; };
+		57A5269E168C11D200E07482 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "Resources/Icon-Small@2x.png"; sourceTree = SOURCE_ROOT; };
+		57A5269F168C11D200E07482 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Resources/Icon.png; sourceTree = SOURCE_ROOT; };
+		57A526A0168C11D200E07482 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Resources/Icon@2x.png"; sourceTree = SOURCE_ROOT; };
+		57A526BE168C124300E07482 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		57A526BF168C124300E07482 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
+		57A526C0168C124300E07482 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		57A526C1168C124300E07482 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		57A526C2168C124300E07482 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
+		57A526C7168C128600E07482 /* CCAstar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAstar.cpp; sourceTree = "<group>"; };
+		57A526C8168C128600E07482 /* CCAstar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAstar.h; sourceTree = "<group>"; };
+		57A526C9168C128600E07482 /* CCAstarNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAstarNode.cpp; sourceTree = "<group>"; };
+		57A526CA168C128600E07482 /* CCAstarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAstarNode.h; sourceTree = "<group>"; };
+		57A526CB168C128600E07482 /* CCCoordinate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCoordinate.cpp; sourceTree = "<group>"; };
+		57A526CC168C128600E07482 /* CCCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCoordinate.h; sourceTree = "<group>"; };
+		57A526CD168C128600E07482 /* CCISOCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCISOCoordinate.h; sourceTree = "<group>"; };
+		57A52702168C145E00E07482 /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
+		57A52703168C145E00E07482 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
+		57A52705168C145E00E07482 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
+		57A52706168C145E00E07482 /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
+		57A52707168C145E00E07482 /* CDConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConfig.h; sourceTree = "<group>"; };
+		57A52708168C145E00E07482 /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
+		57A52709168C145E00E07482 /* CDOpenALSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDOpenALSupport.m; sourceTree = "<group>"; };
+		57A5270A168C145E00E07482 /* CocosDenshion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshion.h; sourceTree = "<group>"; };
+		57A5270B168C145E00E07482 /* CocosDenshion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosDenshion.m; sourceTree = "<group>"; };
+		57A5270C168C145E00E07482 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
+		57A5270D168C145E00E07482 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
+		57A5270E168C145E00E07482 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
+		57A52790168C523C00E07482 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		57A523B7168C111600E07482 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57A52699168C11AC00E07482 /* libcocos2dx.a in Frameworks */,
+				57A523BF168C111600E07482 /* QuartzCore.framework in Frameworks */,
+				57A523C1168C111600E07482 /* OpenGLES.framework in Frameworks */,
+				57A523C3168C111600E07482 /* OpenAL.framework in Frameworks */,
+				57A523C5168C111600E07482 /* AudioToolbox.framework in Frameworks */,
+				57A523C7168C111600E07482 /* AVFoundation.framework in Frameworks */,
+				57A523C9168C111600E07482 /* UIKit.framework in Frameworks */,
+				57A523CB168C111600E07482 /* Foundation.framework in Frameworks */,
+				57A523CD168C111600E07482 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		57A523AF168C111600E07482 = {
+			isa = PBXGroup;
+			children = (
+				57A52690168C11A300E07482 /* cocos2dx.xcodeproj */,
+				57A526D7168C140B00E07482 /* libs */,
+				57A526C6168C128600E07482 /* Isometric */,
+				57A5267B168C119300E07482 /* Classes */,
+				57A526BD168C124300E07482 /* ios */,
+				57A52688168C119300E07482 /* Resources */,
+				57A523BD168C111600E07482 /* Frameworks */,
+				57A523BB168C111600E07482 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		57A523BB168C111600E07482 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				57A523BA168C111600E07482 /* CCLibs.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		57A523BD168C111600E07482 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				57A523BE168C111600E07482 /* QuartzCore.framework */,
+				57A523C0168C111600E07482 /* OpenGLES.framework */,
+				57A523C2168C111600E07482 /* OpenAL.framework */,
+				57A523C4168C111600E07482 /* AudioToolbox.framework */,
+				57A523C6168C111600E07482 /* AVFoundation.framework */,
+				57A523C8168C111600E07482 /* UIKit.framework */,
+				57A523CA168C111600E07482 /* Foundation.framework */,
+				57A523CC168C111600E07482 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		57A5267B168C119300E07482 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				57A5267C168C119300E07482 /* AppDelegate.cpp */,
+				57A5267D168C119300E07482 /* AppDelegate.h */,
+				57A5267E168C119300E07482 /* controller.cpp */,
+				57A5267F168C119300E07482 /* controller.h */,
+				57A52680168C119300E07482 /* IsometricTest */,
+				57A52684168C119300E07482 /* testBasic.cpp */,
+				57A52685168C119300E07482 /* testBasic.h */,
+				57A52686168C119300E07482 /* testResource.h */,
+				57A52687168C119300E07482 /* tests.h */,
+			);
+			name = Classes;
+			path = ../Classes;
+			sourceTree = "<group>";
+		};
+		57A52680168C119300E07482 /* IsometricTest */ = {
+			isa = PBXGroup;
+			children = (
+				57A52681168C119300E07482 /* IsometricTest.cpp */,
+				57A52682168C119300E07482 /* IsometricTest.h */,
+				57A52683168C119300E07482 /* TestData.h */,
+			);
+			path = IsometricTest;
+			sourceTree = "<group>";
+		};
+		57A52688168C119300E07482 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				57A52790168C523C00E07482 /* Images */,
+				57A5269A168C11D200E07482 /* Default.png */,
+				57A5269B168C11D200E07482 /* Icon-72.png */,
+				57A5269C168C11D200E07482 /* Icon-Small-50.png */,
+				57A5269D168C11D200E07482 /* Icon-Small.png */,
+				57A5269E168C11D200E07482 /* Icon-Small@2x.png */,
+				57A5269F168C11D200E07482 /* Icon.png */,
+				57A526A0168C11D200E07482 /* Icon@2x.png */,
+			);
+			name = Resources;
+			path = ../Resources;
+			sourceTree = "<group>";
+		};
+		57A52691168C11A300E07482 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				57A52698168C11A400E07482 /* libcocos2dx.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		57A526BD168C124300E07482 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				57A526BE168C124300E07482 /* AppController.h */,
+				57A526BF168C124300E07482 /* AppController.mm */,
+				57A526C0168C124300E07482 /* main.m */,
+				57A526C1168C124300E07482 /* RootViewController.h */,
+				57A526C2168C124300E07482 /* RootViewController.mm */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		57A526C6168C128600E07482 /* Isometric */ = {
+			isa = PBXGroup;
+			children = (
+				57A526C7168C128600E07482 /* CCAstar.cpp */,
+				57A526C8168C128600E07482 /* CCAstar.h */,
+				57A526C9168C128600E07482 /* CCAstarNode.cpp */,
+				57A526CA168C128600E07482 /* CCAstarNode.h */,
+				57A526CB168C128600E07482 /* CCCoordinate.cpp */,
+				57A526CC168C128600E07482 /* CCCoordinate.h */,
+				57A526CD168C128600E07482 /* CCISOCoordinate.h */,
+			);
+			name = Isometric;
+			path = ../Isometric;
+			sourceTree = "<group>";
+		};
+		57A526D7168C140B00E07482 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				57A526EB168C145E00E07482 /* CocosDenshion */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+		57A526EB168C145E00E07482 /* CocosDenshion */ = {
+			isa = PBXGroup;
+			children = (
+				57A52701168C145E00E07482 /* include */,
+				57A52704168C145E00E07482 /* ios */,
+			);
+			name = CocosDenshion;
+			path = ../../CocosDenshion;
+			sourceTree = "<group>";
+		};
+		57A52701168C145E00E07482 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				57A52702168C145E00E07482 /* Export.h */,
+				57A52703168C145E00E07482 /* SimpleAudioEngine.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		57A52704168C145E00E07482 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				57A52705168C145E00E07482 /* CDAudioManager.h */,
+				57A52706168C145E00E07482 /* CDAudioManager.m */,
+				57A52707168C145E00E07482 /* CDConfig.h */,
+				57A52708168C145E00E07482 /* CDOpenALSupport.h */,
+				57A52709168C145E00E07482 /* CDOpenALSupport.m */,
+				57A5270A168C145E00E07482 /* CocosDenshion.h */,
+				57A5270B168C145E00E07482 /* CocosDenshion.m */,
+				57A5270C168C145E00E07482 /* SimpleAudioEngine.mm */,
+				57A5270D168C145E00E07482 /* SimpleAudioEngine_objc.h */,
+				57A5270E168C145E00E07482 /* SimpleAudioEngine_objc.m */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		57A523B9168C111600E07482 /* CCLibs */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 57A52673168C111E00E07482 /* Build configuration list for PBXNativeTarget "CCLibs" */;
+			buildPhases = (
+				57A523B6168C111600E07482 /* Sources */,
+				57A523B7168C111600E07482 /* Frameworks */,
+				57A523B8168C111600E07482 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CCLibs;
+			productName = CCLibs;
+			productReference = 57A523BA168C111600E07482 /* CCLibs.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		57A523B1168C111600E07482 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+			};
+			buildConfigurationList = 57A523B4168C111600E07482 /* Build configuration list for PBXProject "CCLibs" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 57A523AF168C111600E07482;
+			productRefGroup = 57A523BB168C111600E07482 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 57A52691168C11A300E07482 /* Products */;
+					ProjectRef = 57A52690168C11A300E07482 /* cocos2dx.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				57A523B9168C111600E07482 /* CCLibs */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		57A52698168C11A400E07482 /* libcocos2dx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcocos2dx.a;
+			remoteRef = 57A52697168C11A400E07482 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		57A523B8168C111600E07482 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57A526A3168C11D200E07482 /* Default.png in Resources */,
+				57A526A4168C11D200E07482 /* Icon-72.png in Resources */,
+				57A526A5168C11D200E07482 /* Icon-Small-50.png in Resources */,
+				57A526A6168C11D200E07482 /* Icon-Small.png in Resources */,
+				57A526A7168C11D200E07482 /* Icon-Small@2x.png in Resources */,
+				57A526A8168C11D200E07482 /* Icon.png in Resources */,
+				57A526A9168C11D200E07482 /* Icon@2x.png in Resources */,
+				57A52791168C523C00E07482 /* Images in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		57A523B6168C111600E07482 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57A5268B168C119300E07482 /* AppDelegate.cpp in Sources */,
+				57A5268C168C119300E07482 /* controller.cpp in Sources */,
+				57A5268D168C119300E07482 /* IsometricTest.cpp in Sources */,
+				57A5268E168C119300E07482 /* testBasic.cpp in Sources */,
+				57A526C3168C124300E07482 /* AppController.mm in Sources */,
+				57A526C4168C124300E07482 /* main.m in Sources */,
+				57A526C5168C124300E07482 /* RootViewController.mm in Sources */,
+				57A526D2168C128600E07482 /* CCAstar.cpp in Sources */,
+				57A526D3168C128600E07482 /* CCAstarNode.cpp in Sources */,
+				57A526D4168C128600E07482 /* CCCoordinate.cpp in Sources */,
+				57A5276B168C145E00E07482 /* CDAudioManager.m in Sources */,
+				57A5276C168C145E00E07482 /* CDOpenALSupport.m in Sources */,
+				57A5276D168C145E00E07482 /* CocosDenshion.m in Sources */,
+				57A5276E168C145E00E07482 /* SimpleAudioEngine.mm in Sources */,
+				57A5276F168C145E00E07482 /* SimpleAudioEngine_objc.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		57A52671168C111E00E07482 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					"COCOS2D_DEBUG=1",
+					USE_FILE32API,
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(PROJECT_NAME)/libs/cocos2dx/kazmath/include\"",
+					"\"$(PROJECT_NAME)/libs/cocos2dx\"",
+					"\"$(PROJECT_NAME)/libs/CocosDenshion/include\"",
+					"\"$(SDKROOT)/usr/include/libxml2\"",
+					"\"$(PROJECT_NAME)/libs/cocos2dx/include\"",
+					"\"$(PROJECT_NAME)/libs/cocos2dx/platform/third_party/ios\"",
+					"\"$(PROJECT_NAME)/libs/cocos2dx/platform/ios\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		57A52672168C111E00E07482 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_FILE32API,
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(PROJECT_NAME)/libs/cocos2dx/kazmath/include\"",
+					"\"$(PROJECT_NAME)/libs/cocos2dx\"",
+					"\"$(PROJECT_NAME)/libs/CocosDenshion/include\"",
+					"\"$(SDKROOT)/usr/include/libxml2\"",
+					"\"$(PROJECT_NAME)/libs/cocos2dx/include\"",
+					"\"$(PROJECT_NAME)/libs/cocos2dx/platform/third_party/ios\"",
+					"\"$(PROJECT_NAME)/libs/cocos2dx/platform/ios\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		57A52674168C111E00E07482 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_VERSION = "";
+				INFOPLIST_FILE = Resources/Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/CCLibs/libs/cocos2dx/platform/third_party/ios/libraries\"",
+					"\"$(SRCROOT)/../../CocosDenshion/third_party/blackberry/libraries/armle-v7\"",
+					"\"$(SRCROOT)/../../CocosDenshion/third_party/blackberry/libraries/x86\"",
+				);
+				OTHER_LDFLAGS = (
+					"-lxml2",
+					"-lz",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		57A52675168C111E00E07482 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_VERSION = "";
+				INFOPLIST_FILE = Resources/Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/CCLibs/libs/cocos2dx/platform/third_party/ios/libraries\"",
+					"\"$(SRCROOT)/../../CocosDenshion/third_party/blackberry/libraries/armle-v7\"",
+					"\"$(SRCROOT)/../../CocosDenshion/third_party/blackberry/libraries/x86\"",
+				);
+				OTHER_LDFLAGS = (
+					"-lxml2",
+					"-lz",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		57A523B4168C111600E07482 /* Build configuration list for PBXProject "CCLibs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57A52671168C111E00E07482 /* Debug */,
+				57A52672168C111E00E07482 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		57A52673168C111E00E07482 /* Build configuration list for PBXNativeTarget "CCLibs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57A52674168C111E00E07482 /* Debug */,
+				57A52675168C111E00E07482 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 57A523B1168C111600E07482 /* Project object */;
+}
