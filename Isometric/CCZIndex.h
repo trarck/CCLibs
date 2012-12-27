@@ -1,52 +1,61 @@
 //
-//  ZIndex.h
-//  Dungeons
-//
-//  Created by trarck trarck on 11-11-3.
-//  Copyright 2011 yitengku.com. All rights reserved.
-//
+//  ZIndex.
+
+#ifndef ISO_CCZIndex_H_
+#define ISO_CCZIndex_H_
 
 #include "cocos2d.h"
-#import "GameEntity.h"
-#import "CCCoordinate.h";
+#include "CCZIndexNode.h"
 
-typedef enum zindex_type {
+NS_CC_BEGIN
+
+class CCGameEntity;
+
+typedef enum {
 	ZIndex_Static,
 	ZIndex_Dynamic
 } ZIndexType;
 
-//typedef struct ZIndex_Rect{
-//	
-//}
 
-@interface CCZIndex : NSObject {
-	NSMutableArray *statics_;
-	NSMutableArray *dynamics_;
-	CCLayer *sortLayer_;
-	BOOL isWorking_;
-	BOOL staticDirty_;
-}
 
-@property(nonatomic,retain) NSMutableArray *statics;
-@property(nonatomic,retain) NSMutableArray *dynamics;
-@property(nonatomic,assign) CCLayer *sortLayer;
 
-+(id) sharedZIndex;
-+(id) zIndexWidthGameWorld:(CCLayer *)sortLayer;
--(id) initWithGameWorld:(CCLayer *)sortLayer;
+class CCZIndex : public CCObject {
 
--(void) insertStatic:(GameEntity *)entity;
--(void) insertDynamic:(GameEntity *)entity;
--(void) removeStatic:(GameEntity *)entity;
--(void) removeDynamic:(GameEntity *)entity;
+public:
+    CCZIndex();
+    ~CCZIndex();
 
--(NSMutableArray *) insertSort:(CCNode *)node data:(NSArray *)rects;
--(NSMutableArray *) sort;
--(void) sortStatics;
--(void) update:(ccTime) delta;
--(void) start;
--(void) stop;
--(int) caculateSideFrom:(CGRect)from to:(CGRect)to;
+    CCZIndex* sharedZIndex();
+    CCZIndex* create(CCLayer* sortLayer);
+    bool init();
+    bool init(CCLayer* sortLayer);
 
--(CGRect) getMapRect:(GameEntity *)entity;
-@end
+    void insertStatic(CCZIndexNode* node);
+    void insertDynamic(CCZIndexNode* node);
+    void removeStatic(CCZIndexNode* node);
+    void removeDynamic(CCZIndexNode* node);
+
+    void insertSort(CCZIndexNode* node ,CCArray* rects,CCArray& results);
+    void sort(CCArray& results);
+    void sortStatics();
+    //动态指定。
+    void start();
+    void stop();
+    int caculateSideFrom(CCRect* pFrom ,CCRect* pTo);
+
+    void setUpdate(SEL_SCHEDULE pfnUpdate);
+
+protected:
+	CCArray *m_pStatics;
+	CCArray *m_pDynamics;
+	CCLayer *m_pSortLayer;
+	bool m_bIsWorking;
+	bool m_bStaticDirty;
+    //弱引用
+    SEL_SCHEDULE m_pfnUpdate
+};
+
+
+NS_CC_END
+
+#endif //ISO_CCZIndex_H_

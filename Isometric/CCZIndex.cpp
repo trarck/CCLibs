@@ -6,140 +6,130 @@
 //  Copyright 2011 yitengku.com. All rights reserved.
 //
 
-#import "ZIndex.h"
+#include "CCZIndex.h"
+#include "CCISOCoordinate.h"
 
-@implementation ZIndex
-
-@synthesize statics=statics_;
-@synthesize dynamics=dynamics_;
-@synthesize sortLayer=sortLayer_;
-
-static ZIndex *zIndex_=nil;
-
-+(id) sharedZIndex
+CCZIndex::CCZIndex()
+:m_pStatics(NULL);
+,m_pDynamics(NULL);
+,m_pSortLayer(NULL);
+,m_bIsWorking(true);
+,m_bStaticDirty(true);
 {
-	if(!zIndex_){
-		assert("none init ZIndex before.before used ,init it.");
+    
+}
+
+CCZIndex::~CCZIndex()
+{
+    CC_SAFE_RELEASE(m_pStatics);
+    CC_SAFE_RELEASE(m_pDynamics);
+    CC_SAFE_RELEASE(m_pSortLayer);
+}
+
+static CCZIndex *s_pZIndex=NULL;
+CCZIndex* CCZIndex::sharedZIndex()
+{
+	if(!s_pZIndex){
+		s_pZIndex=new CCZIndex();
+        s_pZIndex->init();
 	}
-	return zIndex_;
+	return s_pZIndex;
 }
 
-+(id) zIndexWidthGameWorld:(CCLayer *) sortLayer
+CCZIndex* CCZIndex::create(CCLayer* sortLayer)
 {
-	if(!zIndex_){
-		zIndex_=[[self alloc] initWithGameWorld:sortLayer];
-	}
-	return zIndex_;
+    CCZIndex* zIndex=new CCZIndex();
+    zIndex->init(sortLayer);
+    zIndex->autoRelease();
+	return zIndex;
 }
 
--(id) init
+bool CCZIndex::init()
 {
-	if((self=[super init])){
-		statics_=[[NSMutableArray alloc] initWithCapacity:20];
-		dynamics_=[[NSMutableArray alloc] initWithCapacity:20];
-		sortLayer_=nil;
-		isWorking_=NO;
-	}
-	return self;
+    m_pStatics=new CCArray(20);
+    m_pDynamics=new CCArray(20);
+    m_bIsWorking=false;
+
+    m_pfnUpdate=schedule_selector(CCZIndex::update);
+	return true;
 }
 
--(id) initWithGameWorld:(CCLayer *) sortLayer
+bool CCZIndex::init(CCLayer* sortLayer)
 {
-	if((self=[self init])){
-		self.sortLayer=sortLayer;
-	}
-	return self;
-}
+    init();
+    m_pSortLayer=sortLayer;
 
--(void) dealloc
-{
-	CCLOG(@"zIndex dealloc");
-	self.statics=nil;
-	self.dynamics=nil;
-	self.sortLayer=nil;
-	//[self stop];
-	[super dealloc];
+	return true;
 }
 
 
--(void) insertStatic:(GameEntity *) entity
+void CCZIndex::insertStatic(CCZIndexNode* node)
 {
-	//注意insertSort反回的数组已经是加1的，如果使用self.statics=[self insertSort:entity data:statics_]，
+	//注意insertSort反回的数组已经是加1的，如果使用self.statics=[self insertSort:node data:m_pStatics]，
 	//则会使statics_的引用数为2，下一次再执行该函数时，则已以前的statics_无法释放。
-	NSMutableArray *results=[self insertSort:entity data:statics_];
-	[statics_ release];
-	statics_=results;
-	staticDirty_=YES;
+    CCArray* results=new CCArray();
+	CCArray* results=insertSort(node ,m_pStatics,results);
+
+    CC_SAFE_RELEASE(m_pStatics);
+	m_pStatics=results;
+	m_bStaticDirty=true;
 }
 
--(void) insertDynamic:(GameEntity *) entity
+void CCZIndex::insertDynamic(CCZIndexNode*  node)
 {
-	[dynamics_ addObject:entity];
+	m_pDynamics->addObject(node);
 }
 
-//-(void) insert:(Entity *) entity type:(ZIndexType) type
-//{
-//	
-//}
-
-
--(void) removeStatic:(GameEntity *) entity
+void CCZIndex::removeStatic(CCZIndexNode* node)
 {
-	[statics_ removeObject:entity];
-}
--(void) removeDynamic:(GameEntity *) entity
-{
-	[dynamics_ removeObject:entity];
+	m_pStatics->removeObject(node);
 }
 
--(CGRect) getMapRect:(GameEntity *) entity
+void CCZIndex::removeDynamic(CCZIndexNode* node)
 {
-	CGRect rect;
-	
-	rect.origin=entity.coordinate;
-	rect.size.width=(float)entity.l;
-	rect.size.height=(float)entity.b;
-	return rect;
+	m_pDynamics->removeObject(node);
 }
 
--(NSMutableArray *) insertSort:(GameEntity *) node data:(NSArray *) rects
+void CCZIndex::insertSort(CCZIndexNode* node ,CCArray* rects,CCArray& results)
 {
-	CGRect src,rect=[self getMapRect:node];
-	int side,l=[rects count];
-	NSMutableArray *results;
-	BOOL maxAppear=NO;
+	CCRect* src;
+    CCRect* rect=node.getRect();
+	int side,l=rects->count();
+	bool maxAppear=false;
 
-		if(l>0){
-		
-		side=[self caculateSideFrom:[self getMapRect:[rects objectAtIndex:l-1]] to:rect];
+    if(l>0){
+		CCZIndexNode fromNode=(CCZIndexNode*)rects->objectAtIndex(l-1);
+		side=caculateSideFrom(fromNode->getRect(),rect);
 		
 		if(side<0){
-			results=[[NSMutableArray alloc] initWithCapacity:l+1];
-			[results addObjectsFromArray:rects];
-			[results addObject:node];
+			results=new CCArray(l+1);
+			results->addObjectsFromArray(rects);
+			results->addObject(node);
 		}else{
-			NSMutableArray *maxs=[[NSMutableArray alloc] initWithCapacity:l/2];
-			NSMutableArray *mins=[[NSMutableArray alloc] initWithCapacity:l/2];
-
-			for (GameEntity *it in rects ) {
-				src=[self getMapRect:it];
-				side=[self caculateSideFrom:src to:rect];
+			CCArray *maxs=new CCArray(l/2);
+			CCArray *mins=new CCArray(l/2);
+            
+            CCObject* pObject = NULL;
+	        CCARRAY_FOREACH(m_openSeq,pObject){
+			    CCZIndexNode*it=(CCZIndexNode*)pObject;
+				src=it->getRect();
+				side=caculateSideFrom(src,rect);
 				//NSLog(@"side:%d,from:%f,%f to:%f,%f",side,src.origin.x,src.origin.y,rect.origin.x,rect.origin.y);
 				switch (side) {
 					case -1:
 					case -2:
-						[mins addObject:it];
+						mins->addObject(it);
 						break;
 					case 1:
 					case 2:
-						[maxs addObject:it];
-						maxAppear=YES;
+						maxs->addObject(it);
+						maxAppear=true;
 						break;
 					case 0:
 						if (maxAppear) {
-							[maxs addObject:it];
+							maxs->addObject(it);
 						}else {
-							[mins addObject:it];
+							mins->addObject(it);
 						}
 						break;
 
@@ -147,93 +137,82 @@ static ZIndex *zIndex_=nil;
 						break;
 				}
 			}
-			[mins addObject:node];
-			[mins addObjectsFromArray:maxs];
+			mins->addObject(node);
+			mins->addObjectsFromArray(maxs);
 			results=mins;
-			[maxs release];
+			maxs->release();
 		}
-	}else{
-		results=[[NSMutableArray alloc] initWithObjects:node,nil];
 	}
-	return results;
 }
 
--(NSMutableArray *) sort
+void CCZIndex::sort(CCArray& results)
 {
-	NSArray *tmps=[[NSArray alloc] initWithArray:statics_];
-	NSMutableArray *items=nil;
+	CCArray* temps=new CCArray(m_pStatics);
+	CCArray* items=NULL;
 	
 	//sort dynamics
-	for (CCNode *it in dynamics_) {
-		items=[self insertSort:it data:tmps];
-		[tmps release];
-		tmps=items;
+    CCObject* pObject=NULL;
+    CCARRAY_FOREACH(m_pDynamics,pObject){
+	    CCZIndexNode* it=(CCZIndexNode*) pObject;
+		items=insertSort(it ,temps);
+		temps->release();
+		temps=items;
 	}
-	return items;
+	results=items;
 }
 
-//-(void) sortStatics
-//{
-//	if ([statics_ count]) {
-//		NSArray *tmps=[[NSArray alloc] init];
-//		NSArray *items;
-//		for (CCNode *it in statics_) {
-//			items=[self insertSort:it  data:tmps];
-//			[tmps release];
-//			tmps=items;
-//		}
-//		[statics_ release];
-//		statics_=items;
-//	}
-//}
-
--(void) update:(ccTime) delta
+void CCZIndex::update(ccTime delta)
 {
 	//update z-index
 
-	if ([dynamics_ count]>0) {
+	if (m_pDynamics->count()>0) {
 		
-		NSMutableArray *items=[self sort];
-		//NSLog(@"%@",sortLayer_);
+		CCArray* items=new Array();
+        sort(items);
+		//NSLog(@"%@",m_pSortLayer);
 		int i=1;
-		for (GameEntity *entity in items) {
-			[sortLayer_ reorderChild:entity z:i++];
+        CCObject* pObject=NULL;
+        CCARRAY_FOREACH(items,pObject){
+		    CCZIndexNode* it=(CCZIndexNode*)pObject;
+            CCNode* node=(CCNode*)it.getEntity();
+			m_pSortLayer->reorderChild(node,i++);
 		}
-		[items release];
-	}else if (staticDirty_) {
+		items->release();
+	}else if (m_bStaticDirty) {
 		int i=1;
-		for (GameEntity *entity in statics_) {
-			[sortLayer_ reorderChild:entity z:i++];
-		}
-		staticDirty_=NO;
+        CCObject* pObject=NULL;
+        CCARRAY_FOREACH(m_pStatics,pObject){
+            CCZIndexNode* it=(CCZIndexNode*)pObject;
+            CCNode* node=(CCNode*)it.getEntity();
+		    m_pSortLayer->reorderChild(node,i++);
+        }
+		m_bStaticDirty=false;
 	}
 }
 
--(void) start
+void CCZIndex::start()
 {
-	if(isWorking_) return;
-	isWorking_=YES;
-	[[CCScheduler sharedScheduler] scheduleUpdateForTarget:self priority:0 paused:NO];
-	//[[CCScheduler sharedScheduler] scheduleSelector:@selector(update:) forTarget:self interval:1 paused:NO];
+	if(m_bIsWorking) return;
+	m_bIsWorking=true;
+	CCScheduler::sharedScheduler()->scheduleSelector(m_pfnUpdate,this,1,false);
 }
 
--(void) stop
+void CCZIndex::stop()
 {
-	if (isWorking_) {
-		[[CCScheduler sharedScheduler] unscheduleUpdateForTarget:self];
-		isWorking_=NO;
+	if (m_bIsWorking) {
+		CCScheduler::sharedScheduler()->unscheduleSelector(m_pfnUpdate,this);
+		m_bIsWorking=false;
 	}
-	
 }
 
--(int) caculateSideFrom:(CGRect ) from to:(CGRect) to
+int CCZIndex::caculateSideFrom(CCRect* pFrom ,CCRect* pTo)
 {
 	int lr, tb;//如果要确切的知道8个方位。上下左右分别用1,4,2,8表示，中还是用0。这样二二之各就可以确定方位。
 
-	if (to.origin.x > from.origin.x+from.size.width|| fabs(to.origin.x- (from.origin.x+from.size.width))<0.0001 ) {
+	if (to->origin.x > from->origin.x+from->size.width|| fabs(to->origin.x- (from->origin.x+from->size.width))<0.0001 ) {
 		//右
 		lr = 1;
-	}else if(to.origin.x+to.size.width<from.origin.x||fabs(to.origin.x+to.size.width-from.origin.x)<0.0001){
+	}else if(to->origin.x+to->size.width<from.origin.x||fabs(to->origin.x+to->size.width-from->origin.x)<0.0001){
 		//左
 		lr = -1;
 	} else  {//desc.right<=src.right && desc.left>=src.left(内中),desc.right>=src.right && desc.left<=src.left(外中) 都算中
@@ -241,10 +220,10 @@ static ZIndex *zIndex_=nil;
 		lr = 0;
 	}
 	
-	if (to.origin.y > from.origin.y+from.size.height||fabs(to.origin.y-( from.origin.y+from.size.height))<0.0001) {
+	if (to->origin.y > from->origin.y+from.size.height||fabs(to->origin.y-( from->origin.y+from.size.height))<0.0001) {
 		//下
 		tb = 1;
-	} else if (to.origin.y+to.size.height < from.origin.y ||fabs(to.origin.y+to.size.height -from.origin.y)<0.0001) {
+	} else if (to->origin.y+to.size.height < from->origin.y ||fabs(to->origin.y+to.size.height -from->origin.y)<0.0001) {
 		//上
 		tb = -1;
 	} else {
@@ -255,9 +234,7 @@ static ZIndex *zIndex_=nil;
 	return lr + tb;
 }
 
--(NSString *) description
+void CCZIndex::setUpdate(SEL_SCHEDULE pfnUpdate)
 {
-	NSString *desc=[NSString stringWithFormat:@"statics:%@,dynamics:%@",statics_,dynamics_];
-	return desc;
+    m_pfnUpdate=pfnUpdate;
 }
-@end
