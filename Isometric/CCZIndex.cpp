@@ -7,7 +7,6 @@
 //
 
 #include "CCZIndex.h"
-#include "CCISOCoordinate.h"
 
 CCZIndex::CCZIndex()
 :m_pStatics(NULL);
