@@ -43,7 +43,18 @@ public:
     void stop();
     int caculateSideFrom(CCRect* pFrom ,CCRect* pTo);
 
-    void setUpdate(SEL_SCHEDULE pfnUpdate);
+    void setUpdate(SEL_SCHEDULE pfnUpdate,CCObject updateTarget);
+
+	void setStatics(CCArray* statics);
+	CCArray* getStatics();
+	void setDynamics(CCArray* dynamics);
+	CCArray* getDynamics();
+	void setSortLayer(CCLayer* sortLayer);
+	CCLayer* getSortLayer();
+	void setIsWorking(bool isWorking);
+	bool getIsWorking();
+	void setStaticDirty(bool staticDirty);
+	bool getStaticDirty();
 
 protected:
 	CCArray *m_pStatics;
@@ -52,7 +63,8 @@ protected:
 	bool m_bIsWorking;
 	bool m_bStaticDirty;
     //弱引用
-    SEL_SCHEDULE m_pfnUpdate
+	SEL_SCHEDULE m_pfnUpdate;
+	CCObject* m_oUpdateTarget;
 };
 
 

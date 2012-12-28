@@ -237,3 +237,59 @@ void CCZIndex::setUpdate(SEL_SCHEDULE pfnUpdate)
 {
     m_pfnUpdate=pfnUpdate;
 }
+
+void CCZIndex::setStatics(CCArray* statics)
+{
+    CC_SAFE_RETAIN(statics);
+    CC_SAFE_RELEASE(m_pStatics);
+    m_pStatics = statics;
+}
+
+CCArray* CCZIndex::getStatics()
+{
+    return m_pStatics;
+}
+
+void CCZIndex::setDynamics(CCArray* dynamics)
+{
+    CC_SAFE_RETAIN(dynamics);
+    CC_SAFE_RELEASE(m_pDynamics);
+    m_pDynamics = dynamics;
+}
+
+CCArray* CCZIndex::getDynamics()
+{
+    return m_pDynamics;
+}
+
+void CCZIndex::setSortLayer(CCLayer* sortLayer)
+{
+    CC_SAFE_RETAIN(sortLayer);
+    CC_SAFE_RELEASE(m_pSortLayer);
+    m_pSortLayer = sortLayer;
+}
+
+CCLayer* CCZIndex::getSortLayer()
+{
+    return m_pSortLayer;
+}
+
+void CCZIndex::setIsWorking(bool isWorking)
+{
+    m_bIsWorking = isWorking;
+}
+
+bool CCZIndex::getIsWorking()
+{
+    return m_bIsWorking;
+}
+
+void CCZIndex::setStaticDirty(bool staticDirty)
+{
+    m_bStaticDirty = staticDirty;
+}
+
+bool CCZIndex::getStaticDirty()
+{
+    return m_bStaticDirty;
+}
