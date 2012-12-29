@@ -9,12 +9,12 @@
 #include "TestData.h"
 
 
-MapInfo * getBarrier(int barriers[10][10])
+MapCellInfo * getBarrier(int barriers[10][10])
 {
-	MapInfo* bs=(MapInfo*)malloc(100*sizeof(MapInfo));
+	MapCellInfo* bs=(MapCellInfo*)malloc(100*sizeof(MapCellInfo));
 	for(int i=0;i<10;i++){
 		for(int j=0;j<10;j++){
-			MapInfo* cell=bs+i*10+j;
+			MapCellInfo* cell=bs+i*10+j;
 			unsigned short barrier=barriers[i][j]==8?0:barriers[i][j];
 			cell->barrier=barrier;
 		}
@@ -22,7 +22,7 @@ MapInfo * getBarrier(int barriers[10][10])
 	return bs;
 }
 
-void showBarrier(MapInfo *barriers)
+void showBarrier(MapCellInfo *barriers)
 {
 	for(int i=0;i<10;i++){
 		for(int j=0;j<10;j++){
@@ -42,7 +42,7 @@ void IsometricTestScene::runThisTest()
 	
 	CCLOG("test start *********");
 	//test0
-	MapInfo *bs;
+	MapCellInfo *bs;
 	int i=0;
 	for(;i<5;i++){
 		bs=getBarrier(barriers[i]);
