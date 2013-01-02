@@ -15,8 +15,6 @@ CCAstar::CCAstar(void)
 ,m_minY(0)
 ,m_maxX(0)
 ,m_maxY(0)
-,m_barriers(NULL)
-,m_barrierColumn(0)
 ,m_start(NULL)
 ,m_end(NULL)
 ,m_current(NULL)
@@ -357,7 +355,7 @@ bool CCAstar::isWorkable(int x,int y)
 	return (m_target->*m_checkBarrierHandle)(x,y);
 }
 
-void setCheckBarrierHandle(SEL_CheckBarrierHandler checkBarrierHandle,CCObject* target)
+void  CCAstar::setCheckBarrierHandle(SEL_CheckBarrierHandler checkBarrierHandle,CCObject* target)
 {
 	m_checkBarrierHandle=checkBarrierHandle;
 	m_target=target;
