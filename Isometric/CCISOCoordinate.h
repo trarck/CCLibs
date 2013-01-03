@@ -57,7 +57,7 @@ static inline CCPoint isoViewToGame2F(float x,float y)
 	return p;
 }
 
-static inline CCPoint isoViewToGamePoint(CCPoint point)
+static inline CCPoint isoViewToGamePoint(const CCPoint& point)
 {
 	return isoViewToGame2F(point.x,point.y);
 }
@@ -70,7 +70,7 @@ static inline CCPoint isoViewToGameGrid2F (float x,float  y)
 	return p;
 }
 
-static inline CCPoint isoViewToGameGridPoint (CCPoint point)
+static inline CCPoint isoViewToGameGridPoint (const CCPoint& point)
 {
 	return isoViewToGameGrid2F(point.x,point.y);
 }
@@ -102,8 +102,74 @@ static inline CCPoint isoGameToView2F(float x, float y)
 	return p;
 }
 
-static inline CCPoint isoGameToViewPoint(CCPoint  point)
+static inline CCPoint isoGameToViewPoint(const CCPoint&  point)
 {
 	return isoGameToView2F(point.x,point.y);
 }
+
+//返回CCPoint的指针
+
+static inline CCPoint* isoViewToGame2FP(float x,float y)
+{
+	CCPoint* p=new CCPoint();
+	x=x/TileWidth;//x=x/64
+	y=y/TileHeight;//y=y/32
+	p->x=x+y;
+	p->y=y-x;
+	p->autorelease();
+	return p;
+}
+
+static inline CCPoint* isoViewToGamePointP(const CCPoint& point)
+{
+	return isoViewToGame2FP(point.x,point.y);
+}
+
+static inline CCPoint* isoViewToGameGrid2FP(float x,float  y)
+{
+	CCPoint* p=isoViewToGame2FP(x,y);
+	p->x=floor(p->x);
+	p->y=floor(p->y);
+	return p;
+}
+
+static inline CCPoint* isoViewToGameGridPointP (const CCPoint& point)
+{
+	return isoViewToGameGrid2FP(point.x,point.y);
+}
+
+static inline CCPoint* isoViewToGameCell2FP(float x,float  y)
+{
+	CCPoint* p=isoViewToGame2FP(x,y);
+	p->x=(int)p->x;
+	p->y=(int)p->y;
+	return p;
+}
+
+
+static inline CCPoint* isoGameToView3FP(float x ,float y ,float z)
+{
+	double sx=x-y,sy=x+y;
+	CCPoint* p=new CCPoint();
+	p->x=sx*XUnit;//sx*32
+	p->y=sy*YUnit-z*ZUnit;//sy*16-z*32
+	p->autorelease();
+	return p;
+}
+
+static inline CCPoint* isoGameToView2FP(float x, float y)
+{
+	double sx=x-y,sy=x+y;
+	CCPoint* p=new CCPoint();
+	p->x=sx*XUnit;//sx*32
+	p->y=sy*YUnit;//sy*16
+	p->autorelease();
+	return p;
+}
+
+static inline CCPoint* isoGameToViewPointP(const CCPoint&  point)
+{
+	return isoGameToView2FP(point.x,point.y);
+}
+
 #endif //ISO_CCISOCoordinate_H_
