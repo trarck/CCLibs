@@ -1,0 +1,56 @@
+#ifndef YHLIB_ISOMETRIC_CCISOOBJECT_H_
+#define YHLIB_ISOMETRIC_CCISOOBJECT_H_
+
+#include "cocos2d.h"
+#include "YHLibMacros.h"
+
+NS_CC_YHLIB_BEGIN
+
+class CCISOObject : public CCObject{
+
+public:
+    
+    CCISOObject();   
+  
+    ~CCISOObject();
+   
+    bool init();
+    
+public:
+    
+    inline const char* getName(){ return m_sName.c_str(); }
+    inline void setName(const char *name){ m_sName = name; }
+    
+    virtual void setType(const char *pType);
+    virtual std::string& getType();
+    virtual void setPosition(CCPoint tPosition);
+    virtual CCPoint getPosition();
+    virtual void setSize(CCSize tSize);
+    virtual CCSize getSize();
+    virtual void setGid(unsigned int uGid);
+    virtual unsigned int getGid();
+    virtual void setVisible(bool bVisible);
+    virtual bool getVisible();
+    
+    virtual void setProperties(CCDictionary* pProperties);
+    virtual CCDictionary* getProperties();
+    
+protected:
+    
+    std::string m_sName;
+    std::string m_sType;
+    CCPoint m_tPosition;
+    CCSize m_tSize;
+    unsigned int m_uGid;
+    bool m_bVisible;
+
+    /**
+     * 属性
+     */
+    CCDictionary* m_pProperties;
+};
+
+
+NS_CC_YHLIB_END
+
+#endif //YHLIB_ISOMETRIC_CCISOOBJECT_H_

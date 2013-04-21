@@ -8,7 +8,7 @@
 
 #include "CCZIndex.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 CCZIndex::CCZIndex()
 :m_pStatics(NULL)
@@ -240,4 +240,4 @@ void CCZIndex::setUpdate(SEL_SCHEDULE pfnUpdate)
     m_pfnUpdate=pfnUpdate;
 }
 
-NS_CC_END
+NS_CC_YHLIB_END

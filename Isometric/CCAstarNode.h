@@ -2,13 +2,13 @@
 //  AstarNode.h
 //  isometric
 //
-#ifndef ISO_CCAstarNode_H_
-#define ISO_CCAstarNode_H_
+#ifndef YHLIB_ISOMETRIC_CCASTARNODE_H_
+#define YHLIB_ISOMETRIC_CCASTARNODE_H_
 
 #include "cocos2d.h"
+#include "YHLibMacros.h"
 
-NS_CC_BEGIN
-
+NS_CC_YHLIB_BEGIN
 
 class CCAstarNode : public CCObject {
 
@@ -48,6 +48,6 @@ protected:
 
 
 
-NS_CC_END
+NS_CC_YHLIB_END
 
-#endif //ISO_CCAstarNode_H_
+#endif //YHLIB_ISOMETRIC_CCASTARNODE_H_

@@ -1,13 +1,14 @@
 //
 //  ZIndex.
 
-#ifndef ISO_CCZIndex_H_
-#define ISO_CCZIndex_H_
+#ifndef YHLIB_ISOMETRIC_CCZINDEX_H_
+#define YHLIB_ISOMETRIC_CCZINDEX_H_
 
 #include "cocos2d.h"
+#include "YHLibMacros.h"
 #include "CCZIndexNode.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 class CCGameEntity;
 
@@ -54,6 +55,6 @@ protected:
 };
 
 
-NS_CC_END
+NS_CC_YHLIB_END
 
-#endif //ISO_CCZIndex_H_
+#endif //YHLIB_ISOMETRIC_CCZINDEX_H_

@@ -1,12 +1,13 @@
 //
 //  ZIndexNode.
 
-#ifndef ISO_CCZIndexNode_H_
-#define ISO_CCZIndexNode_H_
+#ifndef YHLIB_ISOMETRIC_CCZINDEXNODE_H_
+#define YHLIB_ISOMETRIC_CCZINDEXNODE_H_
 
 #include "cocos2d.h"
+#include "YHLibMacros.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 
 class CCZIndexNode : public CCObject {
@@ -27,6 +28,6 @@ protected:
 };
 
 
-NS_CC_END
+NS_CC_YHLIB_END
 
-#endif //ISO_CCZIndexNode_H_
+#endif //YHLIB_ISOMETRIC_CCZINDEXNODE_H_

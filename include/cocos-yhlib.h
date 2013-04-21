@@ -3,5 +3,7 @@
 
 #include "YHLibMacros.h"
 
+//Isometric
+#include "isometric.h"
 
 #endif //COCOS_YHLIB_H_

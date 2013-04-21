@@ -6,7 +6,7 @@
 
 #include "CCAstarNode.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 CCAstarNode::CCAstarNode()
 :m_parent(NULL)
@@ -110,4 +110,4 @@ CCAstarNode* CCAstarNode::getParent()
     return m_parent;
 }
 
-NS_CC_END
+NS_CC_YHLIB_END

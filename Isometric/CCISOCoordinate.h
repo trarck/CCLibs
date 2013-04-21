@@ -8,10 +8,11 @@
  *
  */
 
-#ifndef ISO_CCISOCoordinate_H_
-#define ISO_CCISOCoordinate_H_
+#ifndef YHLIB_ISOMETRIC_CCISOCOORDINATE_H_
+#define YHLIB_ISOMETRIC_CCISOCOORDINATE_H_
 
 #include "cocos2d.h"
+#include "YHLibMacros.h"
 
 //tile width 
 #ifndef TileWidth
@@ -35,6 +36,8 @@
 #endif
 //tileWidth=64,tileHeight=32
 
+NS_CC_YHLIB_BEGIN
+
 typedef struct T_CCPointF{
 	float x;
     float y;
@@ -45,8 +48,7 @@ typedef struct T_CCPointI{
     int y;
 } ISOPointI;
 
-USING_NS_CC;
-
+//==============使用传值的方式==========================//
 static inline CCPoint isoViewToGame2F(float x,float y)
 {
 	CCPoint p;
@@ -107,69 +109,60 @@ static inline CCPoint isoGameToViewPoint(const CCPoint&  point)
 	return isoGameToView2F(point.x,point.y);
 }
 
-//返回CCPoint的指针
+//==============使用传址的方式=====================//
 
-static inline CCPoint* isoViewToGame2FP(float x,float y)
+static inline void isoViewToGame2FP(float x,float y,CCPoint* destPoint)
 {
-	CCPoint* p=new CCPoint();
 	x=x/TileWidth;//x=x/64
 	y=y/TileHeight;//y=y/32
-	p->x=x+y;
-	p->y=y-x;
-	p->autorelease();
-	return p;
+	destPoint->x=x+y;
+	destPoint->y=y-x;
 }
 
-static inline CCPoint* isoViewToGamePointP(const CCPoint& point)
+static inline void isoViewToGamePointP(const CCPoint& point,CCPoint* destPoint)
 {
-	return isoViewToGame2FP(point.x,point.y);
+	isoViewToGame2FP(point.x,point.y,destPoint);
 }
 
-static inline CCPoint* isoViewToGameGrid2FP(float x,float  y)
+static inline void isoViewToGameGrid2FP(float x,float  y,CCPoint* destPoint)
 {
-	CCPoint* p=isoViewToGame2FP(x,y);
-	p->x=floor(p->x);
-	p->y=floor(p->y);
-	return p;
+	isoViewToGame2FP(x,y,destPoint);
+	destPoint->x=floor(destPoint->x);
+	destPoint->y=floor(destPoint->y);
 }
 
-static inline CCPoint* isoViewToGameGridPointP (const CCPoint& point)
+static inline void isoViewToGameGridPointP (const CCPoint& point,CCPoint* destPoint)
 {
-	return isoViewToGameGrid2FP(point.x,point.y);
+	isoViewToGameGrid2FP(point.x,point.y,destPoint);
 }
 
-static inline CCPoint* isoViewToGameCell2FP(float x,float  y)
+static inline void isoViewToGameCell2FP(float x,float  y,CCPoint* destPoint)
 {
-	CCPoint* p=isoViewToGame2FP(x,y);
-	p->x=(int)p->x;
-	p->y=(int)p->y;
-	return p;
+	isoViewToGame2FP(x,y,destPoint);
+	destPoint->x=(int)destPoint->x;
+	destPoint->y=(int)destPoint->y;
 }
 
 
-static inline CCPoint* isoGameToView3FP(float x ,float y ,float z)
+static inline void isoGameToView3FP(float x ,float y ,float z,CCPoint* destPoint)
 {
 	double sx=x-y,sy=x+y;
-	CCPoint* p=new CCPoint();
-	p->x=sx*XUnit;//sx*32
-	p->y=sy*YUnit-z*ZUnit;//sy*16-z*32
-	p->autorelease();
-	return p;
+	destPoint->x=sx*XUnit;//sx*32
+	destPoint->y=sy*YUnit-z*ZUnit;//sy*16-z*32
 }
 
-static inline CCPoint* isoGameToView2FP(float x, float y)
+static inline void isoGameToView2FP(float x, float y,CCPoint* destPoint)
 {
 	double sx=x-y,sy=x+y;
-	CCPoint* p=new CCPoint();
-	p->x=sx*XUnit;//sx*32
-	p->y=sy*YUnit;//sy*16
-	p->autorelease();
-	return p;
+	destPoint->x=sx*XUnit;//sx*32
+	destPoint->y=sy*YUnit;//sy*16
 }
 
-static inline CCPoint* isoGameToViewPointP(const CCPoint&  point)
+static inline void isoGameToViewPointP(const CCPoint&  point,CCPoint* destPoint)
 {
-	return isoGameToView2FP(point.x,point.y);
+	isoGameToView2FP(point.x,point.y,destPoint);
 }
 
-#endif //ISO_CCISOCoordinate_H_
+NS_CC_YHLIB_END
+
+#endif //YHLIB_ISOMETRIC_CCISOCOORDINATE_H_

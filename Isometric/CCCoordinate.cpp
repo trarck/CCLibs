@@ -8,7 +8,7 @@
 
 #include "CCCoordinate.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 static CCCoordinate* l_coordinate=NULL;
 
@@ -163,4 +163,4 @@ CCPoint CCCoordinate::mapToscreenAnchor(int l ,int b ,int h)
 	return p;
 }
 
-NS_CC_END
+NS_CC_YHLIB_END

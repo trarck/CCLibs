@@ -1,11 +1,12 @@
 
 
-#ifndef ISO_CCCoordinate_H_
-#define ISO_CCCoordinate_H_
+#ifndef YHLIB_ISOMETRIC_CCCOORDINATE_H_
+#define YHLIB_ISOMETRIC_CCCOORDINATE_H_
 
 #include "cocos2d.h"
+#include "YHLibMacros.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 typedef struct {
 	int x;
@@ -56,6 +57,6 @@ private:
 
 
 
-NS_CC_END
+NS_CC_YHLIB_END
 
-#endif //ISO_CCCoordinate_H_
+#endif //YHLIB_ISOMETRIC_CCCOORDINATE_H_

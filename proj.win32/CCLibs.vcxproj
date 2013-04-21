@@ -10,6 +10,72 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\cocos-yhlib.h" />
+    <ClInclude Include="..\include\isometric.h" />
+    <ClInclude Include="..\include\YHLibMacros.h" />
+    <ClInclude Include="..\Isometric\CCAstar.h" />
+    <ClInclude Include="..\Isometric\CCAstarNode.h" />
+    <ClInclude Include="..\Isometric\CCCoordinate.h" />
+    <ClInclude Include="..\Isometric\CCISOBatchDynamicComponent.h" />
+    <ClInclude Include="..\Isometric\CCISOBatchDynamicTileLayer.h" />
+    <ClInclude Include="..\Isometric\CCISOBatchTileLayer.h" />
+    <ClInclude Include="..\Isometric\CCISOComponentNode.h" />
+    <ClInclude Include="..\Isometric\CCISOCoordinate.h" />
+    <ClInclude Include="..\Isometric\CCISODynamicComponent.h" />
+    <ClInclude Include="..\Isometric\CCISODynamicTileLayer.h" />
+    <ClInclude Include="..\Isometric\CCISOGroundTileLayer.h" />
+    <ClInclude Include="..\Isometric\CCISOInfos.h" />
+    <ClInclude Include="..\Isometric\CCISOObject.h" />
+    <ClInclude Include="..\Isometric\CCISOObjectGroup.h" />
+    <ClInclude Include="..\Isometric\CCISOTile.h" />
+    <ClInclude Include="..\Isometric\CCISOTileLayer.h" />
+    <ClInclude Include="..\Isometric\CCISOTileMap.h" />
+    <ClInclude Include="..\Isometric\CCISOTileMapBuilder.h" />
+    <ClInclude Include="..\Isometric\CCISOTileSet.h" />
+    <ClInclude Include="..\Isometric\CCISOTilesetGroup.h" />
+    <ClInclude Include="..\Isometric\CCISOXMLReader.h" />
+    <ClInclude Include="..\Isometric\CCZIndex.h" />
+    <ClInclude Include="..\Isometric\CCZIndexNode.h" />
+    <ClInclude Include="..\Isometric\interface\CCISOReaderInterface.h" />
+    <ClInclude Include="..\Isometric\parser\CCISOLayerInfo.h" />
+    <ClInclude Include="..\Isometric\parser\CCISOMapInfo.h" />
+    <ClInclude Include="..\Isometric\parser\CCISOObjectGroupInfo.h" />
+    <ClInclude Include="..\Isometric\parser\CCISOObjectInfo.h" />
+    <ClInclude Include="..\Isometric\parser\CCISOTileInfo.h" />
+    <ClInclude Include="..\Isometric\parser\CCISOTilesetInfo.h" />
+    <ClInclude Include="..\Isometric\parser\CCISOXMLParser.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Isometric\CCAstar.cpp" />
+    <ClCompile Include="..\Isometric\CCAstarNode.cpp" />
+    <ClCompile Include="..\Isometric\CCCoordinate.cpp" />
+    <ClCompile Include="..\Isometric\CCISOBatchDynamicComponent.cpp" />
+    <ClCompile Include="..\Isometric\CCISOBatchDynamicTileLayer.cpp" />
+    <ClCompile Include="..\Isometric\CCISOBatchTileLayer.cpp" />
+    <ClCompile Include="..\Isometric\CCISOComponentNode.cpp" />
+    <ClCompile Include="..\Isometric\CCISODynamicComponent.cpp" />
+    <ClCompile Include="..\Isometric\CCISODynamicTileLayer.cpp" />
+    <ClCompile Include="..\Isometric\CCISOGroundTileLayer.cpp" />
+    <ClCompile Include="..\Isometric\CCISOObject.cpp" />
+    <ClCompile Include="..\Isometric\CCISOObjectGroup.cpp" />
+    <ClCompile Include="..\Isometric\CCISOTile.cpp" />
+    <ClCompile Include="..\Isometric\CCISOTileLayer.cpp" />
+    <ClCompile Include="..\Isometric\CCISOTileMap.cpp" />
+    <ClCompile Include="..\Isometric\CCISOTileMapBuilder.cpp" />
+    <ClCompile Include="..\Isometric\CCISOTileset.cpp" />
+    <ClCompile Include="..\Isometric\CCISOTilesetGroup.cpp" />
+    <ClCompile Include="..\Isometric\CCISOXMLReader.cpp" />
+    <ClCompile Include="..\Isometric\CCZIndex.cpp" />
+    <ClCompile Include="..\Isometric\CCZIndexNode.cpp" />
+    <ClCompile Include="..\Isometric\parser\CCISOLayerInfo.cpp" />
+    <ClCompile Include="..\Isometric\parser\CCISOMapInfo.cpp" />
+    <ClCompile Include="..\Isometric\parser\CCISOObjectGroupInfo.cpp" />
+    <ClCompile Include="..\Isometric\parser\CCISOObjectInfo.cpp" />
+    <ClCompile Include="..\Isometric\parser\CCISOTileInfo.cpp" />
+    <ClCompile Include="..\Isometric\parser\CCISOTilesetInfo.cpp" />
+    <ClCompile Include="..\Isometric\parser\CCISOXMLParser.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6D1AB473-4990-4F53-8E68-F7C5C47DAB65}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -37,14 +103,19 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IntDir>$(Configuration).win32\</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\;..\include;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir)cocos2dx\kazmath\include;$(SolutionDir)cocos2dx\platform\win32;$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform\third_party\win32\pthread;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -59,7 +130,8 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\;..\include;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir)cocos2dx\kazmath\include;$(SolutionDir)cocos2dx\platform\win32;$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform\third_party\win32\pthread;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -68,9 +140,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
