@@ -37,26 +37,42 @@ CCCoordinate* CCCoordinate::sharedCoordinate()
 	return l_coordinate;	
 }
 
-bool CCCoordinate::init()
+static CCCoordinate::CCCoordinate* create()
 {
-    return true;
+	CCCoordinate* pRet=new CCCoordinate();
+	if (pRet && pRet->init()){ 
+        pRet->autorelease(); 
+        return pRet; 
+    }else{ 
+        delete pRet; 
+        pRet = NULL; 
+        return NULL; 
+    }
 }
 
-bool CCCoordinate::init(int width,int height)
+static CCCoordinate::CCCoordinate* create(int width,int height)
 {
-
-    setTileSize(width ,height);
-	
-	return true;
+	if (pRet && pRet->init(width,height)){ 
+        pRet->autorelease(); 
+        return pRet; 
+    }else{ 
+        delete pRet; 
+        pRet = NULL; 
+        return NULL; 
+    }
 }
 
-bool CCCoordinate::init(int xUnit,int yUnit,int zUnit)
+static CCCoordinate::CCCoordinate* create(int xUnit,int yUnit,int zUnit)
 {
-	setCoordinateUnit(xUnit ,yUnit ,zUnit);
-	
-	return true;
+	if (pRet && pRet->init(xUnit,yUnit,zUnit)){ 
+        pRet->autorelease(); 
+        return pRet; 
+    }else{ 
+        delete pRet; 
+        pRet = NULL; 
+        return NULL; 
+    }
 }
-
 
 void CCCoordinate::setTileSize(int width ,int height)
 {
@@ -78,70 +94,7 @@ void CCCoordinate::setCoordinateUnit(int xUnit ,int yUnit ,int zUnit)
 	m_tileHeight=yUnit*2;
 }
 
-void CCCoordinate::setCoordinateUnit(int xUnit ,int yUnit)
-{
-	setCoordinateUnit(xUnit ,yUnit ,yUnit*2);
-}
-
-
-CCPoint CCCoordinate::screenToMap(float x ,float y)
-{
-	x=x/m_tileWidth;
-	y=y/m_tileHeight;
-    return CCPointMake(x+y,y-x);
-//	CCPoint p;
-//	p.x=x+y;
-//	p.y=y-x;
-//	return p;
-}
-
-CCPoint CCCoordinate::screenToMap(CCPoint point)
-{
-	return screenToMap(point.x,point.y);
-}
-
-CCPoint CCCoordinate::screenToMapGrid(float x ,float y)
-{
-	CCPoint p=screenToMap(x,y);
-	p.x=floor(p.x);
-	p.y=floor(p.y);
-	return p;
-}
-
-CCPoint CCCoordinate::screenToMapGrid(CCPoint point)
-{
-	return screenToMapGrid(point.x ,point.y);
-}
-
-CCCell CCCoordinate::screenToMapCell(float x ,float y)
-{
-	CCPoint p=screenToMap(x ,y);
-	CCCell cell;
-	cell.x=(int) p.x;
-	cell.y=(int) p.y;
-	return cell;
-}
-
-CCPoint CCCoordinate::mapToScreen(float x ,float y ,float z)
-{
-	double sx=x-y,sy=x+y;
-	CCPoint p;
-	p.x=sx*m_xUnit;
-	p.y=sy*m_yUnit-z*m_zUnit;
-	return p;
-}
-
-CCPoint CCCoordinate::mapToScreen(float x ,float y)
-{
-	return mapToScreen(x ,y ,0);
-}
-
-CCPoint CCCoordinate::mapToScreen(CCPoint point)
-{
-	return mapToScreen(point.x ,point.y ,0);
-}
-
-CCSize CCCoordinate::mapToscreenSize(int l ,int b ,int h)
+CCSize CCCoordinate::mapToScreenSize(int l ,int b ,int h)
 {
 	int s;
 	float width,height;
@@ -155,7 +108,7 @@ CCSize CCCoordinate::mapToscreenSize(int l ,int b ,int h)
 	return size;
 }
 
-CCPoint CCCoordinate::mapToscreenAnchor(int l ,int b ,int h)
+CCPoint CCCoordinate::mapToScreenAnchor(int l ,int b ,int h)
 {
 	CCPoint p;
 	p.x=b*m_xUnit;

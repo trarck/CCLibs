@@ -1,5 +1,3 @@
-
-
 #ifndef YHLIB_ISOMETRIC_CCCOORDINATE_H_
 #define YHLIB_ISOMETRIC_CCCOORDINATE_H_
 
@@ -21,28 +19,75 @@ public:
     ~CCCoordinate(void);
     
 	static CCCoordinate* sharedCoordinate();
-	
-    bool init();
-    
-	bool init(int width,int height);
-	bool init(int xUnit,int yUnit,int zUnit);
+	static CCCoordinate* create();
+	static CCCoordinate* create(int width,int height);
+	static CCCoordinate* create(int xUnit,int yUnit,int zUnit);
+
+    bool init(){
+		return true;
+	}
+   	bool init(int width,int height)
+	{
+		setTileSize(width ,height);
+		return true;
+	}
+
+	bool init(int xUnit,int yUnit,int zUnit){
+		setCoordinateUnit(xUnit ,yUnit ,zUnit);
+		return true;
+	}
 
 	void setTileSize(int width ,int height);
 	void setCoordinateUnit(int xUnit ,int yUnit ,int zUnit);
 	void setCoordinateUnit(int xUnit ,int yUnit);
 
-	CCPoint screenToMap(float x ,float y);
-	CCPoint screenToMap(CCPoint point);
-	CCPoint screenToMapGrid(float x ,float y);
-	CCPoint screenToMapGrid(CCPoint point);
-	CCCell screenToMapCell(float x ,float y);
+	CCPoint screenToMap(float x ,float y){
+		x=x/m_tileWidth;
+		y=y/m_tileHeight;
+		return CCPointMake(x+y,y-x);
+	}
 
-	CCPoint mapToScreen(float x ,float y ,float z);
-	CCPoint mapToScreen(float x ,float y);
-	CCPoint mapToScreen(CCPoint point);
+	CCPoint screenToMap(const CCPoint& point){
+		return screenToMap(point.x,point.y);
+	}
 
-	CCSize mapToscreenSize(int l ,int b ,int h);
-	CCPoint mapToscreenAnchor(int l ,int b ,int h);
+	CCPoint screenToMapGrid(float x ,float y){
+		CCPoint p=screenToMap(x,y);
+		p.x=floor(p.x);
+		p.y=floor(p.y);
+		return p;
+	}
+
+	CCPoint screenToMapGrid(const CCPoint& point){
+		return screenToMapGrid(point.x ,point.y);
+	}
+
+	CCCell screenToMapCell(float x ,float y){
+		CCPoint p=screenToMap(x ,y);
+		CCCell cell;
+		cell.x=(int) p.x;
+		cell.y=(int) p.y;
+		return cell;
+	}
+
+	CCPoint mapToScreen(float x ,float y ,float z){
+		double sx=x-y,sy=x+y;
+		return CCPointMake(sx*m_xUnit,sy*m_yUnit-z*m_zUnit);
+	}
+
+	CCPoint mapToScreen(float x ,float y){
+		//return mapToScreen(x ,y ,0);
+		double sx=x-y,sy=x+y;
+		return CCPointMake(sx*m_xUnit,sy*m_yUnit);
+	}
+
+	CCPoint mapToScreen(const CCPoint& point){
+		return mapToScreen(point.x,point.y);
+	}
+
+	CCSize mapToScreenSize(int l ,int b ,int h);
+
+	CCPoint mapToScreenAnchor(int l ,int b ,int h);
 
 private:
 	int m_xUnit;
