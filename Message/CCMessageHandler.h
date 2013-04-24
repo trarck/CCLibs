@@ -6,8 +6,8 @@
 //  Copyright 2011 yitengku.com. All rights reserved.
 //
 
-#ifndef __CCMessage_Handler_H__
-#define __CCMessage_Handler_H__
+#ifndef YHLIB_MESSAGE_CCMESSAGEHANDLER_H_
+#define YHLIB_MESSAGE_CCMESSAGEHANDLER_H_
 
 #include "cocos2d.h"
 #include "YHLibMacros.h"
@@ -39,4 +39,4 @@ private:
 
 NS_CC_YHLIB_END
 
-#endif  // __CCMessage_Handler_H__
+#endif  // YHLIB_MESSAGE_CCMESSAGEHANDLER_H_

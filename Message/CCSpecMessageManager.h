@@ -9,8 +9,8 @@
 //  Copyright 2011年 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef __CC_Spec_Message_Manager_H__
-#define __CC_Spec_Message_Manager_H__
+#ifndef YHLIB_MESSAGE_CCSPECMESSAGEMANAGER_H_
+#define YHLIB_MESSAGE_CCSPECMESSAGEMANAGER_H_
 
 #include "cocos2d.h"
 #include "YHLibMacros.h"
@@ -48,4 +48,4 @@ private:
 
 NS_CC_YHLIB_END
 
-#endif // __CC_Spec_Message_Manager_H__
+#endif // YHLIB_MESSAGE_CCSPECMESSAGEMANAGER_H_

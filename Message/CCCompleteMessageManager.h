@@ -7,8 +7,8 @@
 //  Copyright 2011年 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef __CCComplete_Message_Manager_H__
-#define __CCComplete_Message_Manager_H__
+#ifndef YHLIB_MESSAGE_CCCOMPLETEMESSAGEMANAGER_H_
+#define YHLIB_MESSAGE_CCCOMPLETEMESSAGEMANAGER_H_
 
 #include "cocos2d.h"
 #include "YHLibMacros.h"
@@ -71,4 +71,4 @@ private:
 
 NS_CC_YHLIB_END
 
-#endif // __CCComplete_Message_Manager_H__
+#endif // YHLIB_MESSAGE_CCCOMPLETEMESSAGEMANAGER_H_

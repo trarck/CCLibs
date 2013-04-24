@@ -1,5 +1,5 @@
-#ifndef __CCMessage_Target_H__
-#define __CCMessage_Target_H__
+#ifndef YHLIB_MESSAGE_CCMESSAGETARGET_H_
+#define YHLIB_MESSAGE_CCMESSAGETARGET_H_
 
 #include "cocos2d.h"
 #include "YHLibMacros.h"
@@ -28,4 +28,4 @@ protected:
 NS_CC_YHLIB_END
 
 
-#endif //__CCMessage_Target_H__
+#endif //YHLIB_MESSAGE_CCMESSAGETARGET_H_
