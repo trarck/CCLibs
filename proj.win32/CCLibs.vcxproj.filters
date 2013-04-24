@@ -13,6 +13,9 @@
     <Filter Include="include">
       <UniqueIdentifier>{719d4c68-3a1a-49d3-93d6-f5dc380da8c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Message">
+      <UniqueIdentifier>{36f43c10-36bb-49a4-a832-5b8f078b51b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\cocos-yhlib.h">
@@ -117,6 +120,33 @@
     <ClInclude Include="..\include\isometric.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\Message\CCCompleteMessageManager.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Message\CCIMessageManager.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Message\CCMessage.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Message\CCMessageHandler.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Message\CCMessageManager.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Message\CCMessageTarget.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Message\CCNormalMessageManager.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Message\CCSimpleMessageManager.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Message\CCSpecMessageManager.h">
+      <Filter>Message</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Isometric\CCAstar.cpp">
@@ -202,6 +232,30 @@
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOTileMapBuilder.cpp">
       <Filter>Isometric</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Message\CCCompleteMessageManager.cpp">
+      <Filter>Message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Message\CCMessage.cpp">
+      <Filter>Message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Message\CCMessageHandler.cpp">
+      <Filter>Message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Message\CCMessageManager.cpp">
+      <Filter>Message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Message\CCMessageTarget.cpp">
+      <Filter>Message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Message\CCNormalMessageManager.cpp">
+      <Filter>Message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Message\CCSimpleMessageManager.cpp">
+      <Filter>Message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Message\CCSpecMessageManager.cpp">
+      <Filter>Message</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

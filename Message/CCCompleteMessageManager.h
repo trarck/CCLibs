@@ -11,6 +11,7 @@
 #define __CCComplete_Message_Manager_H__
 
 #include "cocos2d.h"
+#include "YHLibMacros.h"
 #include "CCMessage.h"
 #include "CCMessageHandler.h"
 
@@ -18,7 +19,7 @@
 #define GlobalMessageType 0
 #endif
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 class CCCompleteMessageManager : public CCObject {
 public:
@@ -68,6 +69,6 @@ private:
 	static CCCompleteMessageManager* s_sharedCompleteMessageManagerInstance;
 };
 
-NS_CC_END
+NS_CC_YHLIB_END
 
 #endif // __CCComplete_Message_Manager_H__

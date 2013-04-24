@@ -11,6 +11,7 @@
 #define __CCSimple_Message_Manager_H__
 
 #include "cocos2d.h"
+#include "YHLibMacros.h"
 #include "CCMessage.h"
 #include "CCMessageHandler.h"
 
@@ -18,7 +19,7 @@
 #define GlobalMessageType 0
 #endif
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 class CCSimpleMessageManager : public CCObject {
 public:
@@ -67,6 +68,6 @@ private:
 	static CCSimpleMessageManager* s_sharedSimpleMessageManagerInstance;
 };
 
-NS_CC_END
+NS_CC_YHLIB_END
 
 #endif //__CCSimple_Message_Manager_H__

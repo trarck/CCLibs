@@ -10,6 +10,7 @@
 #define __CCIMessage_Manager_H__
 
 #include "cocos2d.h"
+#include "YHLibMacros.h"
 #include "CCMessage.h"
 #include "CCMessageHandler.h"
 
@@ -17,7 +18,7 @@
 #define GlobalMessageType 0
 #endif
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 class CCIMessageManager : public CCObject {
 public:
@@ -50,6 +51,6 @@ public:
     virtual void dispatchMessage(CCMessage* message ,CCObject*  receiver);
 };
 
-NS_CC_END
+NS_CC_YHLIB_END
 
 #endif // __CCIMessage_Manager_H__

@@ -2,10 +2,11 @@
 #define __CCMessage_Target_H__
 
 #include "cocos2d.h"
+#include "YHLibMacros.h"
 #include "CCMessage.h"
 #include "CCMessageHandler.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 class CCMessageTarget : public CCObject {
 public:
@@ -24,7 +25,7 @@ protected:
 
 };
 
-NS_CC_END
+NS_CC_YHLIB_END
 
 
 #endif //__CCMessage_Target_H__

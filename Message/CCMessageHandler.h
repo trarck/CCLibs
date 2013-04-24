@@ -10,8 +10,9 @@
 #define __CCMessage_Handler_H__
 
 #include "cocos2d.h"
+#include "YHLibMacros.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 class CCMessage;
 
@@ -36,6 +37,6 @@ private:
 };
 
 
-NS_CC_END
+NS_CC_YHLIB_END
 
 #endif  // __CCMessage_Handler_H__

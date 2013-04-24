@@ -13,9 +13,10 @@
 #define __CC_Spec_Message_Manager_H__
 
 #include "cocos2d.h"
+#include "YHLibMacros.h"
 #include "CCCompleteMessageManager.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 class CCSpecMessageManager: public CCCompleteMessageManager 
 {
@@ -45,6 +46,6 @@ private:
 	static CCSpecMessageManager* s_sharedSpecMessageManagerInstance;
 };
 
-NS_CC_END
+NS_CC_YHLIB_END
 
 #endif // __CC_Spec_Message_Manager_H__
