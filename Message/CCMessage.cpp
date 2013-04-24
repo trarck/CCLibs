@@ -8,8 +8,6 @@
 
 #include "CCMessage.h"
 
-using namespace std;
-
 NS_CC_YHLIB_BEGIN
 
 

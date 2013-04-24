@@ -6,16 +6,16 @@
 //  Copyright 2011年 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef __CCMessage_Manager_H__
-#define __CCMessage_Manager_H__
+#ifndef YHLIB_MESSAGE_CCMESSAGEMANAGER_H_
+#define YHLIB_MESSAGE_CCMESSAGEMANAGER_H_
 
 #include "cocos2d.h"
 #include "YHLibMacros.h"
 #include "CCMessage.h"
 #include "CCMessageHandler.h"
 
-#ifndef GlobalMessageType
-#define GlobalMessageType 0
+#ifndef Globalunsigned int
+#define Globalunsigned int 0
 #endif
 
 NS_CC_YHLIB_BEGIN
@@ -38,19 +38,19 @@ public:
      */
     //receiver对sender发来的type消息可以有多个响应方法，实际中情况会很少
     
-    bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,MessageType type ,CCObject* sender ,CCObject*  handleObject);
+    bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender ,CCObject*  handleObject);
 
-	bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle,MessageType type ,CCObject* sender);
+	bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle,unsigned int type ,CCObject* sender);
 																															  
-	void removeReceiver(CCObject* receiver,MessageType type ,CCObject* sender,SEL_MessageHandler handle);
+	void removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle);
 
-    void removeReceiver(CCObject* receiver,MessageType type ,CCObject* sender);
+    void removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender);
 
-    void removeReceiver(CCObject* receiver,MessageType type);
+    void removeReceiver(CCObject* receiver,unsigned int type);
 
     void removeReceiver(CCObject* receiver);
     
-    void removeReceiver(CCObject* receiver,MessageType type ,SEL_MessageHandler handle);
+    void removeReceiver(CCObject* receiver,unsigned int type ,SEL_MessageHandler handle);
     
     void removeReceiver(CCObject* receiver,CCObject* sender,SEL_MessageHandler handle);
     
@@ -65,15 +65,15 @@ public:
 
 	void dispatchMessage(CCMessage* message);
 
-    void dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCObject* data);
+    void dispatchMessageWithType(unsigned int type ,CCObject* sender ,CCObject* receiver,CCObject* data);
     
-//    void dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCDictionary* data);
+//    void dispatchMessageWithType(unsigned int type ,CCObject* sender ,CCObject* receiver,CCDictionary* data);
     
-    void dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver);
+    void dispatchMessageWithType(unsigned int type ,CCObject* sender ,CCObject* receiver);
                                                                                                     
 protected:
 
-	void addReceiverMap(CCObject* receiver,SEL_MessageHandler handle ,MessageType type ,CCObject* sender ,CCObject*  handleObject);
+	void addReceiverMap(CCObject* receiver,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender ,CCObject*  handleObject);
 
 	void removeReceiverList(CCArray* list,SEL_MessageHandler handle);
 
@@ -105,4 +105,4 @@ private:
 
 NS_CC_YHLIB_END
 
-#endif // __CCMessage_Manager_H__
+#endif // YHLIB_MESSAGE_CCMESSAGEMANAGER_H_

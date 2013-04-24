@@ -123,9 +123,6 @@
     <ClInclude Include="..\Message\CCCompleteMessageManager.h">
       <Filter>Message</Filter>
     </ClInclude>
-    <ClInclude Include="..\Message\CCIMessageManager.h">
-      <Filter>Message</Filter>
-    </ClInclude>
     <ClInclude Include="..\Message\CCMessage.h">
       <Filter>Message</Filter>
     </ClInclude>
@@ -145,6 +142,9 @@
       <Filter>Message</Filter>
     </ClInclude>
     <ClInclude Include="..\Message\CCSpecMessageManager.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Message\CCMessageManagerInterface.h">
       <Filter>Message</Filter>
     </ClInclude>
   </ItemGroup>

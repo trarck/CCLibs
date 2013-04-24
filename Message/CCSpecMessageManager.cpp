@@ -33,7 +33,7 @@ CCSpecMessageManager* CCSpecMessageManager::sharedSpecMessageManager(void)
 
 
 
-bool CCSpecMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,MessageType type ,CCObject* sender ,CCObject*  handleObject)
+bool CCSpecMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender ,CCObject*  handleObject)
 {
     bool result=CCCompleteMessageManager::registerReceiver(receiver, handle, type, sender,handleObject);
     //注册成功
@@ -72,13 +72,13 @@ bool CCSpecMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandle
     return result;
 }
 
-bool CCSpecMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle,MessageType type ,CCObject* sender)
+bool CCSpecMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle,unsigned int type ,CCObject* sender)
 {
         
     return registerReceiver(receiver, handle, type, sender,receiver);
 }
 
-void CCSpecMessageManager::removeReceiver(CCObject* receiver,MessageType type ,CCObject* sender,SEL_MessageHandler handle)
+void CCSpecMessageManager::removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle)
 {
     CCAssert(receiver!=NULL,"CompleteMessageManage:removeReceiver:receiver can't be null!");
 	CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
@@ -104,7 +104,7 @@ void CCSpecMessageManager::removeReceiver(CCObject* receiver,MessageType type ,C
 	}
 }
 
-void CCSpecMessageManager::removeReceiver(CCObject* receiver,MessageType type ,CCObject* sender)
+void CCSpecMessageManager::removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender)
 {
     CCAssert(receiver!=NULL,"CompleteMessageManage:removeReceiver:receiver can't be null!");
 	CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
@@ -121,7 +121,7 @@ void CCSpecMessageManager::removeReceiver(CCObject* receiver,MessageType type ,C
 	}
 }
 
-void CCSpecMessageManager::removeReceiver(CCObject* receiver,MessageType type)
+void CCSpecMessageManager::removeReceiver(CCObject* receiver,unsigned int type)
 {
     CCAssert(receiver!=NULL,"CompleteMessageManage:removeReceiver:receiver can't be null!");
 	CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);

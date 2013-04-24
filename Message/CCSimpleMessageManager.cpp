@@ -45,7 +45,7 @@ void CCSimpleMessageManager::init()
 //使receiver可以接收sender发送过来的叫type的消息，并用handle来处理
 //关注的对象是receiver
 //type,sender,receiver,handle唯一，同一接收者的同一个消息只有一个处理函数
-bool CCSimpleMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,MessageType type ,CCObject* sender ,CCObject*  handleObject)
+bool CCSimpleMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender ,CCObject*  handleObject)
 {
 	CCAssert(receiver!=NULL,"SimpleMessageManager:registerReceiver:receiver can't be null");
 	CCAssert(handle!=NULL,"SimpleMessageManager:registerReceiver:handle");
@@ -86,13 +86,13 @@ bool CCSimpleMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHand
     return !isRegisted;
 }
 
-bool CCSimpleMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle,MessageType type ,CCObject* sender)
+bool CCSimpleMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle,unsigned int type ,CCObject* sender)
 {
 	return registerReceiver(receiver ,handle,type ,sender ,receiver);
 }
 
 
-void CCSimpleMessageManager::removeReceiver(MessageType type ,CCObject* sender,CCObject* receiver)
+void CCSimpleMessageManager::removeReceiver(unsigned int type ,CCObject* sender,CCObject* receiver)
 {
 	CCAssert(receiver!=NULL,"SimpleMessageManager:removeReceiver:receiver can't be null!");
 	
@@ -153,9 +153,9 @@ void CCSimpleMessageManager::dispatchMessage(CCMessage* message)
 	CCObject* sender;
 	//CCAssert(message.type!=0,)
 	//如果message的type不为0，则需要执行一个type为global的所有消息
-	if (message->getType()!=GlobalMessageType) {
+	if (message->getType()!=Globalunsigned int) {
 		//message for global
-		CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(GlobalMessageType);
+		CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(Globalunsigned int);
 		if (msgMap) {
 			//parse for sender
 			//如果sender不为空，则还要触发一次全局消息。
@@ -201,7 +201,7 @@ void CCSimpleMessageManager::dispatchMessage(CCMessage* message)
 	}
 }
 
-void CCSimpleMessageManager::dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCDictionary* data)
+void CCSimpleMessageManager::dispatchMessageWithType(unsigned int type ,CCObject* sender ,CCObject* receiver,CCDictionary* data)
 {
 	CCMessage* message=new CCMessage();
 	message->initWithType(type ,sender ,receiver ,data);
@@ -214,7 +214,7 @@ void CCSimpleMessageManager::dispatchMessage(CCMessage* message ,CCObject*  rece
 {
 	//CCAssert(message.type!=0,)
 	//如果message的type不为0，则需要执行一个type为global的所有消息
-	if (message->getType()!=GlobalMessageType) {
+	if (message->getType()!=Globalunsigned int) {
 		//message for global
 		CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(m_globalObject->m_uID);
 		if (msgMap) {

@@ -27,13 +27,13 @@ public:
     
 	static CCSpecMessageManager* sharedSpecMessageManager();
     
-    bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,MessageType type ,CCObject* sender ,CCObject*  handleObject);
+    bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender ,CCObject*  handleObject);
     
-	bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle,MessageType type ,CCObject* sender);
+	bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle,unsigned int type ,CCObject* sender);
 
-    void removeReceiver(CCObject* receiver,MessageType type ,CCObject* sender,SEL_MessageHandler handle);
-    void removeReceiver(CCObject* receiver,MessageType type ,CCObject* sender);
-    void removeReceiver(CCObject* receiver,MessageType type);
+    void removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle);
+    void removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender);
+    void removeReceiver(CCObject* receiver,unsigned int type);
     void removeReceiver(CCObject* receiver);
 	void removeReceiverList(CCArray* list,SEL_MessageHandler handle);
 	void removeReceiverList(CCArray* list);

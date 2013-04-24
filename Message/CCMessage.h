@@ -15,9 +15,6 @@
 
 NS_CC_YHLIB_BEGIN
 
-typedef unsigned int MessageType;
-typedef CCObject* MessageParty;
-
 class CCMessage : public CCObject {
 
 public:
@@ -33,7 +30,7 @@ public:
 
     ~CCMessage(void);
     
-	bool initWithType(MessageType type,MessageParty sender ,MessageParty receiver ,CCObject *data){
+	bool initWithType(unsigned int type,CCObject* sender ,CCObject* receiver ,CCObject *data){
 		 m_type=type;
 		setSender(sender);
 		setReceiver(receiver);
@@ -41,41 +38,41 @@ public:
 		return true;
 	}
 
-    bool initWithType(MessageType type,MessageParty sender ,MessageParty receiver){
+    bool initWithType(unsigned int type,CCObject* sender ,CCObject* receiver){
 		m_type=type;
 		setSender(sender);
 		setReceiver(receiver);
     	return true;
 	}
 
-    bool initWithType(MessageType type,MessageParty sender){
+    bool initWithType(unsigned int type,CCObject* sender){
 		m_type=type;
 		setSender(sender);
   		return true;
 	}
 
-	MessageType getType(){
+	unsigned int getType(){
 		return m_type;
 	}
-	void setType(MessageType type){
+	void setType(unsigned int type){
 	    m_type=type;
 	}
 
-	MessageParty getSender(){
+	CCObject* getSender(){
 		return m_sender;
 	}
 
-	void setSender(MessageParty sender){
+	void setSender(CCObject* sender){
 		CC_SAFE_RETAIN(sender);
 		CC_SAFE_RELEASE(m_sender);
 		m_sender=sender;
 	}
 
-	MessageParty getReceiver(){
+	CCObject* getReceiver(){
 		return m_receiver;
 	}
 
-	void setReceiver(MessageParty receiver){
+	void setReceiver(CCObject* receiver){
 		CC_SAFE_RETAIN(receiver);
 		CC_SAFE_RELEASE(m_receiver);
 		m_receiver=receiver;
@@ -102,9 +99,9 @@ public:
 	}
 
 private:
-    MessageType m_type;//消息的类型或ID。
-    MessageParty m_sender;//消息的发送者
-	MessageParty m_receiver;//消息的接收者
+    unsigned int m_type;//消息的类型或ID。
+    CCObject* m_sender;//消息的发送者
+	CCObject* m_receiver;//消息的接收者
     float m_timeStamp;//发送时间
     CCObject* m_pData;
 };

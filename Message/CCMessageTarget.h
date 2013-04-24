@@ -13,10 +13,10 @@ public:
     
   
     //message operate
-    virtual void registerMessage(MessageType type,SEL_MessageHandler handle , CCObject* sender);
-    virtual void unregisterMessage(MessageType type ,SEL_MessageHandler handle ,CCObject* sender);
-    virtual void sendMessage(MessageType type ,CCObject* receiver ,CCObject* data);
-    virtual void sendMessage(MessageType type ,CCObject* receiver);
+    virtual void registerMessage(unsigned int type,SEL_MessageHandler handle , CCObject* sender);
+    virtual void unregisterMessage(unsigned int type ,SEL_MessageHandler handle ,CCObject* sender);
+    virtual void sendMessage(unsigned int type ,CCObject* receiver ,CCObject* data);
+    virtual void sendMessage(unsigned int type ,CCObject* receiver);
 	virtual void cleanupMessages();
 
     

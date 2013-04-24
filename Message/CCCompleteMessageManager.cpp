@@ -43,7 +43,7 @@ void CCCompleteMessageManager::init()
 	m_globalObject=new CCObject();
 }
 
-bool CCCompleteMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,MessageType type ,CCObject* sender ,CCObject*  handleObject)
+bool CCCompleteMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender ,CCObject*  handleObject)
 {
 	CCAssert(receiver!=NULL,"MessageManage:registerReceiver:receiver can't be null");
 	CCAssert(handle!=NULL,"MessageManage:registerReceiver:handle");
@@ -105,12 +105,12 @@ bool CCCompleteMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHa
 
 //使receiver可以接收sender发送过来的叫type的消息，并用handle来处理
 //关注的对象是receiver
-bool CCCompleteMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle,MessageType type ,CCObject* sender)
+bool CCCompleteMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle,unsigned int type ,CCObject* sender)
 {
 	return registerReceiver(receiver ,handle,type ,sender ,receiver);
 }
 
-void CCCompleteMessageManager::removeReceiver(MessageType type ,CCObject* sender,CCObject* receiver ,SEL_MessageHandler handle)
+void CCCompleteMessageManager::removeReceiver(unsigned int type ,CCObject* sender,CCObject* receiver ,SEL_MessageHandler handle)
 {
 	CCAssert(receiver!=NULL,"CompleteMessageManage:removeReceiver:receiver can't be null!");
 	CCAssert(handle!=NULL,"CompleteMessageManage:registerReceiver:handle");
@@ -135,12 +135,12 @@ void CCCompleteMessageManager::removeReceiver(MessageType type ,CCObject* sender
 	}
 }
 
-//void CCCompleteMessageManager::removeReceiver(CCObject* receiver ,SEL_MessageHandler handle ,MessageType type ,CCObject* sender)
+//void CCCompleteMessageManager::removeReceiver(CCObject* receiver ,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender)
 //{
 //	
 //}
 
-void CCCompleteMessageManager::removeReceiver(MessageType type ,CCObject* sender,CCObject* receiver)
+void CCCompleteMessageManager::removeReceiver(unsigned int type ,CCObject* sender,CCObject* receiver)
 {
 	CCAssert(receiver!=NULL,"CompleteMessageManage:removeReceiver:receiver can't be null!");
 	
@@ -215,9 +215,9 @@ void CCCompleteMessageManager::dispatchMessage(CCMessage* message)
 	CCObject* sender;
 	//CCAssert(message.type!=0,)
 	//如果message的type不为0，则需要执行一个type为global的所有消息
-	if (message->getType()!=GlobalMessageType) {
+	if (message->getType()!=Globalunsigned int) {
 		//message for global
-		CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(GlobalMessageType);
+		CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(Globalunsigned int);
 		if (msgMap) {
 			//parse for sender
 			//如果sender不为空，则还要触发一次全局消息。
@@ -264,7 +264,7 @@ void CCCompleteMessageManager::dispatchMessage(CCMessage* message)
 	}
 }
 
-void CCCompleteMessageManager::dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCDictionary* data)
+void CCCompleteMessageManager::dispatchMessageWithType(unsigned int type ,CCObject* sender ,CCObject* receiver,CCDictionary* data)
 {
 	CCMessage* message=new CCMessage();
 	message->initWithType(type ,sender ,receiver ,data);
@@ -275,7 +275,7 @@ void CCCompleteMessageManager::dispatchMessageWithType(MessageType type ,CCObjec
 //适应message中没有receiver的情况
 void CCCompleteMessageManager::dispatchMessage(CCMessage* message ,CCObject*  receiver)
 {
-	if (message->getType()!=GlobalMessageType) {
+	if (message->getType()!=Globalunsigned int) {
 		//message for global
 		CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(m_globalObject->m_uID);
 		if (msgMap) {

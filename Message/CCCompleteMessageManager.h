@@ -15,8 +15,8 @@
 #include "CCMessage.h"
 #include "CCMessageHandler.h"
 
-#ifndef GlobalMessageType
-#define GlobalMessageType 0
+#ifndef Globalunsigned int
+#define Globalunsigned int 0
 #endif
 
 NS_CC_YHLIB_BEGIN
@@ -38,15 +38,15 @@ public:
      */
     //receiver对sender发来的type消息可以有多个响应方法，实际中情况会很少
     //返回注册是成功还是失败。true--成功，false--失败  
-    bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,MessageType type ,CCObject* sender ,CCObject*  handleObject);
+    bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender ,CCObject*  handleObject);
 
-	bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle,MessageType type ,CCObject* sender);
+	bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle,unsigned int type ,CCObject* sender);
                                                              
-    void removeReceiver(MessageType type ,CCObject* sender,CCObject* receiver ,SEL_MessageHandler handle);
-    void removeReceiver(CCObject* receiver ,SEL_MessageHandler handle ,MessageType type ,CCObject* sender){
+    void removeReceiver(unsigned int type ,CCObject* sender,CCObject* receiver ,SEL_MessageHandler handle);
+    void removeReceiver(CCObject* receiver ,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender){
         removeReceiver(type,sender,receiver,handle);
     };
-    void removeReceiver(MessageType type ,CCObject* sender,CCObject* receiver);
+    void removeReceiver(unsigned int type ,CCObject* sender,CCObject* receiver);
                                                                            
 	void execRegisterReceiverList(CCArray* receiverList ,CCMessage* message);
 
@@ -58,7 +58,7 @@ public:
 	                                                                                             
     void dispatchMessage(CCMessage* message);
                                                                                              
-    void dispatchMessageWithType(MessageType type ,CCObject* sender ,CCObject* receiver,CCDictionary* data);
+    void dispatchMessageWithType(unsigned int type ,CCObject* sender ,CCObject* receiver,CCDictionary* data);
                                                                                      
     void dispatchMessage(CCMessage* message ,CCObject*  receiver);
                                                                                                     
