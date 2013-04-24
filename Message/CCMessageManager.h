@@ -1,9 +1,5 @@
 //
-//  MessageManager.h
-//  Message
 //  对消息优先级的支持
-//  Created by trarck on 11-11-27.
-//  Copyright 2011年 __MyCompanyName__. All rights reserved.
 //
 
 #ifndef YHLIB_MESSAGE_CCMESSAGEMANAGER_H_

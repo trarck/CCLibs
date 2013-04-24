@@ -1,10 +1,6 @@
 //
-//  MessageManager.h
-//  Message
 //  对消息优先级的支持
 //  另外一个实现：receiver,sender用int型，handle直接使用函数指针
-//  Created by trarck on 11-11-27.
-//  Copyright 2011年 __MyCompanyName__. All rights reserved.
 //
 
 #ifndef YHLIB_MESSAGE_CCCOMPLETEMESSAGEMANAGER_H_

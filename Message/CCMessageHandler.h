@@ -1,9 +1,5 @@
 //
-//  MessageHandler.h
-//  Message
 //
-//  Created by trarck trarck on 11-12-27.
-//  Copyright 2011 yitengku.com. All rights reserved.
 //
 
 #ifndef YHLIB_MESSAGE_CCMESSAGEHANDLER_H_

@@ -1,11 +1,8 @@
 //
-//  Message.h
-//  Message
 //  
 //  消息是基于投递的，不存在父子关系。一个消息对应消息的处理函数（一个或多个），不存捕捉和冒泡。可以延迟发关。可以设置优先级。
 //  注意和事件的区别，事件要复杂些。消息通常和简单发送执行，所以性能要高一些。
 //  当然事件可以定义的很简单或遵循一定模式(dom事件模型)。
-//  Created by trarck on 11-11-27.
 //
 #ifndef YHLIB_MESSAGE_CCMESSAGE_H_
 #define YHLIB_MESSAGE_CCMESSAGE_H_

@@ -1,8 +1,5 @@
 //
-//  MessageManager.h
-//  Message
 //  对消息优先级的支持
-//  Created by trarck on 11-11-27.
 //
 
 #ifndef YHLIB_MESSAGE_CCMESSAGEMANAGERINTERFACE_H_

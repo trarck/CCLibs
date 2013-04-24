@@ -1,10 +1,7 @@
 //
-//  MessageManager.h
 //
 //	每个对象只有一个处理消息的函数，和window的消息类似
 //	hash(接收者)→hash(发送者)→handler
-//  Created by trarck on 11-11-27.
-//  Copyright 2011年 __MyCompanyName__. All rights reserved.
 //
 
 #ifndef YHLIB_MESSAGE_CCSIMPLEMESSAGEMANAGER_H_
