@@ -8,7 +8,7 @@
 
 #include "CCNormalMessageManager.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 CCNormalMessageManager* CCNormalMessageManager::s_sharedNormalMessageManagerInstance=NULL;
 
@@ -44,4 +44,4 @@ void CCNormalMessageManager::dispatchMessage(CCMessage* message)
 	}
 }
 
-NS_CC_END
+NS_CC_YHLIB_END

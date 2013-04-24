@@ -8,7 +8,7 @@
 
 #include "CCSpecMessageManager.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 CCSpecMessageManager::CCSpecMessageManager()
 {
@@ -176,4 +176,4 @@ void CCSpecMessageManager::removeReceiverMap(CCDictionary* map){
 	}
 }
 
-NS_CC_END
+NS_CC_YHLIB_END

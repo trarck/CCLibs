@@ -8,7 +8,7 @@
 
 #include "CCSimpleMessageManager.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 CCSimpleMessageManager* CCSimpleMessageManager::s_sharedSimpleMessageManagerInstance=NULL;
 
@@ -262,4 +262,4 @@ void CCSimpleMessageManager::dispatchMessage(CCMessage* message ,CCObject*  rece
 	}
 }
 
-NS_CC_END
+NS_CC_YHLIB_END

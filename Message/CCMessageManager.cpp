@@ -8,7 +8,7 @@
 
 #include "CCMessageManager.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 
 CCMessageManager::CCMessageManager():
@@ -23,7 +23,7 @@ CCMessageManager::~CCMessageManager()
 	CCLOG("CCMessageManager destroy begin");
 	CC_SAFE_RELEASE(m_messages);
 	CC_SAFE_RELEASE(m_globalObject);
-	CC_SAFE_RELEASE(m_regiesterMap);
+	//CC_SAFE_RELEASE(m_regiesterMap);
 	CCLOG("CCMessageManager destroy end");
 }
 
@@ -42,7 +42,7 @@ void CCMessageManager::init()
 {
 	m_messages=new CCDictionary();
 	m_globalObject=new CCObject();
-	m_regiesterMap=new CCDictionary();
+	//m_regiesterMap=new CCDictionary();
 }
 
 bool CCMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender ,CCObject*  handleObject)
@@ -114,39 +114,39 @@ bool CCMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler ha
 }
 
 
-void CCMessageManager::addReceiverMap(CCObject* receiver,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender ,CCObject*  handleObject)
-{
-
-	CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
-	if (receiverMap==NULL) {
-		receiverMap=new CCDictionary();
-		m_regiesterMap->setObject(receiverMap,receiver->m_uID);
-		receiverMap->release();
-	}
-
-	CCDictionary *msgMap=(CCDictionary*) receiverMap->objectForKey(type);
-	if (msgMap==NULL) {
-		msgMap=new CCDictionary();
-		receiverMap->setObject(msgMap,type);
-		msgMap->release();
-	}
-	
-	sender=sender==NULL?m_globalObject:sender;
-	unsigned int senderKey=sender->m_uID;
-	CCArray *senderList=(CCArray*)msgMap->objectForKey(senderKey);
-	if (!senderList) {
-		senderList=new CCArray();
-		msgMap->setObject(senderList,senderKey);
-		senderList->release();
-	}
-	//不用检查是否已经注册过，在父类中已经检查过了
-
-	//map for handler
-	CCMessageHandler *handler=new CCMessageHandler();
-	handler->initWithTarget(handleObject,handle);
-	senderList->addObject(handler);
-	handler->release();
-}
+//void CCMessageManager::addReceiverMap(CCObject* receiver,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender ,CCObject*  handleObject)
+//{
+//
+//	CCDictionary *receiverMap=(CCDictionary*) m_regiesterMap->objectForKey(receiver->m_uID);
+//	if (receiverMap==NULL) {
+//		receiverMap=new CCDictionary();
+//		m_regiesterMap->setObject(receiverMap,receiver->m_uID);
+//		receiverMap->release();
+//	}
+//
+//	CCDictionary *msgMap=(CCDictionary*) receiverMap->objectForKey(type);
+//	if (msgMap==NULL) {
+//		msgMap=new CCDictionary();
+//		receiverMap->setObject(msgMap,type);
+//		msgMap->release();
+//	}
+//	
+//	sender=sender==NULL?m_globalObject:sender;
+//	unsigned int senderKey=sender->m_uID;
+//	CCArray *senderList=(CCArray*)msgMap->objectForKey(senderKey);
+//	if (!senderList) {
+//		senderList=new CCArray();
+//		msgMap->setObject(senderList,senderKey);
+//		senderList->release();
+//	}
+//	//不用检查是否已经注册过，在父类中已经检查过了
+//
+//	//map for handler
+//	CCMessageHandler *handler=new CCMessageHandler();
+//	handler->initWithTarget(handleObject,handle);
+//	senderList->addObject(handler);
+//	handler->release();
+//}
 
 
 void CCMessageManager::removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle)
@@ -354,6 +354,137 @@ void CCMessageManager::removeReceiverMap(CCObject* receiver,CCDictionary* map){
     }
 }
 
+//
+void CCMessageManager::dispatchMessage(CCMessage* message)
+{
+	CCObject* sender;
+	//CCAssert(message.type!=0,)
+	//如果message的type不为0，则需要执行一个type为global的所有消息
+	if (message->getType()!=GlobalMessageType) {
+		//message for global
+		CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(GlobalMessageType);
+		if (msgMap) {
+			//parse for sender
+			//如果sender不为空，则还要触发一次全局消息。
+			sender=message->getSender();
+			if (sender) {
+				//执行注册到sender的消息的处理方法
+				CCDictionary* senderMap=(CCDictionary *)msgMap->objectForKey(sender->m_uID);
+				//如果注册则执行
+				if (senderMap)  execRegisterWithSenderMap(senderMap ,message);
+				//执行注册到global的消息的处理方法
+				CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
+				//如果注册则执行
+				if (globalMap)  execRegisterWithSenderMap(globalMap,message);
+			}else {
+				//执行注册到global的消息的处理方法
+				CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
+				//如果注册则执行
+				if (globalMap)  execRegisterWithSenderMap(globalMap ,message);
+			}
+		}
+	}
+	
+	//message for type
+	CCDictionary* msgMap= (CCDictionary*)m_messages->objectForKey(message->getType());
+	if (msgMap) {
+		sender=message->getSender();
+		//parse for sender
+		//如果sender不为空，则还要触发一次全局消息。
+		if (sender) {
+			//执行注册到sender的消息的处理方法
+			CCDictionary* senderMap=(CCDictionary *)msgMap->objectForKey(sender->m_uID);
+			//如果注册则执行
+			if (senderMap)  execRegisterWithSenderMap(senderMap,message);
+			//执行注册到global的消息的处理方法
+			CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
+			//如果注册则执行
+			if (globalMap)  execRegisterWithSenderMap(globalMap,message);
+		}else {
+			//执行注册到global的消息的处理方法
+			CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
+			//如果注册则执行
+			if (globalMap)  execRegisterWithSenderMap(globalMap,message);
+		}
+	}
+}
+
+
+//适应message中没有receiver的情况
+void CCMessageManager::dispatchMessage(CCMessage* message ,CCObject*  receiver)
+{
+	if (message->getType()!=GlobalMessageType) {
+		//message for global
+		CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(m_globalObject->m_uID);
+		if (msgMap) {
+			//parse for sender
+			//如果sender不为空，则还要触发一次全局消息。
+			CCObject* sender=message->getSender();
+			if (sender) {
+				//执行注册到sender的消息的处理方法
+				CCDictionary* senderMap=(CCDictionary*)msgMap->objectForKey(sender->m_uID);
+				//如果注册则执行
+				if (senderMap)  execRegisterWithSenderMap(senderMap,message,receiver);
+				//执行注册到global的消息的处理方法
+				CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
+				//如果注册则执行
+				if (globalMap)  execRegisterWithSenderMap(globalMap ,message ,receiver);
+			}else {
+				//执行注册到global的消息的处理方法
+				CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
+				//如果注册则执行
+				if (globalMap)  execRegisterWithSenderMap(globalMap ,message ,receiver);
+			}
+		}
+	}
+	//message for type
+	CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(message->getType());
+	if (msgMap) {
+		//parse for sender
+		//如果sender不为空，则还要触发一次全局消息。
+		CCObject* sender=message->getSender();
+		if (sender) {
+			//执行注册到sender的消息的处理方法
+			CCDictionary* senderMap=(CCDictionary*)msgMap->objectForKey(sender->m_uID);
+			//如果注册则执行
+			if (senderMap)  execRegisterWithSenderMap(senderMap ,message ,receiver);
+			//执行注册到global的消息的处理方法
+			CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
+			//如果注册则执行
+			if (globalMap)  execRegisterWithSenderMap(globalMap ,message ,receiver);
+		}else {
+			//执行注册到global的消息的处理方法
+			CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
+			//如果注册则执行
+			if (globalMap)  execRegisterWithSenderMap(globalMap ,message ,receiver);
+		}
+	}
+}
+
+
+void CCMessageManager::dispatchMessage(unsigned int type ,CCObject* sender ,CCObject* receiver,CCObject* data)
+{
+	CCMessage* message=new CCMessage();
+	message->initWithType(type ,sender ,receiver ,data);
+	dispatchMessage(message);
+	message->release();
+}
+
+void CCMessageManager::dispatchMessage(unsigned int type ,CCObject* sender ,CCObject* receiver)
+{
+	CCMessage* message=new CCMessage();
+	message->initWithType(type ,sender ,receiver);
+	dispatchMessage(message);
+	message->release();
+}
+
+void CCMessageManager::dispatchMessageWithDictionary(unsigned int type ,CCObject* sender ,CCObject* receiver,CCDictionary* data)
+{
+	CCMessage* message=new CCMessage();
+	message->initWithType(type ,sender ,receiver ,data);
+	dispatchMessage(message);
+	message->release();
+}
 
 void CCMessageManager::execRegisterReceiverList(CCArray* receiverList ,CCMessage* message)
 {
@@ -403,136 +534,4 @@ void CCMessageManager::execRegisterWithSenderMap(CCDictionary* senderMap,CCMessa
 	}
 }
 
-//
-void CCMessageManager::dispatchMessage(CCMessage* message)
-{
-	CCObject* sender;
-	//CCAssert(message.type!=0,)
-	//如果message的type不为0，则需要执行一个type为global的所有消息
-	if (message->getType()!=Globalunsigned int) {
-		//message for global
-		CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(Globalunsigned int);
-		if (msgMap) {
-			//parse for sender
-			//如果sender不为空，则还要触发一次全局消息。
-			sender=message->getSender();
-			if (sender) {
-				//执行注册到sender的消息的处理方法
-				CCDictionary* senderMap=(CCDictionary *)msgMap->objectForKey(sender->m_uID);
-				//如果注册则执行
-				if (senderMap)  execRegisterWithSenderMap(senderMap ,message);
-				//执行注册到global的消息的处理方法
-				CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
-				//如果注册则执行
-				if (globalMap)  execRegisterWithSenderMap(globalMap,message);
-			}else {
-				//执行注册到global的消息的处理方法
-				CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
-				//如果注册则执行
-				if (globalMap)  execRegisterWithSenderMap(globalMap ,message);
-			}
-		}
-	}
-	
-	//message for type
-	CCDictionary* msgMap= (CCDictionary*)m_messages->objectForKey(message->getType());
-	if (msgMap) {
-		sender=message->getSender();
-		//parse for sender
-		//如果sender不为空，则还要触发一次全局消息。
-		if (sender) {
-			//执行注册到sender的消息的处理方法
-			CCDictionary* senderMap=(CCDictionary *)msgMap->objectForKey(sender->m_uID);
-			//如果注册则执行
-			if (senderMap)  execRegisterWithSenderMap(senderMap,message);
-			//执行注册到global的消息的处理方法
-			CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
-			//如果注册则执行
-			if (globalMap)  execRegisterWithSenderMap(globalMap,message);
-		}else {
-			//执行注册到global的消息的处理方法
-			CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
-			//如果注册则执行
-			if (globalMap)  execRegisterWithSenderMap(globalMap,message);
-		}
-	}
-}
-
-
-void CCMessageManager::dispatchMessageWithType(unsigned int type ,CCObject* sender ,CCObject* receiver,CCObject* data)
-{
-	CCMessage* message=new CCMessage();
-	message->initWithType(type ,sender ,receiver ,data);
-	dispatchMessage(message);
-	message->release();
-}
-
-//void CCMessageManager::dispatchMessageWithType(unsigned int type ,CCObject* sender ,CCObject* receiver,CCDictionary* data)
-//{
-//	CCMessage* message=new CCMessage();
-//	message->initWithType(type ,sender ,receiver ,data);
-//	dispatchMessage(message);
-//	message->release();
-//}
-
-void CCMessageManager::dispatchMessageWithType(unsigned int type ,CCObject* sender ,CCObject* receiver)
-{
-	CCMessage* message=new CCMessage();
-	message->initWithType(type ,sender ,receiver);
-	dispatchMessage(message);
-	message->release();
-}
-
-
-//适应message中没有receiver的情况
-void CCMessageManager::dispatchMessage(CCMessage* message ,CCObject*  receiver)
-{
-	if (message->getType()!=Globalunsigned int) {
-		//message for global
-		CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(m_globalObject->m_uID);
-		if (msgMap) {
-			//parse for sender
-			//如果sender不为空，则还要触发一次全局消息。
-			CCObject* sender=message->getSender();
-			if (sender) {
-				//执行注册到sender的消息的处理方法
-				CCDictionary* senderMap=(CCDictionary*)msgMap->objectForKey(sender->m_uID);
-				//如果注册则执行
-				if (senderMap)  execRegisterWithSenderMap(senderMap,message,receiver);
-				//执行注册到global的消息的处理方法
-				CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
-				//如果注册则执行
-				if (globalMap)  execRegisterWithSenderMap(globalMap ,message ,receiver);
-			}else {
-				//执行注册到global的消息的处理方法
-				CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
-				//如果注册则执行
-				if (globalMap)  execRegisterWithSenderMap(globalMap ,message ,receiver);
-			}
-		}
-	}
-	//message for type
-	CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(message->getType());
-	if (msgMap) {
-		//parse for sender
-		//如果sender不为空，则还要触发一次全局消息。
-		CCObject* sender=message->getSender();
-		if (sender) {
-			//执行注册到sender的消息的处理方法
-			CCDictionary* senderMap=(CCDictionary*)msgMap->objectForKey(sender->m_uID);
-			//如果注册则执行
-			if (senderMap)  execRegisterWithSenderMap(senderMap ,message ,receiver);
-			//执行注册到global的消息的处理方法
-			CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
-			//如果注册则执行
-			if (globalMap)  execRegisterWithSenderMap(globalMap ,message ,receiver);
-		}else {
-			//执行注册到global的消息的处理方法
-			CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
-			//如果注册则执行
-			if (globalMap)  execRegisterWithSenderMap(globalMap ,message ,receiver);
-		}
-	}
-}
-
-NS_CC_END
+NS_CC_YHLIB_END
