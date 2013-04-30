@@ -20,7 +20,7 @@ class CCMessageHandler : public CCObject {
 public:
     
 	CCMessageHandler()
-		:m_target(NULL),
+		:m_pTarget(NULL),
 		 m_handle(NULL)
 	{
 		CCLOG("CCMessageHandler create");

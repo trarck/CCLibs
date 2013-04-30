@@ -13,7 +13,7 @@ NS_CC_YHLIB_BEGIN
 CCMessageHandler::~CCMessageHandler()
 {
 	CCLOG("CCMessageHandler destroy begin ");
-    CC_SAFE_RELEASE(m_target);
+    CC_SAFE_RELEASE(m_pTarget);
     CCLOG("CCMessageHandler destroy end ");
 }
 
