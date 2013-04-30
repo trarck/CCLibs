@@ -1,19 +1,19 @@
-    //
+//
 //  MessageManager.m
 //  Message
 //
 //  Created by trarck on 11-11-27.
-//  Copyright 2011年 __MyCompanyName__. All rights reserved.
 //
 
 #include "CCMessageManager.h"
 
 NS_CC_YHLIB_BEGIN
 
+static CCMessageManager* s_sharedMessageManagerInstance=NULL;
 
-CCMessageManager::CCMessageManager():
-m_messages(NULL),
-m_globalObject(NULL)
+CCMessageManager::CCMessageManager()
+:m_messages(NULL)
+,m_globalObject(NULL)
 {
 	CCLOG("CCMessageManager create");
 }
@@ -38,11 +38,11 @@ CCMessageManager* CCMessageManager::defaultManager(void)
 	return s_sharedMessageManagerInstance;
 }
 
-void CCMessageManager::init()
+bool CCMessageManager::init()
 {
 	m_messages=new CCDictionary();
 	m_globalObject=new CCObject();
-	//m_regiesterMap=new CCDictionary();
+	return true;
 }
 
 bool CCMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender ,CCObject*  handleObject)

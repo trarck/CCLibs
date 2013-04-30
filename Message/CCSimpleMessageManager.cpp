@@ -92,10 +92,11 @@ bool CCSimpleMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHand
 }
 
 
-void CCSimpleMessageManager::removeReceiver(unsigned int type ,CCObject* sender,CCObject* receiver)
+void CCSimpleMessageManager::removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender)
 {
 	CCAssert(receiver!=NULL,"SimpleMessageManager:removeReceiver:receiver can't be null!");
-	
+	CCAssert(sender!=NULL,"SimpleMessageManager:removeReceiver:receiver can't be null!");
+
 	//message for type
 	CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(type);
 	if (msgMap) {

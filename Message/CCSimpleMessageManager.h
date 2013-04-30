@@ -9,19 +9,16 @@
 
 #include "cocos2d.h"
 #include "YHLibMacros.h"
-#include "CCMessage.h"
-#include "CCMessageHandler.h"
+#include "CCMessageManager.h"
 
 NS_CC_YHLIB_BEGIN
 
-class CCSimpleMessageManager : public CCObject {
+class CCSimpleMessageManager : public CCMessageManager {
 public:
 	CCSimpleMessageManager();
     ~CCSimpleMessageManager();
 
     static CCSimpleMessageManager* sharedSimpleMessageManager();
-
-//	static CCIMessageManager* sharedMessageManager();
 
     void init();
 
@@ -34,7 +31,47 @@ public:
     bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender ,CCObject*  handleObject);
 
 	bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle,unsigned int type ,CCObject* sender);
-                                                                                                                              
+    
+	/**
+	 * 取消接收者的处理方法，该方法注册到发送者的某个消息。
+	 */
+	void removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle);
+
+	/**
+	 * 取消接收者注册到某个发送者的某个消息的所有处理方法。
+	 */
+    void removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender);
+
+	/**
+	 * 取消接收者注册到某个消息的所有处理方法。
+	 */
+    void removeReceiver(CCObject* receiver,unsigned int type);
+
+	/**
+	 * 取消接收者的所以注册信息。
+	 */
+    void removeReceiver(CCObject* receiver);
+    
+	/**
+	 * 取消接收者处理某个消息的某个方法。
+	 */
+    void removeReceiver(CCObject* receiver,unsigned int type ,SEL_MessageHandler handle);
+    
+	/**
+	 * 取消接收者注册到发送者的任意消息的某个处理方法。
+	 */
+    void removeReceiver(CCObject* receiver,CCObject* sender,SEL_MessageHandler handle);
+    
+	/**
+	 * 取消接收者注册到发送者的所有消息的所有处理方法。
+	 */
+    void removeReceiver(CCObject* receiver,CCObject* sender);
+
+	/**
+	 * 取消接收者注册到任意发送者任意消息的某个处理方法。
+	 */
+    void removeReceiver(CCObject* receiver,SEL_MessageHandler handle);
+
     void removeReceiver(unsigned int type ,CCObject* sender,CCObject* receiver ,SEL_MessageHandler handle){
         removeReceiver(type,sender,receiver);
     };

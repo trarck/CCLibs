@@ -120,9 +120,6 @@
     <ClInclude Include="..\include\isometric.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Message\CCCompleteMessageManager.h">
-      <Filter>Message</Filter>
-    </ClInclude>
     <ClInclude Include="..\Message\CCMessage.h">
       <Filter>Message</Filter>
     </ClInclude>
@@ -232,9 +229,6 @@
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOTileMapBuilder.cpp">
       <Filter>Isometric</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Message\CCCompleteMessageManager.cpp">
-      <Filter>Message</Filter>
     </ClCompile>
     <ClCompile Include="..\Message\CCMessage.cpp">
       <Filter>Message</Filter>

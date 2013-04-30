@@ -22,7 +22,7 @@ public:
 
     static CCMessageManager* defaultManager();
 
-    void init();
+    bool init();
     
     /**
      * observer 消息接收者
@@ -169,11 +169,6 @@ protected:
 	// * 消息的注册表
 	// */
 	//CCDictionary* m_regiesterMap;
-
-private:
-
-	static CCMessageManager* s_sharedMessageManagerInstance;
-
 };
 
 NS_CC_YHLIB_END

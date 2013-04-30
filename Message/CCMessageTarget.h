@@ -21,8 +21,6 @@ public:
     virtual void sendMessage(unsigned int type ,CCObject* pReceiver ,CCObject* data);
     virtual void sendMessage(unsigned int type ,CCObject* pReceiver);
 	virtual void cleanupMessages();
-
-    
     
 protected:
 

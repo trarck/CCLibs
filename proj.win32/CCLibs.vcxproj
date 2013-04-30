@@ -45,7 +45,6 @@
     <ClInclude Include="..\Isometric\parser\CCISOTileInfo.h" />
     <ClInclude Include="..\Isometric\parser\CCISOTilesetInfo.h" />
     <ClInclude Include="..\Isometric\parser\CCISOXMLParser.h" />
-    <ClInclude Include="..\Message\CCCompleteMessageManager.h" />
     <ClInclude Include="..\Message\CCMessageManagerInterface.h" />
     <ClInclude Include="..\Message\CCMessage.h" />
     <ClInclude Include="..\Message\CCMessageHandler.h" />
@@ -84,7 +83,6 @@
     <ClCompile Include="..\Isometric\parser\CCISOTileInfo.cpp" />
     <ClCompile Include="..\Isometric\parser\CCISOTilesetInfo.cpp" />
     <ClCompile Include="..\Isometric\parser\CCISOXMLParser.cpp" />
-    <ClCompile Include="..\Message\CCCompleteMessageManager.cpp" />
     <ClCompile Include="..\Message\CCMessage.cpp" />
     <ClCompile Include="..\Message\CCMessageHandler.cpp" />
     <ClCompile Include="..\Message\CCMessageManager.cpp" />
