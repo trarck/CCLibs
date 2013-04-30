@@ -23,8 +23,6 @@ CCSimpleMessageManager* CCSimpleMessageManager::sharedSimpleMessageManager(void)
 
 
 CCSimpleMessageManager::CCSimpleMessageManager()
-	:m_messages(NULL)
-	,m_globalObject(NULL)
 {
 
 }

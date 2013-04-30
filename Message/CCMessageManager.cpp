@@ -27,8 +27,6 @@ CCMessageManager::~CCMessageManager()
 	CCLOG("CCMessageManager destroy end");
 }
 
-CCMessageManager* CCMessageManager::s_sharedMessageManagerInstance=NULL;
-
 CCMessageManager* CCMessageManager::defaultManager(void)
 {
 	if (!s_sharedMessageManagerInstance) {
