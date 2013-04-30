@@ -12,10 +12,6 @@
 #include "CCMessage.h"
 #include "CCMessageHandler.h"
 
-#ifndef Globalunsigned int
-#define Globalunsigned int 0
-#endif
-
 NS_CC_YHLIB_BEGIN
 
 class CCSimpleMessageManager : public CCObject {
@@ -58,6 +54,11 @@ public:
     void dispatchMessageWithType(unsigned int type ,CCObject* sender ,CCObject* receiver,CCDictionary* data);
                                                                                      
     void dispatchMessage(CCMessage* message ,CCObject*  receiver);
+
+	enum{
+		GlobalMessageType=0
+	};
+
 
 private:
     CCDictionary *m_messages;

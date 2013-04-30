@@ -153,9 +153,9 @@ void CCSimpleMessageManager::dispatchMessage(CCMessage* message)
 	CCObject* sender;
 	//CCAssert(message.type!=0,)
 	//如果message的type不为0，则需要执行一个type为global的所有消息
-	if (message->getType()!=Globalunsigned int) {
+	if (message->getType()!=GlobalMessageType) {
 		//message for global
-		CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(Globalunsigned int);
+		CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(GlobalMessageType);
 		if (msgMap) {
 			//parse for sender
 			//如果sender不为空，则还要触发一次全局消息。
@@ -214,7 +214,7 @@ void CCSimpleMessageManager::dispatchMessage(CCMessage* message ,CCObject*  rece
 {
 	//CCAssert(message.type!=0,)
 	//如果message的type不为0，则需要执行一个type为global的所有消息
-	if (message->getType()!=Globalunsigned int) {
+	if (message->getType()!=GlobalMessageType) {
 		//message for global
 		CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(m_globalObject->m_uID);
 		if (msgMap) {

@@ -10,8 +10,8 @@
 #include "CCMessage.h"
 #include "CCMessageHandler.h"
 
-#ifndef Globalunsigned int
-#define Globalunsigned int 0
+#ifndef GlobalMessageType
+#define GlobalMessageType 0
 #endif
 
 NS_CC_YHLIB_BEGIN
