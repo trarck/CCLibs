@@ -32,14 +32,14 @@
 
 NS_CC_YHLIB_BEGIN
 
-class CCFSMState:public CCObject 
+class CCFSMStateInterface
 {
 public:
-	virtual void enter();
-    virtual void exit();
-    virtual void update();
-	virtual void update(float delta);
-    virtual void onMessage(CCMessage* message);
+	virtual void enter()=0;
+    virtual void exit()=0;
+    virtual void update()=0;
+	virtual void update(float delta)=0;
+    virtual void onMessage(CCMessage* message)=0;
 };
 
 NS_CC_YHLIB_END

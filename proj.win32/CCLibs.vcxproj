@@ -11,6 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\FSM\Common\CCFSMMachine.h" />
+    <ClInclude Include="..\FSM\Common\CCFSMMachineInterface.h" />
+    <ClInclude Include="..\FSM\Common\CCFSMState.h" />
+    <ClInclude Include="..\FSM\Common\CCFSMDelegateState.h" />
+    <ClInclude Include="..\FSM\Common\CCFSMParameterState.h" />
+    <ClInclude Include="..\FSM\Common\CCFSMStateInterface.h" />
     <ClInclude Include="..\include\cocos-yhlib.h" />
     <ClInclude Include="..\include\isometric.h" />
     <ClInclude Include="..\include\YHLibMacros.h" />
@@ -52,9 +58,10 @@
     <ClInclude Include="..\Message\CCMessageTarget.h" />
     <ClInclude Include="..\Message\CCNormalMessageManager.h" />
     <ClInclude Include="..\Message\CCSimpleMessageManager.h" />
-    <ClInclude Include="..\Message\CCSpecMessageManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\FSM\Common\CCFSMMachine.cpp" />
+    <ClCompile Include="..\FSM\Common\CCFSMState.cpp" />
     <ClCompile Include="..\Isometric\CCAstar.cpp" />
     <ClCompile Include="..\Isometric\CCAstarNode.cpp" />
     <ClCompile Include="..\Isometric\CCCoordinate.cpp" />
@@ -89,7 +96,6 @@
     <ClCompile Include="..\Message\CCMessageTarget.cpp" />
     <ClCompile Include="..\Message\CCNormalMessageManager.cpp" />
     <ClCompile Include="..\Message\CCSimpleMessageManager.cpp" />
-    <ClCompile Include="..\Message\CCSpecMessageManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6D1AB473-4990-4F53-8E68-F7C5C47DAB65}</ProjectGuid>

@@ -1,9 +1,12 @@
 
 #include "CCFSMMachine.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 CCFSMMachine::CCFSMMachine(void)
+:m_pCurrentState(NULL)
+,m_pStates(NULL)
+
 {
     CCLOG("CCFSMMachine create");
 }
@@ -12,76 +15,66 @@ CCFSMMachine::CCFSMMachine(void)
 CCFSMMachine::~CCFSMMachine(void)
 {
     CCLOG("CCFSMMachine destroy");
+	CC_SAFE_RELEASE(m_pCurrentState);
+	CC_SAFE_RELEASE(m_pStates);
 }
 
-// CCFSMState* CCFSMMachine::getCurrentState()
-// {
-// 	
-// }
-// 
-// void CCFSMMachine::setCurrentState(CCFSMState* state)
-// {
-// 	
-// }
-
-void CCFSMMachine::addState(CCFSMState* state ,CCObject* key)
+bool CCFSMMachine::init()
 {
-	
+	m_pStates=new CCDictionary();
+	return true;
 }
 
 void CCFSMMachine::addState(CCFSMState* state ,const std::string& name)
 {
-	
+	m_pStates->setObject(state,name);
 }
 
-void CCFSMMachine::addState(CCFSMState* state ,unsigned int guid)
+void CCFSMMachine::addState(CCFSMState* state ,unsigned int uId)
 {
-	
-}
-
-void CCFSMMachine::removeStateWithKey(CCObject* key)
-{
-	
+	m_pStates->setObject(state,uId);
 }
 
 void CCFSMMachine::removeStateWithName(const std::string& name)
 {
-	
+	m_pStates->removeObjectForKey(name);
 }
 
-void CCFSMMachine::removeStateWithGuid(unsigned int guid)
+void CCFSMMachine::removeStateWithGuid(unsigned int uId)
 {
-	
-}
-
-CCFSMState* CCFSMMachine::stateForKey(CCObject* key)
-{
-	
+	m_pStates->removeObjectForKey(uId);
 }
 
 CCFSMState* CCFSMMachine::stateForName(const std::string& name)
 {
-	
+	return static_cast<CCFSMState*>(m_pStates->objectForKey(name));
 }
 
-CCFSMState* CCFSMMachine::stateForGuid(unsigned int guid)
+CCFSMState* CCFSMMachine::stateForGuid(unsigned int uId)
 {
-	
-}
-
-void CCFSMMachine::update()
-{
-	CCLOG("CCFSMMachine update");
-}
-
-void CCFSMMachine::handleMessage(CCMessage* message)
-{
-	CCLOG("CCFSMMachine handleMessage");
+	return static_cast<CCFSMState*>(m_pStates->objectForKey(uId));
 }
 
 void CCFSMMachine::changeState(CCFSMState* state)
 {
-	CCLOG("CCFSMMachine changeState");
+	m_pCurrentState->exit();
+	setCurrentState(state);
+	m_pCurrentState->enter();
 }
 
-NS_CC_END
+void CCFSMMachine::update()
+{
+	m_pCurrentState->update();
+}
+
+void CCFSMMachine::update(float delta)
+{
+	m_pCurrentState->update(delta);
+}
+
+void CCFSMMachine::handleMessage(CCMessage* message)
+{
+	m_pCurrentState->onMessage(message);
+}
+
+NS_CC_YHLIB_END

@@ -16,6 +16,15 @@
     <Filter Include="Message">
       <UniqueIdentifier>{36f43c10-36bb-49a4-a832-5b8f078b51b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FSM">
+      <UniqueIdentifier>{22989a16-f729-4434-9319-35a99f296b3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FSM\Common">
+      <UniqueIdentifier>{4ab4f7c6-b480-466a-a0c9-2dd9ee5216a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FSM\LayerFSM">
+      <UniqueIdentifier>{65926c7b-fd5e-46ce-8d10-4725a52ddf82}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\cocos-yhlib.h">
@@ -138,11 +147,26 @@
     <ClInclude Include="..\Message\CCSimpleMessageManager.h">
       <Filter>Message</Filter>
     </ClInclude>
-    <ClInclude Include="..\Message\CCSpecMessageManager.h">
-      <Filter>Message</Filter>
-    </ClInclude>
     <ClInclude Include="..\Message\CCMessageManagerInterface.h">
       <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FSM\Common\CCFSMMachine.h">
+      <Filter>FSM\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FSM\Common\CCFSMState.h">
+      <Filter>FSM\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FSM\Common\CCFSMDelegateState.h">
+      <Filter>FSM\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FSM\Common\CCFSMParameterState.h">
+      <Filter>FSM\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FSM\Common\CCFSMMachineInterface.h">
+      <Filter>FSM\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FSM\Common\CCFSMStateInterface.h">
+      <Filter>FSM\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -248,8 +272,11 @@
     <ClCompile Include="..\Message\CCSimpleMessageManager.cpp">
       <Filter>Message</Filter>
     </ClCompile>
-    <ClCompile Include="..\Message\CCSpecMessageManager.cpp">
-      <Filter>Message</Filter>
+    <ClCompile Include="..\FSM\Common\CCFSMMachine.cpp">
+      <Filter>FSM\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FSM\Common\CCFSMState.cpp">
+      <Filter>FSM\Common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

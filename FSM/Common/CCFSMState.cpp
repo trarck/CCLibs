@@ -1,6 +1,6 @@
 #include "CCFSMState.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 void CCFSMState::enter()
 {
@@ -22,4 +22,4 @@ void CCFSMState::onMessage(CCMessage* message)
 	CCLOG("CCFSMState onMessage");
 }
 
-NS_CC_END
+NS_CC_YHLIB_END
