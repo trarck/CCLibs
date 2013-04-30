@@ -37,7 +37,7 @@ CCCoordinate* CCCoordinate::sharedCoordinate()
 	return l_coordinate;	
 }
 
-static CCCoordinate::CCCoordinate* create()
+CCCoordinate* CCCoordinate::create()
 {
 	CCCoordinate* pRet=new CCCoordinate();
 	if (pRet && pRet->init()){ 
@@ -50,8 +50,9 @@ static CCCoordinate::CCCoordinate* create()
     }
 }
 
-static CCCoordinate::CCCoordinate* create(int width,int height)
+CCCoordinate* CCCoordinate::create(int width,int height)
 {
+	CCCoordinate* pRet=new CCCoordinate();
 	if (pRet && pRet->init(width,height)){ 
         pRet->autorelease(); 
         return pRet; 
@@ -62,8 +63,9 @@ static CCCoordinate::CCCoordinate* create(int width,int height)
     }
 }
 
-static CCCoordinate::CCCoordinate* create(int xUnit,int yUnit,int zUnit)
+CCCoordinate* CCCoordinate::create(int xUnit,int yUnit,int zUnit)
 {
+	CCCoordinate* pRet=new CCCoordinate();
 	if (pRet && pRet->init(xUnit,yUnit,zUnit)){ 
         pRet->autorelease(); 
         return pRet; 
