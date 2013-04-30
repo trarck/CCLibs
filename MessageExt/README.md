@@ -1,0 +1,1 @@
+common 是一种通用的设置消息，发送者，接收者都是数字。template 发送者和接收者都是数字，消息类型是template，可以是数据和字符object 扩展到对象，使用接口，接口定义一个获取唯一id的方法。cocos2d 直接对cocos2d中使用CCObject
