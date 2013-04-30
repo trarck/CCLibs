@@ -10,6 +10,7 @@
 #include "cocos2d.h"
 #include "YHLibMacros.h"
 #include "CCMessageManager.h"
+#include "CCMessageHandler.h"
 
 NS_CC_YHLIB_BEGIN
 
@@ -72,35 +73,39 @@ public:
 	 */
     void removeReceiver(CCObject* receiver,SEL_MessageHandler handle);
 
-    void removeReceiver(unsigned int type ,CCObject* sender,CCObject* receiver ,SEL_MessageHandler handle){
-        removeReceiver(type,sender,receiver);
-    };
-    void removeReceiver(CCObject* receiver ,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender){
-        removeReceiver(type,sender,receiver);
-    };
-    void removeReceiver(unsigned int type ,CCObject* sender,CCObject* receiver);
-                                                                                                                                                                      
+	/**
+	 * 发送消息。
+	 */
+	void dispatchMessage(CCMessage* message);
+
+	/**
+	 * 发送消息到某个接收者。
+	 */
+	void dispatchMessage(CCMessage* message ,CCObject*  receiver);
+
+	/**
+	 * 发送消息的工具方法。
+	 */
+    void dispatchMessage(unsigned int type ,CCObject* sender ,CCObject* receiver,CCObject* data);
+    
+    /**
+	 * 发送消息的工具方法。
+	 */
+    void dispatchMessage(unsigned int type ,CCObject* sender ,CCObject* receiver);
+
+	/**
+	 * 发送消息的工具方法。
+	 * 数据是一个字典
+	 */
+	void dispatchMessageWithDictionary(unsigned int type ,CCObject* sender ,CCObject* receiver,CCDictionary* data);
+
+protected:
+
 	void execAllRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message);
 
     void execRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message);
 
 	void execRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message,CCObject*  receiver);
-
-	void dispatchMessage(CCMessage* message);
-                                                                                             
-    void dispatchMessageWithType(unsigned int type ,CCObject* sender ,CCObject* receiver,CCDictionary* data);
-                                                                                     
-    void dispatchMessage(CCMessage* message ,CCObject*  receiver);
-
-	enum{
-		GlobalMessageType=0
-	};
-
-
-private:
-    CCDictionary *m_messages;
-	CCObject *m_globalObject;
-	static CCSimpleMessageManager* s_sharedSimpleMessageManagerInstance;
 };
 
 NS_CC_YHLIB_END

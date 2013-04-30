@@ -20,8 +20,6 @@ class CCNormalMessageManager: public CCMessageManager
 public:
 	static CCNormalMessageManager* sharedNormalMessageManager();
     void dispatchMessage(CCMessage* message);
-private:
-	static CCNormalMessageManager* s_sharedNormalMessageManagerInstance;
 };
 
 NS_CC_YHLIB_END

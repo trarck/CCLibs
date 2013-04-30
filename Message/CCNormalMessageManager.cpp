@@ -10,7 +10,7 @@
 
 NS_CC_YHLIB_BEGIN
 
-CCNormalMessageManager* CCNormalMessageManager::s_sharedNormalMessageManagerInstance=NULL;
+static CCNormalMessageManager* s_sharedNormalMessageManagerInstance=NULL;
 
 CCNormalMessageManager* CCNormalMessageManager::sharedNormalMessageManager(void)
 {

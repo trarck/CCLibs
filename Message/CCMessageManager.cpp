@@ -306,6 +306,8 @@ void CCMessageManager::removeReceiverMap(CCObject* receiver,CCDictionary* map){
 //
 void CCMessageManager::dispatchMessage(CCMessage* message)
 {
+	CCAssert(message!=NULL,"CCMessageManager:dispatchMessage:message can't be null!");
+
 	CCObject* sender;
 	//CCAssert(message.type!=0,)
 	//如果message的type不为0，则需要执行一个type为global的所有消息
@@ -362,6 +364,9 @@ void CCMessageManager::dispatchMessage(CCMessage* message)
 //适应message中没有receiver的情况
 void CCMessageManager::dispatchMessage(CCMessage* message ,CCObject*  receiver)
 {
+	CCAssert(message!=NULL,"CCMessageManager:dispatchMessage:message can't be null!");
+	CCAssert(receiver!=NULL,"CCMessageManager:dispatchMessage:receiver can't be null!");
+
 	if (message->getType()!=GlobalMessageType) {
 		//message for global
 		CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(m_globalObject->m_uID);
@@ -473,14 +478,10 @@ void CCMessageManager::execRegisterWithSenderMap(CCDictionary* senderMap,CCMessa
 void CCMessageManager::execRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message,CCObject*  receiver)
 {
 	CCAssert(senderMap!=NULL,"CCMessageManager:execRegisterWithSenderMap:senderMap can't be null!");
-	if (receiver) {
-		//message for receiver
-		CCArray* receiverList=(CCArray*)senderMap->objectForKey(receiver->m_uID);
-		if(receiverList) execRegisterReceiverList(receiverList ,message);
-	}else {
-		//send to all receiver
-		execAllRegisterWithSenderMap(senderMap ,message);
-	}
+	CCAssert(receiver!=NULL,"CCMessageManager:execRegisterWithSenderMap:receiver can't be null!");
+	CCArray* receiverList=(CCArray*)senderMap->objectForKey(receiver->m_uID);
+	if(receiverList) 
+		execRegisterReceiverList(receiverList,message);
 }
 
 NS_CC_YHLIB_END
