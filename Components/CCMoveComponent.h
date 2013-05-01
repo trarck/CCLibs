@@ -1,9 +1,10 @@
-#ifndef __MoveComponent_H__
-#define __MoveComponent_H__
+#ifndef YHLIB_COMPONENTS_MOVECOMPONENT_H_
+#define YHLIB_COMPONENTS_MOVECOMPONENT_H_
 
 #include "cocos2d.h"
-#include "Component.h"
-NS_CC_BEGIN
+#include "CCComponent.h"
+
+NS_CC_YHLIB_BEGIN
 
 typedef enum  {
 	MoveStop=0,
@@ -12,11 +13,11 @@ typedef enum  {
 	MoveContinue,
 } MoveState;
 
-class MoveComponent : public Component{
+class CCMoveComponent : public CCComponent{
 
 public:
 
-	bool initWithSpeed(float speed);
+	bool init(float speed);
 
 	CCPoint movingCoordinate();
 
@@ -37,8 +38,8 @@ public:
 	void continueMoveWithPaths(bool *paths);
 	void continueMoveWithDirection(CCPoint dir);
 	void stopMove();
-	void updateDirection(ccTime delta);
-	void updatePath(ccTime delta);
+	void updateDirection(float delta);
+	void updatePath(float delta);
 
 	void updateMoveAnimation();
 	void didMoveStop();
@@ -78,13 +79,13 @@ protected:
 	int fromIndex_;
 	CCArray *currentPaths_;
 	CCArray *nextPaths_;
-	BOOL moving_;
-	BOOL inStep;
+	bool moving_;
+	bool inStep;
 	MoveState moveState_;
 	
 	SEL updateStep_;
 }
 
-NS_CC_END
+NS_CC_YHLIB_END
 
-#endif //__MoveComponent_H__
+#endif //YHLIB_COMPONENTS_MOVECOMPONENT_H_

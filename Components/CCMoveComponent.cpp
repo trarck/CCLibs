@@ -1,7 +1,7 @@
 
-#include "MoveComponent.h"
+#include "CCMoveComponent.h"
 
-NS_CC_BEGIN
+NS_CC_YHLIB_BEGIN
 
 void dealloc
 {
@@ -387,4 +387,4 @@ void didHit:(CGPoint) location
 	
 }
 
-NS_CC_END
+NS_CC_YHLIB_END

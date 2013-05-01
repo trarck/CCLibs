@@ -1,12 +1,12 @@
-#ifndef __MoveComponent_H__
-#define __MoveComponent_H__
+#ifndef YHLIB_COMPONENTS_CCSIMPLEMOVECOMPONENT_H_
+#define YHLIB_COMPONENTS_CCSIMPLEMOVECOMPONENT_H_
 
 #include "cocos2d.h"
-#include "Component.h"
+#include "CCComponent.h"
 
 USING_NS_CC;
 
-NS_YH_BEGIN
+NS_CC_YHLIB_BEGIN
 
 typedef enum  {
 	MoveStop=0,
@@ -15,21 +15,18 @@ typedef enum  {
 	MoveContinue
 } MoveState;
 
-class SimpleMoveComponent : public Component{
+class CCSimpleMoveComponent : public CCComponent{
 
 public:
 
-    SimpleMoveComponent();
-    ~SimpleMoveComponent();
+    CCSimpleMoveComponent();
+    ~CCSimpleMoveComponent();
     
     virtual bool init();
-    
+    bool init(float speed);
+
     virtual bool registerMessages();
     virtual void handleMessage(CCMessage* message);
-//    virtual void cleanupMessages();
-    
-    
-	bool initWithSpeed(float speed);
 
 	void preparePath();
 
@@ -122,10 +119,10 @@ protected:
     
     SEL_SCHEDULE m_update;
     
-        bool m_hasEndPosition;
+    bool m_hasEndPosition;
 
 };
 
-NS_YH_END
+NS_CC_YHLIB_END
 
 #endif //__MoveComponent_H__

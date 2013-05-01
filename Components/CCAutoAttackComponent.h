@@ -1,21 +1,18 @@
-#ifndef __Auto_Attack_Component_H__
-#define __Auto_Attack_Component_H__
+#ifndef YHLIB_COMPONENTS_CCAUTOATTACKCOMPONENT_H_
+#define YHLIB_COMPONENTS_CCAUTOATTACKCOMPONENT_H_
 
 #include "cocos2d.h"
-#include "GameEntity.h"
 
-#include "AttackComponent.h"
+#include "CCAttackComponent.h"
 
-USING_NS_CC;
-
-NS_YH_BEGIN
+NS_CC_YHLIB_BEGIN
 
 
-class AutoAttackComponent : public AttackComponent 
+class CCAutoAttackComponent : public CCAttackComponent 
 {
 public:
-    AutoAttackComponent();
-    ~AutoAttackComponent();
+    CCAutoAttackComponent();
+    ~CCAutoAttackComponent();
     virtual bool init();
     
     virtual bool registerMessages();
@@ -35,6 +32,6 @@ protected:
     float m_attackSpeed;
 };
 
-NS_YH_END
+NS_CC_YHLIB_END
 
-#endif //__Auto_Attack_Component_H__
+#endif //YHLIB_COMPONENTS_CCAUTOATTACKCOMPONENT_H_

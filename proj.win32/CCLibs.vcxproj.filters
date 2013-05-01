@@ -25,6 +25,9 @@
     <Filter Include="FSM\LayerFSM">
       <UniqueIdentifier>{65926c7b-fd5e-46ce-8d10-4725a52ddf82}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{a214be2d-cbbc-4446-a6ac-862fac475f7d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\cocos-yhlib.h">
@@ -168,6 +171,33 @@
     <ClInclude Include="..\FSM\Common\CCFSMStateInterface.h">
       <Filter>FSM\Common</Filter>
     </ClInclude>
+    <ClInclude Include="..\FSM\LayerFSM\CCLayerFSMMachine.h">
+      <Filter>FSM\LayerFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCAnimationComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCAttackComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCAutoAttackComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCComponentEntityInterface.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCComponentInterface.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCManualAttackComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\CCSimpleMoveComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Isometric\CCAstar.cpp">
@@ -277,6 +307,24 @@
     </ClCompile>
     <ClCompile Include="..\FSM\Common\CCFSMState.cpp">
       <Filter>FSM\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCAnimationComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCAttackComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCAutoAttackComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCManualAttackComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\CCSimpleMoveComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

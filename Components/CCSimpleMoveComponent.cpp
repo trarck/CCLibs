@@ -1,13 +1,11 @@
-#include "CCMessageManager.h"
-#include "SimpleMoveComponent.h"
-#include "GameEntity.h"
-#include "GameMessages.h"
+#include "CCSimpleMoveComponent.h"
+#include "Message/CCMessageManager.h"
 
 USING_NS_CC;
 
-NS_YH_BEGIN
+NS_CC_YHLIB_BEGIN
 
-SimpleMoveComponent::SimpleMoveComponent()
+CCSimpleMoveComponent::CCSimpleMoveComponent()
 :m_speed(0.0f)
 ,m_direction(0.0f)
 ,m_directionX(0)
@@ -17,24 +15,24 @@ SimpleMoveComponent::SimpleMoveComponent()
 ,m_hasEndPosition(false)
 ,m_isDirectionDirty(true)
 {
-    CCLOG("SimpleMoveComponent create");
+    CCLOG("CCSimpleMoveComponent create");
 }
 
-SimpleMoveComponent::~SimpleMoveComponent()
+CCSimpleMoveComponent::~CCSimpleMoveComponent()
 {
-    CCLOG("SimpleMoveComponent destroy");
+    CCLOG("CCSimpleMoveComponent destroy");
 }
 
-bool SimpleMoveComponent::init()
+bool CCSimpleMoveComponent::init()
 {
-	if(Component::init()){
+	if(CCComponent::init()){
 		m_moveState=MoveStop;      
 	}
     return true;
 	
 }
 
-bool SimpleMoveComponent::initWithSpeed(float speed)
+bool CCSimpleMoveComponent::init(float speed)
 {
 	if (init()) {
 		m_speed=speed;
@@ -42,92 +40,62 @@ bool SimpleMoveComponent::initWithSpeed(float speed)
 	return true;
 }
 
-void SimpleMoveComponent::handleMessage(CCMessage *message)
+void CCSimpleMoveComponent::handleMessage(CCMessage *message)
 {
-    CCLOG("SimpleMoveComponent::handleMessage");
+    CCLOG("CCSimpleMoveComponent::handleMessage");
     CCLOG("get message %d",message->getType());
-    
  
-	switch(message->getType()){
-            
-		case MOVE_DIRECTION :
-        {
-            CCInteger* integer=(CCInteger*)message->getData();
-            moveWithDirection(kmDegreesToRadians(integer->getValue()));
-            break;
-        }
-        case MOVE_DIRECTION_STOP:
-            stopMove();
-            break;
-        case MOVE_TO:
-        {
-            CCPoint to=*(CCPoint*)message->getData();
-            moveTo(to);
-            break;
-        }
-	}
 }
 
-bool SimpleMoveComponent::registerMessages()
+bool CCSimpleMoveComponent::registerMessages()
 {
-    CCLOG("SimpleMoveComponent::registerMessages");
-    
-    SEL_MessageHandler handle=message_selector(SimpleMoveComponent::handleMessage);
-    
-    CCMessageManager::defaultManager()->registerReceiver(m_owner, handle, MOVE_DIRECTION, NULL,this); 
-    CCMessageManager::defaultManager()->registerReceiver(m_owner, handle, MOVE_DIRECTION_STOP, NULL,this);
-    CCMessageManager::defaultManager()->registerReceiver(m_owner, handle, MOVE_TO, NULL,this);
+    CCLOG("CCSimpleMoveComponent::registerMessages");
     
     return true;
 }
 
-//void SimpleMoveComponent::cleanupMessages()
-//{
-//    CCMessageManager::defaultManager()->removeReceiver(this);
-//}
-
-float SimpleMoveComponent::getSpeed()
+float CCSimpleMoveComponent::getSpeed()
 {
     return m_speed;
 }
 
-void SimpleMoveComponent::setSpeed(float speed)
+void CCSimpleMoveComponent::setSpeed(float speed)
 {
     m_speed=speed;
 }
 
-void SimpleMoveComponent::setDirection(float direction)
+void CCSimpleMoveComponent::setDirection(float direction)
 {
     m_direction=direction;
     m_isDirectionDirty=false;
 }
 
-float SimpleMoveComponent::getDirection()
+float CCSimpleMoveComponent::getDirection()
 {
     return m_direction;
 }
 
-CCPoint SimpleMoveComponent::getTo()
+CCPoint CCSimpleMoveComponent::getTo()
 {
     return m_to;
 }
 
-void SimpleMoveComponent::setTo(CCPoint to)
+void CCSimpleMoveComponent::setTo(CCPoint to)
 {
     m_to=to;
 }
 
-bool SimpleMoveComponent::isMoving()
+bool CCSimpleMoveComponent::isMoving()
 {
     return m_moving;
 }
 
-MoveState SimpleMoveComponent::getMoveState()
+MoveState CCSimpleMoveComponent::getMoveState()
 {
     return m_moveState;
 }
 
-CCPoint SimpleMoveComponent::movingCoordinate()
+CCPoint CCSimpleMoveComponent::movingCoordinate()
 {
 	CCPoint coord;
 //	if (m_moveState==MoveStart) {
@@ -145,7 +113,7 @@ CCPoint SimpleMoveComponent::movingCoordinate()
  * 移动之前进行检查
  */
 
-bool SimpleMoveComponent::beforeMove()
+bool CCSimpleMoveComponent::beforeMove()
 {
 	return true;
 }
@@ -154,7 +122,7 @@ bool SimpleMoveComponent::beforeMove()
  * 开始移动
  * 设置移动动画的定时器
  */
-void SimpleMoveComponent::startMove()
+void CCSimpleMoveComponent::startMove()
 {
     CCLOG("startMove");
 	m_moveState=MoveStart;
@@ -168,7 +136,7 @@ void SimpleMoveComponent::startMove()
  * 停止移动
  * 取消移动动画的定时器
  */
-void SimpleMoveComponent::stopMove()
+void CCSimpleMoveComponent::stopMove()
 {
 //	if(m_moveState==MoveStart){
 //		m_moveState=MoveWillStop;
@@ -182,19 +150,16 @@ void SimpleMoveComponent::stopMove()
 //	}
 }
 
-#pragma mark -
-#pragma mark 按方向移动
-
-void SimpleMoveComponent::moveWithDirection(float direction)
+void CCSimpleMoveComponent::moveWithDirection(float direction)
 {
     moveWithDirection(direction,false);
 }
 
-void SimpleMoveComponent::moveWithDirection(float direction,bool hasTo)
+void CCSimpleMoveComponent::moveWithDirection(float direction,bool hasTo)
 {
     CCLOG("moveWithDirection:%f",direction);
     
-    m_update=schedule_selector(SimpleMoveComponent::updateDirection);
+    m_update=schedule_selector(CCSimpleMoveComponent::updateDirection);
     m_hasEndPosition=hasTo;
     
     if (m_moveState==MoveStart) {
@@ -212,7 +177,7 @@ void SimpleMoveComponent::moveWithDirection(float direction,bool hasTo)
 /**
  * 按指定方向偏移量,这里不考虑速度叠加.
  */
-void SimpleMoveComponent::moveWithDirection(float directionX ,float directionY)
+void CCSimpleMoveComponent::moveWithDirection(float directionX ,float directionY)
 {
     moveWithDirection(directionX, directionY, false);
 }
@@ -220,9 +185,9 @@ void SimpleMoveComponent::moveWithDirection(float directionX ,float directionY)
 /**
  * 按指定方向偏移量,这里不考虑速度叠加.
  */
-void SimpleMoveComponent::moveWithDirection(float directionX ,float directionY,bool hasTo)
+void CCSimpleMoveComponent::moveWithDirection(float directionX ,float directionY,bool hasTo)
 {
-    m_update=schedule_selector(SimpleMoveComponent::updateDirection);
+    m_update=schedule_selector(CCSimpleMoveComponent::updateDirection);
     m_hasEndPosition=hasTo;
     
     m_isDirectionDirty=true;
@@ -239,7 +204,7 @@ void SimpleMoveComponent::moveWithDirection(float directionX ,float directionY,b
 /**
  * 断续指定方向移动
  */
-void SimpleMoveComponent::continueMoveWithDirection(float direction)
+void CCSimpleMoveComponent::continueMoveWithDirection(float direction)
 {
 	setDirection(direction);
     calcSpeedVector(cosf(direction), sinf(direction));
@@ -250,16 +215,16 @@ void SimpleMoveComponent::continueMoveWithDirection(float direction)
 /**
  * 断续指定方向移动
  */
-void SimpleMoveComponent::continueMoveWithDirection(float directionX ,float directionY)
+void CCSimpleMoveComponent::continueMoveWithDirection(float directionX ,float directionY)
 {
 	calcSpeedVector(directionX, directionY);
     m_moveState=MoveContinue;
 }
 
-void SimpleMoveComponent::moveTo(CCPoint to)
+void CCSimpleMoveComponent::moveTo(CCPoint to)
 {
     
-    CCPoint pos=((GameEntity*)m_owner)->getPosition();
+    CCPoint pos=((CCNode*)m_pOwner)->getPosition();
     
     float dx=to.x-pos.x;
     float dy=to.y-pos.y;
@@ -346,9 +311,9 @@ void SimpleMoveComponent::moveTo(CCPoint to)
  * 移动动画步骤
  * 通过方向移动的动画步骤
  */
-void SimpleMoveComponent::updateDirection( float delta)
+void CCSimpleMoveComponent::updateDirection( float delta)
 {
-    GameEntity* owner=(GameEntity*)m_owner;
+    CCNode* owner=(CCNode*)m_pOwner;
     
     CCPoint pos=owner->getPosition();
 	//根据速度计算移动距离
@@ -384,7 +349,7 @@ void SimpleMoveComponent::updateDirection( float delta)
 // * 移动动画步骤
 // * 通过路径移动的动画步骤
 // */
-//void SimpleMoveComponent::updatePath(float delta)
+//void CCSimpleMoveComponent::updatePath(float delta)
 //{
 //    GameEntity* owner=(GameEntity*)m_owner;
 //    
@@ -506,7 +471,7 @@ void SimpleMoveComponent::updateDirection( float delta)
  * 移动结束
  * 由移动状态转向空闲状态
  */
-void SimpleMoveComponent::didMoveStart()
+void CCSimpleMoveComponent::didMoveStart()
 {
     //todo parse direction
     
@@ -514,7 +479,7 @@ void SimpleMoveComponent::didMoveStart()
     data->setObject(CCString::create("move"), "name");
     data->setObject(CCInteger::create(3), "direction");
     
-    CCMessageManager::defaultManager()->dispatchMessageWithType(CHANGE_ANIMATION, NULL, m_owner,data);
+    //CCMessageManager::defaultManager()->dispatchMessageWithType(CHANGE_ANIMATION, NULL, m_owner,data);
     
 }
 
@@ -522,20 +487,20 @@ void SimpleMoveComponent::didMoveStart()
  * 移动结束
  * 由移动状态转向空闲状态
  */
-void SimpleMoveComponent::didMoveStop()
+void CCSimpleMoveComponent::didMoveStop()
 {
 	CCDictionary* data=new CCDictionary();
     data->setObject(CCString::create("idle"), "name");
     data->setObject(CCInteger::create(0), "direction");
     
-    CCMessageManager::defaultManager()->dispatchMessageWithType(CHANGE_ANIMATION, NULL, m_owner,data);
+    //CCMessageManager::defaultManager()->dispatchMessageWithType(CHANGE_ANIMATION, NULL, m_owner,data);
 
 }
 //处理碰撞,由子类实现。
 //TODO:触发事件。由事件接收者执行处理逻辑，比如重新寻路。、
-void SimpleMoveComponent::didHit(CCPoint location)
+void CCSimpleMoveComponent::didHit(CCPoint location)
 {
 	
 }
 
-NS_YH_END
+NS_CC_YHLIB_END
