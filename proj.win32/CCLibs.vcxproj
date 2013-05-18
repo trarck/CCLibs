@@ -33,6 +33,7 @@
     <ClInclude Include="..\FSM\LayerFSM\CCLayerFSMMachine.h" />
     <ClInclude Include="..\include\cocos-yhlib.h" />
     <ClInclude Include="..\include\isometric.h" />
+    <ClInclude Include="..\include\message.h" />
     <ClInclude Include="..\include\YHLibMacros.h" />
     <ClInclude Include="..\Isometric\CCAstar.h" />
     <ClInclude Include="..\Isometric\CCAstarNode.h" />

@@ -74,7 +74,7 @@ bool CCMessageManager::registerReceiver(CCObject* receiver,SEL_MessageHandler ha
 	CCArray *handleList=(CCArray*)receiverMap->objectForKey(senderKey);
 	if (!handleList) {
         handleList=new CCArray();
-		receiverMap->setObject(handleList,receiverKey);
+		receiverMap->setObject(handleList,senderKey);
 		handleList->release();
 	}
 
@@ -299,8 +299,6 @@ void CCMessageManager::dispatchMessage(CCMessage* message)
 {
 	CCAssert(message!=NULL,"CCMessageManager:dispatchMessage:message can't be null!");
 
-    CCObject* receiver=NULL;
-	CCObject* sender=NULL;
 	//CCAssert(message.type!=0,)
 	//如果message的type不为0，则需要执行一个type为global的所有消息
 	if (message->getType()!=GlobalMessageType) {
@@ -364,7 +362,8 @@ void CCMessageManager::dispatchMessageMap(CCDictionary* msgMap,CCMessage* messag
                 if(sender){
                     //执行注册到送送者为sender的消息的处理方法
                     handleList=(CCArray *)receiverMap->objectForKey(sender->m_uID);
-                    execHandleList(handleList,message);
+                    if(handleList)
+                        execHandleList(handleList,message);
 //                        //执行注册到送送者为null的消息的处理方法
 //
 //                    }else{
@@ -374,8 +373,8 @@ void CCMessageManager::dispatchMessageMap(CCDictionary* msgMap,CCMessage* messag
 
                 //执行注册到送送者为null的消息的处理方法
                 handleList=(CCArray *)receiverMap->objectForKey(kNullObjectId);
-
-                execHandleList(handleList,message);
+                if(handleList!=NULL)
+                    execHandleList(handleList,message);
         }else{
                 //发送到注册时的接收者为sender的所有接收者
                 dispathMessageToAllReceiverWithSender(message,msgMap,sender);
@@ -390,16 +389,19 @@ void CCMessageManager::dispathMessageToAllReceiverWithSender(CCMessage* message,
 
         CCDictElement* pElement = NULL;
         CCDictionary* receiverMap=NULL;
+        CCArray* handleList=NULL;
 
         CCDICT_FOREACH(msgMap,pElement){
             receiverMap=(CCDictionary*)pElement->getObject();
-            execHandleList((CCArray*)receiverMap->objectForKey(senderKey),message);
+            handleList=(CCArray*)receiverMap->objectForKey(senderKey);
+            if(handleList)
+                execHandleList(handleList,message);
         }
 }
 
 void CCMessageManager::execHandleList(CCArray* handleList ,CCMessage* message)
 {
-	CCAssert(handleList!=NULL,"CCMessageManager:execRegisterReceiverList:handleList can't be null!");
+	CCAssert(handleList!=NULL,"CCMessageManager:execHandleList:handleList can't be null!");
 	CCObject* pObject = NULL;
     CCARRAY_FOREACH(handleList,pObject){
         CCMessageHandler* handler=(CCMessageHandler*) pObject;
