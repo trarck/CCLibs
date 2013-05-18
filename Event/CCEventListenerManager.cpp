@@ -2,86 +2,125 @@
 
 NS_CC_YHLIB_BEGIN
 
-CCEventListenerManager::CCEventListenerManager();
+CCEventListenerManager::CCEventListenerManager()
+:m_pListeners(NULL)
+{
 
-CCEventListenerManager::~CCEventListenerManager();
+}
 
-bool CCEventListenerManager::init();
+CCEventListenerManager::~CCEventListenerManager()
+{
+	CC_SAFE_RELEASE(m_pListeners);
+}
 
-void CCEventListenerManager::addEventListener(CCObject* target,const char* type,SEL_EventHandle handle,CCObject* handleObject,CCObject* data)
+bool CCEventListenerManager::init()
+{
+	m_pListeners=new CCDictionary();
+}
+
+void CCEventListenerManager::addEventListener(CCObject* target,const char* type,CCObject* handleObject,SEL_EventHandle handle)
 {
 
     unsigned int id=target->m_uID;
-    
-    var listener= {
-        handle:handle,
-        scope:scope||obj,
-        data:data||[]
-    };
 
-    //get listeners
-    var listeners,eventListeners=Events[id]||(Events[id]={});
+	CCDictionary* targetListeners=static_cast<CCDictionary*>(m_pListeners->objectForKey(m_uID));
+	if(targetListeners==NULL){
+		targetListeners=new CCDictionary();
+		m_pListeners->setObject(targetListeners,m_uID);
+        targetListeners->release();
+	}
 
-    if(eventListeners[type]){
-        listeners=eventListeners[type].listeners;
-    }else{
-        eventListeners[type]={};
-    }
+    CCArray* eventListeners=static_cast<CCArray*>(targetListeners->objectForKey(type));
+    if(eventListeners==NULL){
+		eventListeners=new CCArray();
+		eventListeners->init();
+		targetListeners->setObject(eventListeners,type);
+        eventListeners->release();
+	}
+
     //is listened. one type event only have a  handle ,have multi-processor function
     //一个事件只有一个触发点，但有很多处理该事件的函数
-    if(listeners){
-        if(!this.isListened(listeners,handle)) {
-            listeners.push(listener);
-        }
-    }else{
-        //add event handle to listene
-        eventListeners[type].listeners=[listener];
 
-        // //add to framework listener systerm,trigger by framework automatic. user defined event trigger by user program manual.
-        // //事件处理函数。系统中的事件传的参数不一样，要做相应的接口对接，全部转成EventObject。
-        // eventListeners[type].handle=this.getEventHandle(type,obj,params);
-        // //设置系统触发点。平台事件由系统自动触发。自定义事件要手动触发。
-        // this.addTrigger(obj,type,eventListeners[type].handle,params);
+    if(!isListened(eventListeners,handle,handleObject)) {
+        CCEventHandle* eventHandle=new CCEventHandle();
+	    eventHandle->initWithTarget(handleObject,handle);
+        eventListeners->addObject(eventHandle);
+        eventHandle->release();
+    }else{
+        CCAssert(0,"CCEventListenerManager:Handle has register");
+    }
+
+}
+
+void CCEventListenerManager::removeEventListener(CCObject* target,const char* type,CCObject* handleObject,SEL_EventHandle handle)
+{
+    CCAssert(target!=NULL,"CCEventListenerManager::removeEventListener target is null.");
+    CCAssert(handle!=NULL,"CCEventListenerManager::removeEventListener handle is null.");
+    CCAssert(handleObject!=NULL,"CCEventListenerManager::removeEventListener handleObject is null.");
+
+    CCArray* targetListeners=static_cast<CCArray*>(m_pListeners->objectForKey(target->m_uID));
+    if(targetListeners) {
+        if(type) {
+            //移除对应的type事件
+            CCArray* eventListeners=static_cast<CCArray*>(targetListeners->objectForKey(type));
+            if(eventListeners) {
+                //某事件有处理函数
+                if(handle) {
+                    //删除事件中的handler
+                    removeListeners(eventListeners,handleObject,handle);
+                } else {
+                    //删除事件中的处理对象为handleObject的注册项
+                    removeListeners(eventListeners,handleObject);
+                }
+            }
+        } else {
+           //删除target的所有监听者
+
+        }
     }
 }
 
-void CCEventListenerManager::removeEventListener(CCObject* target,const char* type,SEL_EventHandle handle) 
+
+
+void removeListeners(CCArray* listeners,CCObject* handleObject)
 {
-    if(obj._eventId_) {
-        var eventListeners=Events[obj._eventId_];
-        if(eventListeners) {
-            //有obj对应的事件
-            if(type) {
-                var listeners=eventListeners[type] && eventListeners[type].listeners;
-                if(listeners) {
-                    //某事件有listeners
-                    if(handle) {
-                        //删除事件中的handler
-                        var i=this.getHandlerIndex(listeners,handle);
-                        if(i>-1) {
-                            listeners.splice(i,1);
-                        }
-                        if(listeners.length==0){
-                            // this.removeTrigger(obj,type,eventListeners[type].handle);
-                            delete eventListeners[type];
-                        }
-                    } else {
-                        //删除事件的所有handler，即删除obj的type事件。
-                        // this.removeTrigger(obj,type,eventListeners[type].handle);
-                        delete eventListeners[type];
-                    }
-                }
-            } else {
-                // remove all object events
-                
-                // for(var i in eventListeners){
-                    // //remove trigger
-                    // this.removeTrigger(obj,i,eventListeners[i].handle);
-                // }
-                delete Events[obj._eventId_];
-                //delete obj._eventId_;
+    //使用index删除，效率会高些。但要注意删除后的空位置.
+    //如果使用object删除，则效率会低些，但不会有空位引发的问题。
+    
+    CCObject* pObject = NULL;
+    if (listeners && listeners->data->num > 0){         
+        int len=listeners->data->num;
+        CCObject** arr = listeners->data->arr;
+        for(int i=0;i<len;){
+		    CCEventHandle* eventHandle=(CCEventHandle*)(*(arr+i));
+		    if (eventHandle->getTarget()==handleObject) {
+			    listeners->removeObjectAtIndex(i);
+                --len;
+		    }else{
+                ++i;
             }
-        }
+	    }
+    }
+}
+
+void removeListeners(CCArray* listeners,CCObject* handleObject,SEL_EventHandle handle)
+{
+    //使用index删除，效率会高些。但要注意删除后的空位置.
+    //如果使用object删除，则效率会低些，但不会有空位引发的问题。
+
+    CCObject* pObject = NULL;
+    if (listeners && listeners->data->num > 0){         
+        int len=listeners->data->num;
+        CCObject** arr = listeners->data->arr;
+        for(int i=0;i<len;){
+		    CCEventHandle* eventHandle=(CCEventHandle*)(*(arr+i));
+		    if (eventHandle->getTarget()==handleObject && eventHandle->getHandle()==handle) {
+			    listeners->removeObjectAtIndex(i);
+                --len;
+		    }else{
+                ++i;
+            }
+	    }
     }
 }
 
@@ -118,21 +157,18 @@ void CCEventListenerManager::handleEvent(CCObject* target,CCEvent* event)
     }
 }
 
-bool CCEventListenerManager::isListened(CCArray* listeners,SEL_EventHandle handle)
+bool CCEventListenerManager::isListened(CCArray* listeners,SEL_EventHandle handle,CCObject* handleObject)
 {
-    return this.getHandlerIndex(listeners,handle)>-1;
-}
+    CCObject* pObj=NULL;
+    CCEventHandle* eventHandle=NULL;
 
-int CCEventListenerManager::getHandlerIndex(CCArray* listeners,SEL_EventHandle handle)
-{
-    var p=-1;
-    for(var i=0,l=listeners.length;i<l;i++) {
-        if(listeners[i].handle==handle) {
-            p=i;
-            break;
-        }
+    CCARRAY_FOREACH(listeners,pObj){
+        eventHandle=(CCEventHandle*) pObj;
+        if (eventHandle->getHandle()==handle && eventHandle->getTarget()==handleObject) {
+			return true;
+		}
     }
-    return p;
+    return false;
 }
 
 CCArray* CCEventListenerManager::getEventListeners(CCObject* target,const char* type)
@@ -152,5 +188,6 @@ void CCEventListenerManager::trigger(CCObject* target,const char* type,CCDiction
     e.data=data;
     this.dispatchEvent(obj,e);
 }
+
 
 NS_CC_YHLIB_END

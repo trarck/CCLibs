@@ -53,26 +53,26 @@ public:
         return m_sType;
     }
 
-    inline void setTarget(cocos2d::CCObject* pTarget)
+    inline void setTarget(CCObject* pTarget)
     {
         CC_SAFE_RETAIN(pTarget);
         CC_SAFE_RELEASE(m_pTarget);
         m_pTarget = pTarget;
     }
 
-    inline cocos2d::CCObject* getTarget()
+    inline CCObject* getTarget()
     {
         return m_pTarget;
     }
 
-    inline void setCurrentTarget(cocos2d::CCObject* pCurrentTarget)
+    inline void setCurrentTarget(CCObject* pCurrentTarget)
     {
         CC_SAFE_RETAIN(pCurrentTarget);
         CC_SAFE_RELEASE(m_pCurrentTarget);
         m_pCurrentTarget = pCurrentTarget;
     }
 
-    inline cocos2d::CCObject* getCurrentTarget()
+    inline CCObject* getCurrentTarget()
     {
         return m_pCurrentTarget;
     }
@@ -117,13 +117,25 @@ public:
         return m_nTimeStamp;
     }
 
+	 inline void setData(CCObject* data)
+    {
+        CC_SAFE_RETAIN(data);
+		CC_SAFE_RELEASE(m_pData);
+        m_pData=data;
+    }
+
+    inline CCObject* getData()
+    {
+        return m_pData;
+    }
+
 protected:
     /**event类型*/
     std::string m_sType;
     /**event目标*/
-    cocos2d::CCObject* m_pTarget;
+    CCObject* m_pTarget;
     /**event 当前处理目标*/
-    cocos2d::CCObject* m_pCurrentTarget;
+    CCObject* m_pCurrentTarget;
     /**event 处理的阶段*/
     int m_nEventPhase;
     /**event允许冒泡*/
@@ -136,6 +148,8 @@ protected:
     bool m_bDispatchStopped;
 
     bool m_bNoDefault
+
+	CCObject* m_pData;
 };
 
 NS_CC_YHLIB_END

@@ -6,5 +6,5 @@
 #define USING_NS_CC_YHLIB                     using namespace cocos2d::yhlib
 
 
-#endif //COCOS_YHLIB_MACROS_H_
 
+#endif //COCOS_YHLIB_MACROS_H_

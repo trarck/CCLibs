@@ -26,7 +26,7 @@ public:
 		CCLOG("CCEventHandle create");
 	}
 
-    ~CCEventHandle();
+    virtual ~CCEventHandle();
 
 	inline CCObject* getTarget()
 	{
@@ -57,6 +57,9 @@ public:
 		return true;
 	}
 
+	//不使用虚函数，来继承handle。
+	//可以使用外包一层
+	//virtual void execute(CCEvent *event);
 	inline void execute(CCEvent *event)
 	{
 		if(m_handle){

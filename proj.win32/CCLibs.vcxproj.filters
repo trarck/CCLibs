@@ -28,6 +28,9 @@
     <Filter Include="Components">
       <UniqueIdentifier>{a214be2d-cbbc-4446-a6ac-862fac475f7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Event">
+      <UniqueIdentifier>{01a728c0-7ac1-4302-a68b-03ccfeefabff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\cocos-yhlib.h">
@@ -198,6 +201,21 @@
     <ClInclude Include="..\Components\CCSimpleMoveComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="..\Event\CCEvent.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Event\CCEventHandle.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Event\CCEventListenerManager.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Event\CCUIEvent.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Event\CCEventHandleWrap.h">
+      <Filter>Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Isometric\CCAstar.cpp">
@@ -325,6 +343,21 @@
     </ClCompile>
     <ClCompile Include="..\Components\CCSimpleMoveComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Event\CCEvent.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Event\CCEventHandle.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Event\CCEventListenerManager.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Event\CCUIEvent.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Event\CCEventHandleWrap.cpp">
+      <Filter>Event</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

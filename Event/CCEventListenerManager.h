@@ -18,24 +18,27 @@ public:
 
     bool init();
 
-    void addEventListener(CCObject* target,const char* type,SEL_EventHandle handle,CCObject* handleObject,CCObject* data);
+    void addEventListener(CCObject* target,const char* type,CCObject* handleObject,SEL_EventHandle handle);
         
-    void removeEventListener(CCObject* target,const char* type,SEL_EventHandle handle) ;
+    void removeEventListener(CCObject* target,const char* type,CCObject* handleObject,SEL_EventHandle handle);
         
     void dispatchEvent(CCObject* target,CCEvent* event);
 
     void handleEvent(CCObject* target,CCEvent* event);
 
-    bool isListened(CCArray* listeners,SEL_EventHandle handle) ;
-
-    int getHandlerIndex(CCArray* listeners,SEL_EventHandle handle) ;
+    bool isListened(CCArray* listeners,SEL_EventHandle handle,CCObject* handleObject) ;
 
     CCArray* getEventListeners(CCObject* target,const char* type);
     //把new EventObject和dispatchEvent和起来，提供简便方法
     void trigger(CCObject* target,const char* type,CCDictionary* data,bool bubbles);
-   
+  
 protected:
+    void removeListeners(CCDi* listeners,CCObject* handleObject);
+    void removeListeners(CCArray* listeners,CCObject* handleObject);
+    void removeListeners(CCArray* listeners,CCObject* handleObject,SEL_EventHandle handle);
 
+protected:
+	CCDictionary* m_pListeners;
 };
 NS_CC_YHLIB_END
 #endif  // YHLIB_EVENT_CCEVENTLISTENERMANAGER_H_

@@ -19,6 +19,11 @@
     <ClInclude Include="..\Components\CCComponentInterface.h" />
     <ClInclude Include="..\Components\CCManualAttackComponent.h" />
     <ClInclude Include="..\Components\CCSimpleMoveComponent.h" />
+    <ClInclude Include="..\Event\CCEvent.h" />
+    <ClInclude Include="..\Event\CCEventHandle.h" />
+    <ClInclude Include="..\Event\CCEventHandleWrap.h" />
+    <ClInclude Include="..\Event\CCEventListenerManager.h" />
+    <ClInclude Include="..\Event\CCUIEvent.h" />
     <ClInclude Include="..\FSM\Common\CCFSMMachine.h" />
     <ClInclude Include="..\FSM\Common\CCFSMMachineInterface.h" />
     <ClInclude Include="..\FSM\Common\CCFSMState.h" />
@@ -75,6 +80,11 @@
     <ClCompile Include="..\Components\CCComponent.cpp" />
     <ClCompile Include="..\Components\CCManualAttackComponent.cpp" />
     <ClCompile Include="..\Components\CCSimpleMoveComponent.cpp" />
+    <ClCompile Include="..\Event\CCEvent.cpp" />
+    <ClCompile Include="..\Event\CCEventHandle.cpp" />
+    <ClCompile Include="..\Event\CCEventHandleWrap.cpp" />
+    <ClCompile Include="..\Event\CCEventListenerManager.cpp" />
+    <ClCompile Include="..\Event\CCUIEvent.cpp" />
     <ClCompile Include="..\FSM\Common\CCFSMMachine.cpp" />
     <ClCompile Include="..\FSM\Common\CCFSMState.cpp" />
     <ClCompile Include="..\Isometric\CCAstar.cpp" />
