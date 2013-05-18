@@ -12,15 +12,15 @@
 
 NS_CC_YHLIB_BEGIN
 
-class CCMessageManager : public CCObject {
+class CCMessageManagerComplex : public CCObject {
 
 public:
 
-    CCMessageManager();
+    CCMessageManagerComplex();
 
-    ~CCMessageManager();
+    ~CCMessageManagerComplex();
 
-    static CCMessageManager* defaultManager();
+    static CCMessageManagerComplex* defaultManager();
 
     bool init();
     
