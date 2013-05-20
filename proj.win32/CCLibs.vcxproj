@@ -66,13 +66,14 @@
     <ClInclude Include="..\Isometric\parser\CCISOTileInfo.h" />
     <ClInclude Include="..\Isometric\parser\CCISOTilesetInfo.h" />
     <ClInclude Include="..\Isometric\parser\CCISOXMLParser.h" />
-    <ClInclude Include="..\Message\CCMessageManagerInterface.h" />
     <ClInclude Include="..\Message\CCMessage.h" />
     <ClInclude Include="..\Message\CCMessageHandler.h" />
     <ClInclude Include="..\Message\CCMessageManager.h" />
+    <ClInclude Include="..\Message\CCMessageManagerComplex.h" />
     <ClInclude Include="..\Message\CCMessageTarget.h" />
     <ClInclude Include="..\Message\CCNormalMessageManager.h" />
     <ClInclude Include="..\Message\CCSimpleMessageManager.h" />
+    <ClInclude Include="..\Message\ICCMessageManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Components\CCAnimationComponent.cpp" />
@@ -119,6 +120,7 @@
     <ClCompile Include="..\Message\CCMessage.cpp" />
     <ClCompile Include="..\Message\CCMessageHandler.cpp" />
     <ClCompile Include="..\Message\CCMessageManager.cpp" />
+    <ClCompile Include="..\Message\CCMessageManagerComplex.cpp" />
     <ClCompile Include="..\Message\CCMessageTarget.cpp" />
     <ClCompile Include="..\Message\CCNormalMessageManager.cpp" />
     <ClCompile Include="..\Message\CCSimpleMessageManager.cpp" />

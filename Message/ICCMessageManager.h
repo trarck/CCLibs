@@ -27,11 +27,16 @@ public:
      */
     //receiver对sender发来的type消息可以有多个响应方法，实际中情况会很少
     
-    virtual bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender ,CCObject*  handleObject);
+    virtual bool registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle ,CCObject*  handleObject);
 
-	virtual bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle,unsigned int type ,CCObject* sender);
+	virtual bool registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle);
 	
 	/**
+	 * 取消注册到接收者的处理对象的处理方法，该方法注册到发送者的某个消息。
+	 */
+	virtual void removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle,CCObject*  handleObject);
+
+    /**
 	 * 取消接收者的处理方法，该方法注册到发送者的某个消息。
 	 */
 	virtual void removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle);

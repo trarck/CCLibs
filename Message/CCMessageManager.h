@@ -34,11 +34,16 @@ public:
      */
     //receiver对sender发来的type消息可以有多个响应方法，实际中情况会很少
     
-    bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle ,unsigned int type ,CCObject* sender ,CCObject*  handleObject);
+    bool registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle ,CCObject*  handleObject);
 
-	bool registerReceiver(CCObject* receiver,SEL_MessageHandler handle,unsigned int type ,CCObject* sender);
+	bool registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle);
 	
 	/**
+	 * 取消注册到接收者的处理对象的处理方法，该方法注册到发送者的某个消息。
+	 */
+	void removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle,CCObject*  handleObject);
+
+    /**
 	 * 取消接收者的处理方法，该方法注册到发送者的某个消息。
 	 */
 	void removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle);
@@ -117,6 +122,25 @@ protected:
     void dispathMessageToAllReceiverWithSender(CCMessage* message,CCDictionary* msgMap,CCObject* sender);
     void dispatchMessageMap(CCDictionary* msgMap,CCMessage* message);
 
+    /**
+	 * 删除接收者的注册列表。
+	 */
+	void removeReceiverMap(CCDictionary* receiverMap,SEL_MessageHandler handle,CCObject* handleObject);
+
+    /**
+	 * 删除接收者的注册列表。
+	 */
+	void removeReceiverMap(CCDictionary* receiverMap,SEL_MessageHandler handle);
+
+	/**
+	 * 删除接收者的注册列表。
+	 */
+	void removeReceiverMap(CCDictionary* receiverMap);
+
+    /**
+	 * 删除接收者的处理方法列表的处理方法为参数指定的函数。
+	 */
+	void removeHandleList(CCArray* handleList,SEL_MessageHandler handle,CCObject* handleObject);
 	/**
 	 * 删除接收者的处理方法列表的处理方法为参数指定的函数。
 	 */
@@ -126,16 +150,6 @@ protected:
 	 * 删除接收者的处理方法列表。
 	 */
 	void removeHandleList(CCArray* handleList);
-
-	/**
-	 * 删除接收者的注册列表。
-	 */
-	void removeReceiverMap(CCDictionary* receiverMap,SEL_MessageHandler handle);
-
-	/**
-	 * 删除接收者的注册列表。
-	 */
-	void removeReceiverMap(CCDictionary* receiverMap);
 
 	/**
 	 * 执行接收者的处理列表的所有处理方法。

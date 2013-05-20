@@ -3,6 +3,6 @@
 
 #include <Message/CCMessage.h>
 #include <Message/CCMessageHandler.h>
-#include <Message/CCMessageManager2.h>
+#include <Message/CCMessageManager.h>
 
 #endif //COCOS_YHLIB_MESSAGE_H_

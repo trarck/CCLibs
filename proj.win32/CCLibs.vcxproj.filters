@@ -153,9 +153,6 @@
     <ClInclude Include="..\Message\CCSimpleMessageManager.h">
       <Filter>Message</Filter>
     </ClInclude>
-    <ClInclude Include="..\Message\CCMessageManagerInterface.h">
-      <Filter>Message</Filter>
-    </ClInclude>
     <ClInclude Include="..\FSM\Common\CCFSMMachine.h">
       <Filter>FSM\Common</Filter>
     </ClInclude>
@@ -218,6 +215,12 @@
     </ClInclude>
     <ClInclude Include="..\include\message.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Message\ICCMessageManager.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Message\CCMessageManagerComplex.h">
+      <Filter>Message</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -361,6 +364,9 @@
     </ClCompile>
     <ClCompile Include="..\Event\CCEventHandleWrap.cpp">
       <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Message\CCMessageManagerComplex.cpp">
+      <Filter>Message</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
