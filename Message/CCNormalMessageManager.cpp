@@ -24,23 +24,10 @@ CCNormalMessageManager* CCNormalMessageManager::sharedNormalMessageManager(void)
 void CCNormalMessageManager::dispatchMessage(CCMessage* message)
 {
 	//NSAssert(message.type!=0,)
-	//message for type
-	CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(message->getType());
+		//message for type
+	CCDictionary* msgMap= (CCDictionary*)m_messages->objectForKey(message->getType());
 	if (msgMap) {
-		//parse for sender
-		//如果sender不为空，则不要触发一次全局消息，只触发sender的消息。
-		CCObject* sender=message->getSender();
-		if (sender) {
-			//执行注册到sender的消息的处理方法
-			CCDictionary* senderMap=(CCDictionary*)msgMap->objectForKey(sender->m_uID);
-			//如果注册则执行
-			if (senderMap)   execRegisterWithSenderMap(senderMap ,message);
-		}else {
-			//执行注册到global的消息的处理方法
-			CCDictionary* globalMap=(CCDictionary*) msgMap->objectForKey(m_globalObject->m_uID);
-			//如果注册则执行
-			if (globalMap)   execRegisterWithSenderMap(globalMap ,message);
-		}
+		dispatchMessageMap(msgMap,message);
 	}
 }
 

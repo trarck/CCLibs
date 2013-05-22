@@ -34,15 +34,17 @@ public:
 
 	bool registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle);
 	
+   /**
+	 * 取消注册到接收者的处理对象的处理方法，该方法注册到发送者的某个消息。
+	 */
+	void removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle,CCObject*  handleObject);
+
 	/**
 	 * 取消接收者的处理方法，该方法注册到发送者的某个消息。
 	 */
 	void removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle);
 
-    /**
-	 * 取消注册到接收者的处理对象的处理方法，该方法注册到发送者的某个消息。
-	 */
-	void removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle,CCObject*  handleObject);
+
 	/**
 	 * 取消接收者注册到某个发送者的某个消息的所有处理方法。
 	 */
@@ -118,12 +120,22 @@ protected:
 	/**
 	 * 删除接收者的处理方法列表的处理方法为参数指定的函数。
 	 */
+	void removeReceiverList(CCArray* list,SEL_MessageHandler handle,CCObject* handleObject);
+
+	/**
+	 * 删除接收者的处理方法列表的处理方法为参数指定的函数。
+	 */
 	void removeReceiverList(CCArray* list,SEL_MessageHandler handle);
 
 	/**
 	 * 删除接收者的处理方法列表。
 	 */
 	void removeReceiverList(CCArray* list);
+
+	/**
+	 * 删除接收者的注册列表。
+	 */
+	void removeReceiverMap(CCObject* receiver,CCDictionary* map,SEL_MessageHandler handle,CCObject* handleObject);
 
 	/**
 	 * 删除接收者的注册列表。

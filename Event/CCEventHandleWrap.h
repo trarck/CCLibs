@@ -11,7 +11,7 @@
 NS_CC_YHLIB_BEGIN
 
 //定义处理函数类型
-typedef void (CCObject::*SEL_EventHandleD)(CCEvent*,CCObject* data);
+typedef void (CCObject::*SEL_EventHandleD)(CCEvent* evt,CCObject* data);
 #define yh_event_selectorD(_SELECTOR) (SEL_EventHandleD)(&_SELECTOR)
 
 class CCEventHandleWrap : public CCObject {

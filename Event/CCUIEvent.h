@@ -1,12 +1,11 @@
 #ifndef YHLIB_EVENT_CCUIEVENT_H_
 #define YHLIB_EVENT_CCUIEVENT_H_
 
-#include "cocos2d.h"
-#include "YHLibMacros.h"
+#include "CCEvent.h"
 
 NS_CC_YHLIB_BEGIN
 
-class CCUIEvent:public CCObject
+class CCUIEvent:public CCEvent
 {
 public:
     CCUIEvent();
@@ -41,6 +40,7 @@ private:
     cocos2d::CCNode* m_pView;
     long m_lDetail;
 
+};
 NS_CC_YHLIB_END
 
 #endif  // YHLIB_EVENT_CCUIEVENT_H_

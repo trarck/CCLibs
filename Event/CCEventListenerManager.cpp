@@ -18,7 +18,7 @@ bool CCEventListenerManager::init()
 	m_pListeners=new CCDictionary();
 }
 
-void CCEventListenerManager::addEventListener(CCObject* target,const char* type,CCObject* handleObject,SEL_EventHandle handle)
+void CCEventListenerManager::addEventListener(CCNode* target,const char* type,CCObject* handleObject,SEL_EventHandle handle)
 {
 
     unsigned int id=target->m_uID;
@@ -52,13 +52,13 @@ void CCEventListenerManager::addEventListener(CCObject* target,const char* type,
 
 }
 
-void CCEventListenerManager::removeEventListener(CCObject* target,const char* type,CCObject* handleObject,SEL_EventHandle handle)
+void CCEventListenerManager::removeEventListener(CCNode* target,const char* type,CCObject* handleObject,SEL_EventHandle handle)
 {
     CCAssert(target!=NULL,"CCEventListenerManager::removeEventListener target is null.");
     CCAssert(handle!=NULL,"CCEventListenerManager::removeEventListener handle is null.");
     CCAssert(handleObject!=NULL,"CCEventListenerManager::removeEventListener handleObject is null.");
 
-    CCArray* targetListeners=static_cast<CCArray*>(m_pListeners->objectForKey(target->m_uID));
+    CCDictionary* targetListeners=static_cast<CCDictionary*>(m_pListeners->objectForKey(target->m_uID));
     if(targetListeners) {
         if(type) {
             //移除对应的type事件
@@ -124,37 +124,41 @@ void removeListeners(CCArray* listeners,CCObject* handleObject,SEL_EventHandle h
     }
 }
 
-void CCEventListenerManager::dispatchEvent(CCObject* target,CCEvent* event)
+void CCEventListenerManager::dispatchEvent(CCNode* target,CCEvent* evt)
 {
     // Capture no
     
     // Target
     //event.currentTarget=obj;
-    this.handleEvent(obj,event);
+    handleEvent(target,evt);
     // Bubble
-    var parent=obj.getParent && obj.getParent();
-    while(parent && !event.isDispatchStopped()){
+	CCNode* parent=target->getParent();
+    while(parent && !evt->isDispatchStopped()){
         //event.currentTarget=parent;
-        this.handleEvent(parent,event);
-        parent=parent.getParent && parent.getParent();
+        handleEvent(parent,evt);
+        parent=target->getParent();
     }
 }
 
-void CCEventListenerManager::handleEvent(CCObject* target,CCEvent* event)
+void CCEventListenerManager::handleEvent(CCNode* target,CCEvent* evt)
 {
-    if(obj._eventId_) {
-        var eventListeners=Events[obj._eventId_];
-        if(eventListeners) {
-            var listeners=eventListeners[event.type]&&eventListeners[event.type].listeners;
-            if(listeners) {
-                var listener;
-                for(var i=0,l=listeners.length;i<l;i++) {
-                   listener=listeners[i];
-                   listener.handle.apply(listener.scope,[event].concat(listener.data));
-                }
+
+	CCDictionary* targetListeners=static_cast<CCDictionary*>(m_pListeners->objectForKey(target->m_uID));
+    if(targetListeners) {
+		std::string type=evt->getType();
+		if(type!="") {
+			//执行对应的type事件
+            CCArray* eventListeners=static_cast<CCArray*>(targetListeners->objectForKey(type));
+            if(eventListeners) {
+				CCObject* pObj=NULL;
+				CCEventHandle* eventHandle=NULL;
+                CCARRAY_FOREACH(eventListeners,pObj){
+					eventHandle=static_cast<CCEventHandle*>(pObj);
+					eventHandle->execute(evt);
+				}
             }
-        }
-    }
+		}
+	}
 }
 
 bool CCEventListenerManager::isListened(CCArray* listeners,SEL_EventHandle handle,CCObject* handleObject)
@@ -171,22 +175,24 @@ bool CCEventListenerManager::isListened(CCArray* listeners,SEL_EventHandle handl
     return false;
 }
 
-CCArray* CCEventListenerManager::getEventListeners(CCObject* target,const char* type)
+CCArray* CCEventListenerManager::getEventListeners(CCNode* target,const char* type)
 {
-    var eventListeners=Events[obj._eventId_];
-    if(eventListeners && type){
-        eventListeners= eventListeners[type] && eventListeners[type].listeners;
-    }
-    return eventListeners;
+    CCDictionary* targetListeners=static_cast<CCDictionary*>(m_pListeners->objectForKey(target->m_uID));
+    if(targetListeners && type) {
+		//对应的type事件
+        return static_cast<CCArray*>(targetListeners->objectForKey(type));
+	}
+	return NULL;
 }
 
 //把new EventObject和dispatchEvent和起来，提供简便方法
-void CCEventListenerManager::trigger(CCObject* target,const char* type,CCDictionary* data,bool bubbles)
+void CCEventListenerManager::trigger(CCNode* target,const char* type,CCDictionary* data,bool bubbles)
 {
-    bubbles=typeof bubbles=='undefined'?true:bubbles;
-    var e=new EventObject(type,bubbles,true);
-    e.data=data;
-    this.dispatchEvent(obj,e);
+    CCEvent* e=new CCEvent();
+	e->initEvent(type,bubbles,true);
+	e->setData(data);
+    dispatchEvent(target,e);
+	e->release();
 }
 
 

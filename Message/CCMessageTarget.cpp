@@ -6,7 +6,7 @@ NS_CC_YHLIB_BEGIN
 
 void CCMessageTarget::registerMessage(unsigned int type,SEL_MessageHandler handle , CCObject* pSender)
 {
-    CCMessageManager::defaultManager()->registerReceiver(this,handle,type,pSender);
+    CCMessageManager::defaultManager()->registerReceiver(this,type,pSender,handle);
 }
 
 void CCMessageTarget::unregisterMessage(unsigned int type ,SEL_MessageHandler handle ,CCObject* pSender)

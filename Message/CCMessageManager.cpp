@@ -5,7 +5,7 @@
 //  Created by trarck on 11-11-27.
 //
 
-#include "CCMessageManager2.h"
+#include "CCMessageManager.h"
 
 NS_CC_YHLIB_BEGIN
 

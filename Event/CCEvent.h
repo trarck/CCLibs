@@ -53,26 +53,26 @@ public:
         return m_sType;
     }
 
-    inline void setTarget(CCObject* pTarget)
+    inline void setTarget(CCNode* pTarget)
     {
         CC_SAFE_RETAIN(pTarget);
         CC_SAFE_RELEASE(m_pTarget);
         m_pTarget = pTarget;
     }
 
-    inline CCObject* getTarget()
+    inline CCNode* getTarget()
     {
         return m_pTarget;
     }
 
-    inline void setCurrentTarget(CCObject* pCurrentTarget)
+    inline void setCurrentTarget(CCNode* pCurrentTarget)
     {
         CC_SAFE_RETAIN(pCurrentTarget);
         CC_SAFE_RELEASE(m_pCurrentTarget);
         m_pCurrentTarget = pCurrentTarget;
     }
 
-    inline CCObject* getCurrentTarget()
+    inline CCNode* getCurrentTarget()
     {
         return m_pCurrentTarget;
     }
@@ -133,9 +133,9 @@ protected:
     /**event类型*/
     std::string m_sType;
     /**event目标*/
-    CCObject* m_pTarget;
+    CCNode* m_pTarget;
     /**event 当前处理目标*/
-    CCObject* m_pCurrentTarget;
+    CCNode* m_pCurrentTarget;
     /**event 处理的阶段*/
     int m_nEventPhase;
     /**event允许冒泡*/
@@ -147,7 +147,7 @@ protected:
 
     bool m_bDispatchStopped;
 
-    bool m_bNoDefault
+    bool m_bNoDefault;
 
 	CCObject* m_pData;
 };

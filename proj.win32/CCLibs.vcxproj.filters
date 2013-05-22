@@ -222,6 +222,9 @@
     <ClInclude Include="..\Message\CCMessageManagerComplex.h">
       <Filter>Message</Filter>
     </ClInclude>
+    <ClInclude Include="..\Message\CCAsyncMessageManager.h">
+      <Filter>Message</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Isometric\CCAstar.cpp">
@@ -366,6 +369,9 @@
       <Filter>Event</Filter>
     </ClCompile>
     <ClCompile Include="..\Message\CCMessageManagerComplex.cpp">
+      <Filter>Message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Message\CCAsyncMessageManager.cpp">
       <Filter>Message</Filter>
     </ClCompile>
   </ItemGroup>
