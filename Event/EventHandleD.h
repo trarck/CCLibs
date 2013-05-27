@@ -1,49 +1,32 @@
 //
-// Ö´ÐÐÊÂ¼þµÄº¯Êý¾ä±ú
+// æ‰§è¡Œäº‹ä»¶çš„å‡½æ•°å¥æŸ„
 //
 
 #ifndef YHLIB_EVENT_CCEVENTHANDLER_H_
 #define YHLIB_EVENT_CCEVENTHANDLER_H_
 
 #include "cocos2d.h"
-#include "CCEventHandle.h"
+#include "EventHandle.h"
 
 NS_CC_YHLIB_BEGIN
 
-//¶¨Òå´¦Àíº¯ÊýÀàÐÍ
-typedef void (CCObject::*SEL_EventHandleD)(CCEvent* evt,CCObject* data);
+class Event;
+
+//å®šä¹‰å¤„ç†å‡½æ•°ç±»åž‹
+typedef void (CCObject::*SEL_EventHandleD)(Event*,CCObject* data);
 #define yh_event_selectorD(_SELECTOR) (SEL_EventHandleD)(&_SELECTOR)
 
-class CCEventHandleWrap : public CCObject {
+class EventHandleD : public EventHandle {
 public:
     
-	inline CCEventHandleWrap()
-        :m_pTarget(NULL)
-		,m_handle(NULL)
+	inline EventHandleD()
+		 :m_handleD(NULL)
         ,m_data(NULL)
 	{
 
 	}
 
-    ~CCEventHandleWrap();
-
-    inline void handle(CCEvent* event){
-        if(m_handle){
-		    (m_pTarget->*m_handle)(event,m_data);
-	    }
-    }
-
-    inline CCObject* getTarget()
-	{
-		return m_pTarget;
-	}
-
-	inline void setTarget(CCObject* pTarget)
-	{
-		CC_SAFE_RETAIN(pTarget);
-		CC_SAFE_RELEASE(m_pTarget);
-		m_pTarget=pTarget;
-	}
+    ~EventHandleD();
 
 	inline SEL_EventHandleD getHandle()
 	{
@@ -66,7 +49,7 @@ public:
     inline void setData(CCObject* data)
     {
         CC_SAFE_RETAIN(data);
-		CC_SAFE_RELEASE(m_data);
+        CC_SAFE_RELEASE(m_data);
         m_data=data;
     }
 
@@ -75,11 +58,37 @@ public:
         return m_data;
     }
 
+	virtual void execute(Event *event);
+
 protected:
-	CCObject* m_pTarget;
 	SEL_EventHandleD m_handle;
     CCObject* m_data;
 };
+
+//class EventHandleD : public EventHandle {
+//public:
+//    
+//	EventHandleD()
+//		:m_pTarget(NULL),
+//		 m_handle(NULL)
+//	{
+//		CCLOG("EventHandle create");
+//	}
+//
+//    ~EventHandleD();
+//
+//    inline void execute(Event *event)
+//	{
+//		if(m_handle){
+//			(m_pTarget->*m_handle)(event);
+//		}
+//	}
+//    
+//private:
+//
+//    CCObject* m_pData;
+//
+//};
 
 NS_CC_YHLIB_END
 

@@ -6,18 +6,18 @@
 //  Copyright 2011 yitengku.com. All rights reserved.
 //
 
-#include "CCEventHandle.h"
+#include "EventHandle.h"
 
 NS_CC_YHLIB_BEGIN
 
-CCEventHandle::~CCEventHandle()
+EventHandle::~EventHandle()
 {
-	CCLOG("CCEventHandle destroy begin ");
+	CCLOG("EventHandle destroy begin ");
     CC_SAFE_RELEASE(m_pTarget);
-    CCLOG("CCEventHandle destroy end ");
+    CCLOG("EventHandle destroy end ");
 }
 
-//void CCEventHandle::execute(CCEvent *event)
+//void EventHandle::execute(Event *event)
 //{
 //	if(m_handle){
 //		(m_pTarget->*m_handle)(event);

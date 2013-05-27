@@ -1,16 +1,16 @@
 #ifndef YHLIB_EVENT_CCUIEVENT_H_
 #define YHLIB_EVENT_CCUIEVENT_H_
 
-#include "CCEvent.h"
+#include "Event.h"
 
 NS_CC_YHLIB_BEGIN
 
-class CCUIEvent:public CCEvent
+class UIEvent:public Event
 {
 public:
-    CCUIEvent();
+    UIEvent();
 
-    ~CCUIEvent();
+    ~UIEvent();
 
     bool initUIEvent(const std::string& type, bool canBubble, bool cancelable,cocos2d::CCNode* view, long detail);
 

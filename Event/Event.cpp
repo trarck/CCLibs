@@ -1,22 +1,22 @@
-#include "CCEvent.h"
+#include "Event.h"
 
 NS_CC_YHLIB_BEGIN
 
-CCEvent::CCEvent()
-:m_sType(""),
+Event::Event()
+:m_sType("")
 ,m_pTarget(NULL)
 ,m_pCurrentTarget(NULL)
 {
 
 }
 
-CCEvent::~CCEvent()
+Event::~Event()
 {
     CC_SAFE_RELEASE(m_pTarget);
     CC_SAFE_RELEASE(m_pCurrentTarget);
 }
 
-bool CCEvent::initEvent(const std::string &eventType, bool canBubble, bool cancelable)
+bool Event::initEvent(const std::string &eventType, bool canBubble, bool cancelable)
 {
     m_sType=eventType;
     m_bBubbles=canBubble;

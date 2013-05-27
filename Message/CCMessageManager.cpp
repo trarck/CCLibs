@@ -144,7 +144,6 @@ void CCMessageManager::removeReceiver(CCObject* receiver,unsigned int type ,CCOb
 {
     CCAssert(receiver!=NULL,"CCMessageManager:removeReceiver:receiver can't be null!");
 	CCAssert(handle!=NULL,"CCMessageManager:removeReceiver:handle can't be null!");
-    
 
     CCDictionary *msgMap=(CCDictionary*) m_messages->objectForKey(type);
 
@@ -311,6 +310,101 @@ void CCMessageManager::removeReceiver(CCObject* receiver,SEL_MessageHandler hand
     }
 }
 
+/**
+ * 取消注册到接收者的处理对象的所有处理方法，该方法注册到发送者的某个消息。
+ */
+void CCMessageManager::removeReceiverAllHanldes(CCObject* receiver,unsigned int type ,CCObject* sender,CCObject*  handleObject)
+{
+    CCAssert(receiver!=NULL,"CCMessageManager:removeReceiver:receiver can't be null!");
+    CCAssert(handleObject!=NULL,"CCMessageManager:removeReceiver:handleObject can't be null!");
+
+    CCDictionary *msgMap=(CCDictionary*) m_messages->objectForKey(type);
+
+    if(msgMap){
+        CCDictionary *receiverMap=(CCDictionary*)msgMap->objectForKey(receiver->m_uID);
+        if(receiverMap){
+            if(sender){
+                //移除注册到sender的记录
+                CCArray* handleList=(CCArray*)receiverMap->objectForKey(sender->m_uID);
+                if(handleList){
+                    removeHandleListForTarget(handleList, handleObject);
+                }
+            }else{
+                //移除所有receiver记录
+                removeReceiverMapForTarget(receiverMap, handleObject);
+            }
+        }
+    }
+}
+
+/**
+ * 取消接收者处理某个消息的所有方法。
+ */
+void CCMessageManager::removeReceiverAllHanldes(CCObject* receiver,unsigned int type ,CCObject*  handleObject)
+{
+    CCAssert(receiver!=NULL,"CCMessageManager:removeReceiver:receiver can't be null!");
+    CCAssert(handleObject!=NULL,"CCMessageManager:removeReceiver:handleObject can't be null!");
+
+    CCDictionary *msgMap=(CCDictionary*) m_messages->objectForKey(type);
+
+    if(msgMap){
+        CCDictionary *receiverMap=(CCDictionary*)msgMap->objectForKey(receiver->m_uID);
+        if(receiverMap){
+            //移除所有receiver记录
+            removeReceiverMapForTarget(receiverMap,handleObject);
+        }
+    }
+}
+
+/**
+ * 取消接收者注册到发送者的任意消息的所有处理方法。
+ */
+void CCMessageManager::removeReceiverAllHanldes(CCObject* receiver,CCObject* sender,CCObject*  handleObject)
+{
+    CCAssert(receiver!=NULL,"CCMessageManager:removeReceiver:receiver can't be null!");
+	CCAssert(sender!=NULL,"CCMessageManager:removeReceiver:sender can't be null!");
+	CCAssert(handleObject!=NULL,"CCMessageManager:removeReceiver:handleObject can't be null!");
+
+    CCDictElement* msgMapElement = NULL;
+    CCDictionary* msgMap=NULL;
+	CCDictionary* receiverMap=NULL;
+    CCArray* handleList=NULL;
+
+    CCDICT_FOREACH(m_messages,msgMapElement){
+        msgMap=(CCDictionary*) msgMapElement->getObject();
+        receiverMap=(CCDictionary*)msgMap->objectForKey(receiver->m_uID);
+        if(receiverMap){
+            handleList=(CCArray*)receiverMap->objectForKey(sender->m_uID);
+            if(handleList){
+                //移除所有receiver记录
+                removeHandleListForTarget(handleList,handleObject);
+            }
+        }
+    }
+}
+
+/**
+ * 取消接收者注册到任意发送者任意消息的所有处理方法。
+ */
+void CCMessageManager::removeReceiverAllHanldes(CCObject* receiver,CCObject*  handleObject)
+{
+    CCAssert(receiver!=NULL,"CCMessageManager:removeReceiver:receiver can't be null!");
+	CCAssert(handleObject!=NULL,"CCMessageManager:removeReceiver:handleObject can't be null!");
+
+    CCDictElement* msgMapElement = NULL;
+    CCDictionary* msgMap=NULL;
+	CCDictionary* receiverMap=NULL;
+
+    CCDICT_FOREACH(m_messages,msgMapElement){
+        msgMap=(CCDictionary*) msgMapElement->getObject();
+        receiverMap=(CCDictionary*)msgMap->objectForKey(receiver->m_uID);
+        if(receiverMap){
+             //移除所有receiver记录
+             removeReceiverMapForTarget(receiverMap,handleObject);
+        }
+    }
+}
+
 void CCMessageManager::removeReceiverMap(CCDictionary* receiverMap,SEL_MessageHandler handle,CCObject* handleObject){
 	CCAssert(receiverMap!=NULL,"CCMessageManager:removeReceiverMap:receiverMap can't be null!");
 
@@ -342,28 +436,78 @@ void CCMessageManager::removeReceiverMap(CCDictionary* receiverMap){
     receiverMap->removeAllObjects();
 }
 
+/**
+ * 删除接收者的注册列表。
+ */
+void CCMessageManager::removeReceiverMapForTarget(CCDictionary* receiverMap,CCObject* handleObject)
+{
+    CCAssert(receiverMap!=NULL,"CCMessageManager:removeReceiverMap:receiverMap can't be null!");
+
+    CCDictElement* msgMapElement = NULL;
+    CCArray* handleList=NULL;
+
+    CCDICT_FOREACH(receiverMap,msgMapElement){
+        //移除所有receiver记录
+        handleList=(CCArray*)msgMapElement->getObject();
+        removeHandleListForTarget(handleList,handleObject);
+    }
+}
+
 void CCMessageManager::removeHandleList(CCArray* handleList,SEL_MessageHandler handle,CCObject* handleObject){
-    CCObject* pObject = NULL;
-    CCARRAY_FOREACH(handleList,pObject){
-	    CCMessageHandler* handler=(CCMessageHandler*) pObject;
-	    if (handler->getHandle()==handle && handler->getTarget()==handleObject) {
-		    handleList->removeObject(handler);
+
+    if (handleList && handleList->data->num > 0){         
+        int len=handleList->data->num;
+        CCObject** arr = handleList->data->arr;
+        for(int i=0;i<len;){
+		    CCMessageHandler* handler=(CCMessageHandler*)(*(arr+i));
+		    if (handler->getTarget()==handleObject && handler->getHandle()==handle) {
+			    handleList->removeObjectAtIndex(i);
+                --len;
+		    }else{
+                ++i;
+            }
 	    }
     }
 }
 
 void CCMessageManager::removeHandleList(CCArray* handleList,SEL_MessageHandler handle){
-	CCObject* pObject = NULL;
-	CCARRAY_FOREACH(handleList,pObject){
-		CCMessageHandler* handler=(CCMessageHandler*) pObject;
-		if (handler->getHandle()==handle) {
-			handleList->removeObject(handler);
-		}
-	}
+	if (handleList && handleList->data->num > 0){         
+        int len=handleList->data->num;
+        CCObject** arr = handleList->data->arr;
+        for(int i=0;i<len;){
+		    CCMessageHandler* handler=(CCMessageHandler*)(*(arr+i));
+		    if (handler->getHandle()==handle) {
+			    handleList->removeObjectAtIndex(i);
+                --len;
+		    }else{
+                ++i;
+            }
+	    }
+    }
 }
 
 void CCMessageManager::removeHandleList(CCArray* handleList){
     handleList->removeAllObjects();
+}
+
+/**
+ * 删除接收者的处理方法列表的处理方法为参数指定的函数。
+ */
+void CCMessageManager::removeHandleListForTarget(CCArray* handleList,CCObject* handleObject)
+{
+    if (handleList && handleList->data->num > 0){         
+        int len=handleList->data->num;
+        CCObject** arr = handleList->data->arr;
+        for(int i=0;i<len;){
+		    CCMessageHandler* handler=(CCMessageHandler*)(*(arr+i));
+		    if (handler->getTarget()==handleObject) {
+			    handleList->removeObjectAtIndex(i);
+                --len;
+		    }else{
+                ++i;
+            }
+	    }
+    }
 }
 
 
