@@ -1,5 +1,5 @@
 //
-// Ö´ĞĞÊÂ¼şµÄº¯Êı¾ä±ú
+// æ‰§è¡Œäº‹ä»¶çš„å‡½æ•°å¥æŸ„
 //
 
 #ifndef YHLIB_EVENT_CCEVENTHANDLER_H_
@@ -10,23 +10,23 @@
 
 NS_CC_YHLIB_BEGIN
 
-class CCEvent;
+class Event;
 
-//¶¨Òå´¦Àíº¯ÊıÀàĞÍ
-typedef void (CCObject::*SEL_EventHandle)(CCEvent*);
+//å®šä¹‰å¤„ç†å‡½æ•°ç±»å‹
+typedef void (CCObject::*SEL_EventHandle)(yhlib::Event*);
 #define yh_event_selector(_SELECTOR) (SEL_EventHandle)(&_SELECTOR)
 
-class CCEventHandle : public CCObject {
+class EventHandle : public CCObject {
 public:
     
-	inline CCEventHandle()
+	inline EventHandle()
 		:m_pTarget(NULL),
 		 m_handle(NULL)
 	{
-		CCLOG("CCEventHandle create");
+		CCLOG("EventHandle create");
 	}
 
-    virtual ~CCEventHandle();
+    virtual ~EventHandle();
 
 	inline CCObject* getTarget()
 	{
@@ -57,10 +57,10 @@ public:
 		return true;
 	}
 
-	//²»Ê¹ÓÃĞéº¯Êı£¬À´¼Ì³Ğhandle¡£
-	//¿ÉÒÔÊ¹ÓÃÍâ°üÒ»²ã
-	//virtual void execute(CCEvent *event);
-	inline void execute(CCEvent *event)
+	//ä¸ä½¿ç”¨è™šå‡½æ•°ï¼Œæ¥ç»§æ‰¿handleã€‚
+	//å¯ä»¥ä½¿ç”¨å¤–åŒ…ä¸€å±‚
+	//virtual void execute(Event *event);
+	inline void execute(yhlib::Event *event)
 	{
 		if(m_handle){
 			(m_pTarget->*m_handle)(event);
@@ -72,19 +72,19 @@ protected:
 	SEL_EventHandle m_handle;
 };
 
-//class CCEventHandleD : public CCEventHandle {
+//class EventHandleD : public EventHandle {
 //public:
 //    
-//	CCEventHandleD()
+//	EventHandleD()
 //		:m_pTarget(NULL),
 //		 m_handle(NULL)
 //	{
-//		CCLOG("CCEventHandle create");
+//		CCLOG("EventHandle create");
 //	}
 //
-//    ~CCEventHandleD();
+//    ~EventHandleD();
 //
-//    inline void execute(CCEvent *event)
+//    inline void execute(Event *event)
 //	{
 //		if(m_handle){
 //			(m_pTarget->*m_handle)(event);

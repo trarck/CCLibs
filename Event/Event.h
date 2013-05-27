@@ -6,12 +6,18 @@
 
 NS_CC_YHLIB_BEGIN
 
-class CCEvent:public CCObject
+enum EventPhase{
+    CAPTURING_PHASE=1,
+    AT_TARGET,
+    BUBBLING_PHASE
+};
+
+class Event:public CCObject
 {
 public:
 
-    CCEvent();
-    ~CCEvent(void);
+    Event();
+    ~Event(void);
 
     bool initEvent(const std::string &eventType, bool canBubble, bool cancelable);
 
@@ -35,20 +41,12 @@ public:
         return m_bCancelable && m_bNoDefault;
     }
 
-    /**事件的处理阶段*/
-    enum{
-        CAPTURING_PHASE=1,
-        AT_TARGET,
-        BUBBLING_PHASE,
-    };
-//=================get set=====================//
-public:
-    inline void setType(const std::string & sType)
+    inline void setType(const std::string& type)
     {
-        m_sType = sType;
+        m_sType=type;
     }
 
-    inline const std::string & getType()
+    inline std::string getType()
     {
         return m_sType;
     }
@@ -117,7 +115,7 @@ public:
         return m_nTimeStamp;
     }
 
-	 inline void setData(CCObject* data)
+	void setData(CCObject* data)
     {
         CC_SAFE_RETAIN(data);
 		CC_SAFE_RELEASE(m_pData);
@@ -136,7 +134,9 @@ protected:
     CCNode* m_pTarget;
     /**event 当前处理目标*/
     CCNode* m_pCurrentTarget;
-    /**event 处理的阶段*/
+    /**
+     * event 处理的阶段
+     */
     int m_nEventPhase;
     /**event允许冒泡*/
     bool m_bBubbles;
@@ -151,6 +151,8 @@ protected:
 
 	CCObject* m_pData;
 };
+
+typedef yhlib::Event YHEvent;
 
 NS_CC_YHLIB_END
 

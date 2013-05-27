@@ -6,11 +6,11 @@
 //  Copyright 2011 yitengku.com. All rights reserved.
 //
 
-#include "CCEventHandleWrap.h"
+#include "EventHandleWrap.h"
 
 NS_CC_YHLIB_BEGIN
 
-CCEventHandleWrap::~CCEventHandleWrap()
+EventHandleWrap::~EventHandleWrap()
 {
      CC_SAFE_RELEASE(m_pTarget);
     CC_SAFE_RELEASE(m_data);

@@ -83,6 +83,26 @@ public:
 	 */
     void removeReceiver(CCObject* receiver,SEL_MessageHandler handle);
    	
+    /**
+	 * 取消注册到接收者的处理对象的所有处理方法，该方法注册到发送者的某个消息。
+	 */
+	void removeReceiverAllHanldes(CCObject* receiver,unsigned int type ,CCObject* sender,CCObject*  handleObject);
+
+    /**
+	 * 取消接收者处理某个消息的所有方法。
+	 */
+	void removeReceiverAllHanldes(CCObject* receiver,unsigned int type ,CCObject*  handleObject);
+
+    /**
+	 * 取消接收者注册到发送者的任意消息的所有处理方法。
+	 */
+    void removeReceiverAllHanldes(CCObject* receiver,CCObject* sender,CCObject*  handleObject);
+
+    /**
+	 * 取消接收者注册到任意发送者任意消息的所有处理方法。
+	 */
+	void removeReceiverAllHanldes(CCObject* receiver,CCObject*  handleObject);
+
 	/**
 	 * 发送消息。
 	 */
@@ -138,6 +158,11 @@ protected:
 	void removeReceiverMap(CCDictionary* receiverMap);
 
     /**
+	 * 删除接收者的注册列表。
+	 */
+	void removeReceiverMapForTarget(CCDictionary* receiverMap,CCObject* handleObject);
+
+    /**
 	 * 删除接收者的处理方法列表的处理方法为参数指定的函数。
 	 */
 	void removeHandleList(CCArray* handleList,SEL_MessageHandler handle,CCObject* handleObject);
@@ -150,6 +175,11 @@ protected:
 	 * 删除接收者的处理方法列表。
 	 */
 	void removeHandleList(CCArray* handleList);
+
+    /**
+	 * 删除接收者的处理方法列表的处理方法为参数指定的函数。
+	 */
+	void removeHandleListForTarget(CCArray* handleList,CCObject* handleObject);
 
 	/**
 	 * 执行接收者的处理列表的所有处理方法。
