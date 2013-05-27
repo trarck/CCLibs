@@ -22,14 +22,20 @@
     <Filter Include="Event">
       <UniqueIdentifier>{01a728c0-7ac1-4302-a68b-03ccfeefabff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Event\Isometric">
+    <Filter Include="Isometric">
       <UniqueIdentifier>{58492eae-6620-4ce0-a668-3189bca45d70}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Event\Isometric\interface">
+    <Filter Include="Isometric\interface">
       <UniqueIdentifier>{ffbf2f4c-a217-484d-bf23-df6559bb2ba2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Event\Isometric\parser">
+    <Filter Include="Isometric\parser">
       <UniqueIdentifier>{a6431b6f-cd68-4dd1-b177-fe2dd12c916c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CocosExt">
+      <UniqueIdentifier>{9c55f2d6-f26d-4830-a0de-68cb66a9f9f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{6a622c61-34df-437a-81d8-364feb441214}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,97 +46,97 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCAstar.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCAstarNode.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCCoordinate.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOBatchDynamicComponent.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOBatchDynamicTileLayer.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOBatchTileLayer.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOComponentNode.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOCoordinate.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISODynamicComponent.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISODynamicTileLayer.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOGroundTileLayer.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOInfos.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOObject.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOObjectGroup.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOTile.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOTileLayer.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOTileMap.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOTileSet.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOTilesetGroup.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOXMLReader.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCZIndex.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCZIndexNode.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\interface\CCISOReaderInterface.h">
-      <Filter>Event\Isometric\interface</Filter>
+      <Filter>Isometric\interface</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\parser\CCISOLayerInfo.h">
-      <Filter>Event\Isometric\parser</Filter>
+      <Filter>Isometric\parser</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\parser\CCISOMapInfo.h">
-      <Filter>Event\Isometric\parser</Filter>
+      <Filter>Isometric\parser</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\parser\CCISOObjectGroupInfo.h">
-      <Filter>Event\Isometric\parser</Filter>
+      <Filter>Isometric\parser</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\parser\CCISOObjectInfo.h">
-      <Filter>Event\Isometric\parser</Filter>
+      <Filter>Isometric\parser</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\parser\CCISOTileInfo.h">
-      <Filter>Event\Isometric\parser</Filter>
+      <Filter>Isometric\parser</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\parser\CCISOTilesetInfo.h">
-      <Filter>Event\Isometric\parser</Filter>
+      <Filter>Isometric\parser</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\parser\CCISOXMLParser.h">
-      <Filter>Event\Isometric\parser</Filter>
+      <Filter>Isometric\parser</Filter>
     </ClInclude>
     <ClInclude Include="..\Isometric\CCISOTileMapBuilder.h">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClInclude>
     <ClInclude Include="..\include\isometric.h">
       <Filter>include</Filter>
@@ -225,91 +231,100 @@
     <ClInclude Include="..\Message\CCAsyncMessageManager.h">
       <Filter>Message</Filter>
     </ClInclude>
+    <ClInclude Include="..\CocosExt\CCGeometryVaule.h">
+      <Filter>CocosExt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\MersenneTwister.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\RandomMT.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Isometric\CCAstar.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCAstarNode.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCCoordinate.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOBatchDynamicComponent.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOBatchDynamicTileLayer.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOBatchTileLayer.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOComponentNode.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISODynamicComponent.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISODynamicTileLayer.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOGroundTileLayer.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOObject.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOObjectGroup.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOTile.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOTileLayer.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOTileMap.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOTileset.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOTilesetGroup.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOXMLReader.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCZIndex.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCZIndexNode.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\parser\CCISOLayerInfo.cpp">
-      <Filter>Event\Isometric\parser</Filter>
+      <Filter>Isometric\parser</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\parser\CCISOMapInfo.cpp">
-      <Filter>Event\Isometric\parser</Filter>
+      <Filter>Isometric\parser</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\parser\CCISOObjectGroupInfo.cpp">
-      <Filter>Event\Isometric\parser</Filter>
+      <Filter>Isometric\parser</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\parser\CCISOObjectInfo.cpp">
-      <Filter>Event\Isometric\parser</Filter>
+      <Filter>Isometric\parser</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\parser\CCISOTileInfo.cpp">
-      <Filter>Event\Isometric\parser</Filter>
+      <Filter>Isometric\parser</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\parser\CCISOTilesetInfo.cpp">
-      <Filter>Event\Isometric\parser</Filter>
+      <Filter>Isometric\parser</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\parser\CCISOXMLParser.cpp">
-      <Filter>Event\Isometric\parser</Filter>
+      <Filter>Isometric\parser</Filter>
     </ClCompile>
     <ClCompile Include="..\Isometric\CCISOTileMapBuilder.cpp">
-      <Filter>Event\Isometric</Filter>
+      <Filter>Isometric</Filter>
     </ClCompile>
     <ClCompile Include="..\Message\CCMessage.cpp">
       <Filter>Message</Filter>
@@ -373,6 +388,15 @@
     </ClCompile>
     <ClCompile Include="..\Message\CCAsyncMessageManager.cpp">
       <Filter>Message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocosExt\CCGeometryValue.cpp">
+      <Filter>CocosExt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Math\MersenneTwister.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Math\RandomMT.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
