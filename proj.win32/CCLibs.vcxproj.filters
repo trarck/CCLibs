@@ -19,9 +19,6 @@
     <Filter Include="Components">
       <UniqueIdentifier>{a214be2d-cbbc-4446-a6ac-862fac475f7d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Event">
-      <UniqueIdentifier>{01a728c0-7ac1-4302-a68b-03ccfeefabff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Isometric">
       <UniqueIdentifier>{58492eae-6620-4ce0-a668-3189bca45d70}</UniqueIdentifier>
     </Filter>
@@ -36,6 +33,9 @@
     </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{6a622c61-34df-437a-81d8-364feb441214}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event">
+      <UniqueIdentifier>{31432c8e-d69f-4fa1-af12-5b358f452c40}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -204,21 +204,6 @@
     <ClInclude Include="..\Components\CCSimpleMoveComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\Event\CCEvent.h">
-      <Filter>Event</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Event\CCEventHandle.h">
-      <Filter>Event</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Event\CCEventListenerManager.h">
-      <Filter>Event</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Event\CCUIEvent.h">
-      <Filter>Event</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Event\CCEventHandleWrap.h">
-      <Filter>Event</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\message.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -239,6 +224,27 @@
     </ClInclude>
     <ClInclude Include="..\Math\RandomMT.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Event\UIEvent.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Event\Event.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Event\EventHandle.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Event\EventHandleWrap.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Event\EventListenerManager.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Event\EventTarget.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Event\IEventTarget.h">
+      <Filter>Event</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -368,21 +374,6 @@
     <ClCompile Include="..\Components\CCSimpleMoveComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\Event\CCEvent.cpp">
-      <Filter>Event</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Event\CCEventHandle.cpp">
-      <Filter>Event</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Event\CCEventListenerManager.cpp">
-      <Filter>Event</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Event\CCUIEvent.cpp">
-      <Filter>Event</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Event\CCEventHandleWrap.cpp">
-      <Filter>Event</Filter>
-    </ClCompile>
     <ClCompile Include="..\Message\CCMessageManagerComplex.cpp">
       <Filter>Message</Filter>
     </ClCompile>
@@ -397,6 +388,21 @@
     </ClCompile>
     <ClCompile Include="..\Math\RandomMT.cpp">
       <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Event\Event.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Event\EventHandle.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Event\EventHandleWrap.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Event\EventListenerManager.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Event\UIEvent.cpp">
+      <Filter>Event</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
