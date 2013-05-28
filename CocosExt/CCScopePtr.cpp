@@ -1,7 +1,7 @@
 #include "CCScopePtr.h"
 
-NS_FB_BEGIN
+NS_CC_YHLIB_BEGIN
 
     
     
-NS_FB_END
+NS_CC_YHLIB_END

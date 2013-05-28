@@ -1,19 +1,11 @@
-//
-//  Parabola.cpp
-//  ProjectFB
-//
-//  Created by duanhouhai on 13-4-27.
-//
-//
-
 #include "CCParabolaMove.h"
 
 USING_NS_CC;
 
-NS_FB_BEGIN
+NS_CC_YHLIB_BEGIN
 
 
-CCParabolaMove* CCParabolaMove::create(float duration,const cocos2d::CCPoint& speed)
+CCParabolaMove* CCParabolaMove::create(float duration,const CCPoint& speed)
 {
     CCParabolaMove *pRet = new CCParabolaMove();
     pRet->initWithDuration(duration, speed);
@@ -97,7 +89,7 @@ void CCParabolaMove::update(float t)
     }
 }
 
-CCParabolaMoveTo* CCParabolaMoveTo::create(float duration, const cocos2d::CCPoint &position)
+CCParabolaMoveTo* CCParabolaMoveTo::create(float duration, const CCPoint &position)
 {
     CCParabolaMoveTo *pRet = new CCParabolaMoveTo();
     pRet->initWithDuration(duration, position);
@@ -105,7 +97,7 @@ CCParabolaMoveTo* CCParabolaMoveTo::create(float duration, const cocos2d::CCPoin
     return pRet;
 }
 
-CCParabolaMoveTo* CCParabolaMoveTo::create(float duration, const cocos2d::CCPoint &position,float height)
+CCParabolaMoveTo* CCParabolaMoveTo::create(float duration, const CCPoint &position,float height)
 {
     CCParabolaMoveTo *pRet = new CCParabolaMoveTo();
     pRet->initWithDuration(duration, position,height);
@@ -125,7 +117,7 @@ bool CCParabolaMoveTo::initWithDuration(float duration, const CCPoint& position)
     return false;
 }
 
-bool CCParabolaMoveTo::initWithDuration(float duration, const cocos2d::CCPoint& position,float height)
+bool CCParabolaMoveTo::initWithDuration(float duration, const CCPoint& position,float height)
 {
     if (CCActionInterval::initWithDuration(duration))
     {
@@ -138,7 +130,7 @@ bool CCParabolaMoveTo::initWithDuration(float duration, const cocos2d::CCPoint& 
     return false;
 }
 
-CCObject* CCParabolaMoveTo::copyWithZone(cocos2d::CCZone *pZone)
+CCObject* CCParabolaMoveTo::copyWithZone(CCZone *pZone)
 {
     CCZone* pNewZone = NULL;
     CCParabolaMoveTo* pCopy = NULL;
@@ -184,4 +176,4 @@ void CCParabolaMoveTo::stop()
     CCParabolaMove::stop();
 }
 
-NS_FB_END
+NS_CC_YHLIB_END

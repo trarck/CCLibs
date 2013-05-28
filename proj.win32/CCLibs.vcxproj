@@ -12,6 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CocosExt\CCGeometryVaule.h" />
+    <ClInclude Include="..\CocosExt\CCParabolaMove.h" />
+    <ClInclude Include="..\CocosExt\CCScopePtr.h" />
     <ClInclude Include="..\Components\CCAnimationComponent.h" />
     <ClInclude Include="..\Components\CCAttackComponent.h" />
     <ClInclude Include="..\Components\CCAutoAttackComponent.h" />
@@ -83,6 +85,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CocosExt\CCGeometryValue.cpp" />
+    <ClCompile Include="..\CocosExt\CCParabolaMove.cpp" />
+    <ClCompile Include="..\CocosExt\CCScopePtr.cpp" />
     <ClCompile Include="..\Components\CCAnimationComponent.cpp" />
     <ClCompile Include="..\Components\CCAttackComponent.cpp" />
     <ClCompile Include="..\Components\CCAutoAttackComponent.cpp" />

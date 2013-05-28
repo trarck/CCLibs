@@ -246,6 +246,12 @@
     <ClInclude Include="..\Event\IEventTarget.h">
       <Filter>Event</Filter>
     </ClInclude>
+    <ClInclude Include="..\CocosExt\CCParabolaMove.h">
+      <Filter>CocosExt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocosExt\CCScopePtr.h">
+      <Filter>CocosExt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Isometric\CCAstar.cpp">
@@ -403,6 +409,12 @@
     </ClCompile>
     <ClCompile Include="..\Event\UIEvent.cpp">
       <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocosExt\CCParabolaMove.cpp">
+      <Filter>CocosExt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocosExt\CCScopePtr.cpp">
+      <Filter>CocosExt</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,40 +1,31 @@
-//
-//  Parabola.h
-//  ProjectFB
-//
-//
-//
-
 #ifndef YHLIB_COCOSEXT_CCPARABOLAMOVE_H_
 #define YHLIB_COCOSEXT_CCPARABOLAMOVE_H_
 
 #include "cocos2d.h"
 #include "YHLibMacros.h"
 
+#define PARABOLA_GRAVITY_DEFAULT -1000.0f
 
 NS_CC_YHLIB_BEGIN
 
-
-NS_FB_BEGIN
-
-class CCParabolaMove : public cocos2d::CCActionInterval
+class CCParabolaMove : public CCActionInterval
 {
 public:
     //负的表示向下
-    CCParabolaMove():m_fGravity(-1000.0f){}
+    CCParabolaMove():m_fGravity(PARABOLA_GRAVITY_DEFAULT){}
     
     /** initializes the action */
-    bool initWithDuration(float duration, const cocos2d::CCPoint& deltaPosition);
+    bool initWithDuration(float duration, const CCPoint& deltaPosition);
     
-    virtual CCObject* copyWithZone(cocos2d::CCZone* pZone);
-    virtual void startWithTarget(cocos2d::CCNode *pTarget);
+    virtual CCObject* copyWithZone(CCZone* pZone);
+    virtual void startWithTarget(CCNode *pTarget);
     virtual CCActionInterval* reverse(void);
     virtual void step(float delta);
     virtual void update(float time);
     
 public:
     /** creates the action */    
-    static CCParabolaMove* create(float duration,const cocos2d::CCPoint& speed);
+    static CCParabolaMove* create(float duration,const CCPoint& speed);
     
     inline void setGravity(float fGravity)
     {
@@ -47,11 +38,11 @@ public:
     }
     
 protected:
-    cocos2d::CCPoint m_positionDelta;
-    cocos2d::CCPoint m_startPosition;
-    cocos2d::CCPoint m_previousPosition;
+    CCPoint m_positionDelta;
+    CCPoint m_startPosition;
+    CCPoint m_previousPosition;
     
-    cocos2d::CCPoint m_tSpeed;
+    CCPoint m_tSpeed;
     
     float m_fGravity;
 };
@@ -67,12 +58,12 @@ public:
         
     }
     /** initializes the action */
-    bool initWithDuration(float duration, const cocos2d::CCPoint& position);
+    bool initWithDuration(float duration, const CCPoint& position);
     
-    bool initWithDuration(float duration, const cocos2d::CCPoint& position,float height);
+    bool initWithDuration(float duration, const CCPoint& position,float height);
         
-    virtual CCObject* copyWithZone(cocos2d::CCZone* pZone);
-    virtual void startWithTarget(cocos2d::CCNode *pTarget);
+    virtual CCObject* copyWithZone(CCZone* pZone);
+    virtual void startWithTarget(CCNode *pTarget);
     
     
     void stop();
@@ -89,16 +80,16 @@ public:
     
 public:
     /** creates the action */
-    static CCParabolaMoveTo* create(float duration,const cocos2d::CCPoint& position);
-    static CCParabolaMoveTo* create(float duration,const cocos2d::CCPoint& position,float height);
+    static CCParabolaMoveTo* create(float duration,const CCPoint& position);
+    static CCParabolaMoveTo* create(float duration,const CCPoint& position,float height);
     
 protected:
-    cocos2d::CCPoint m_endPosition;
+    CCPoint m_endPosition;
     float m_fHeight;;
     bool m_bUseHight;
 };
 
 
-NS_FB_END
+NS_CC_YHLIB_END
 
 #endif //YHLIB_COCOSEXT_CCPARABOLAMOVE_H_

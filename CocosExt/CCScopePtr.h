@@ -1,18 +1,17 @@
-
-#ifndef PROJECTFB_UTILS_CCScopePtr_H_
-#define PROJECTFB_UTILS_CCScopePtr_H_
+#ifndef YHLIB_COCOSEXT_CCSCOPEPTR_H_
+#define YHLIB_COCOSEXT_CCSCOPEPTR_H_
 
 #include "cocos2d.h"
-#include "GameMacros.h"
+#include "YHLibMacros.h"
 
-NS_FB_BEGIN
+NS_CC_YHLIB_BEGIN
 
 /**
  * 对指针进行封装，可以用于CCArray,CCDictionay中等。
  * 类似 boost的auto
  */
 template <class T>
-class CC_DLL CCScopePtr : public cocos2d::CCObject
+class CCScopePtr : public cocos2d::CCObject
 {
 public:
 	inline CCScopePtr()
@@ -59,6 +58,6 @@ private:
 };
 
 
-NS_FB_END
+NS_CC_YHLIB_END
 
-#endif // PROJECTFB_UTILS_CCScopePtr_H_
+#endif // YHLIB_COCOSEXT_CCSCOPEPTR_H_
