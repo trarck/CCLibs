@@ -11,9 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CocosExt\CCCallFuncNO.h" />
     <ClInclude Include="..\CocosExt\CCGeometryVaule.h" />
     <ClInclude Include="..\CocosExt\CCParabolaMove.h" />
     <ClInclude Include="..\CocosExt\CCScopePtr.h" />
+    <ClInclude Include="..\CocosExt\CCSelectorWrap.h" />
     <ClInclude Include="..\Components\CCAnimationComponent.h" />
     <ClInclude Include="..\Components\CCAttackComponent.h" />
     <ClInclude Include="..\Components\CCAutoAttackComponent.h" />
@@ -84,9 +86,11 @@
     <ClInclude Include="..\Message\ICCMessageManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\CocosExt\CCCallFuncNO.cpp" />
     <ClCompile Include="..\CocosExt\CCGeometryValue.cpp" />
     <ClCompile Include="..\CocosExt\CCParabolaMove.cpp" />
     <ClCompile Include="..\CocosExt\CCScopePtr.cpp" />
+    <ClCompile Include="..\CocosExt\CCSelectorWrap.cpp" />
     <ClCompile Include="..\Components\CCAnimationComponent.cpp" />
     <ClCompile Include="..\Components\CCAttackComponent.cpp" />
     <ClCompile Include="..\Components\CCAutoAttackComponent.cpp" />

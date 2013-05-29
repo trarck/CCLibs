@@ -252,6 +252,12 @@
     <ClInclude Include="..\CocosExt\CCScopePtr.h">
       <Filter>CocosExt</Filter>
     </ClInclude>
+    <ClInclude Include="..\CocosExt\CCCallFuncNO.h">
+      <Filter>CocosExt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocosExt\CCSelectorWrap.h">
+      <Filter>CocosExt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Isometric\CCAstar.cpp">
@@ -414,6 +420,12 @@
       <Filter>CocosExt</Filter>
     </ClCompile>
     <ClCompile Include="..\CocosExt\CCScopePtr.cpp">
+      <Filter>CocosExt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocosExt\CCCallFuncNO.cpp">
+      <Filter>CocosExt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocosExt\CCSelectorWrap.cpp">
       <Filter>CocosExt</Filter>
     </ClCompile>
   </ItemGroup>
