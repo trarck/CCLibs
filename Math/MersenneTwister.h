@@ -41,8 +41,8 @@
  email: m-mat @ math.sci.hiroshima-u.ac.jp (remove space)
  */
 
-#ifndef PROJECTFB_UTILS_MERSENNETWISTER19337_H_
-#define PROJECTFB_UTILS_MERSENNETWISTER19337_H_
+#ifndef PROJECTFB_UTILS_MERSENNETWISTER_H_
+#define PROJECTFB_UTILS_MERSENNETWISTER_H_
 
 #include "YHLibMacros.h"
 
@@ -52,9 +52,9 @@
 #define Mersenne_Twister_UPPER_MASK 0x80000000UL /* most significant w-r bits */
 #define Mersenne_Twister_LOWER_MASK 0x7fffffffUL /* least significant r bits */
 
-NS_FB_BEGIN
+NS_CC_YHLIB_BEGIN
 
-class MersenneTwister19337
+class MersenneTwister
 {
 public:
     
@@ -124,6 +124,6 @@ private:
     
 };
 
-NS_FB_END
+NS_CC_YHLIB_END
 
-#endif // PROJECTFB_UTILS_MERSENNETWISTER19337_H_
+#endif // PROJECTFB_UTILS_MERSENNETWISTER_H_

@@ -1,14 +1,6 @@
-//
-//  MersenneTwister.cpp
-//  ProjectFB
-//
-//  Created by duanhouhai on 13-5-9.
-//
-//
+#include "MersenneTwister.h"
 
-#include "MersenneTwister19337.h"
-
-NS_FB_BEGIN
+NS_CC_YHLIB_BEGIN
 
 /* initializes mt[Mersenne_Twister_N] with a seed */
 void MersenneTwister::initGenrand(unsigned long s)
@@ -93,4 +85,4 @@ unsigned long MersenneTwister::genrandInt32(void)
     return y;
 }
 
-NS_FB_END
+NS_CC_YHLIB_END
