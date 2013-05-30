@@ -619,10 +619,16 @@ void CCMessageManager::execHandleList(CCArray* handleList ,CCMessage* message)
 {
 	CCAssert(handleList!=NULL,"CCMessageManager:execHandleList:handleList can't be null!");
 	CCObject* pObject = NULL;
-    CCARRAY_FOREACH(handleList,pObject){
+	//为了安全执行handler，需要一份handleList的复制。
+	//在执行handle的时间，有可能会调用反注册函数。
+	//如果反注册函数和当前handleList相关，则下面的执行会出错。
+	CCArray* handleListCopy=new CCArray();
+	handleListCopy->initWithArray(handleList);
+    CCARRAY_FOREACH(handleListCopy,pObject){
         CCMessageHandler* handler=(CCMessageHandler*) pObject;
 		handler->execute(message);
     }
+	handleListCopy->release();
 }
 
 //

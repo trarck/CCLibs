@@ -281,30 +281,39 @@ void CCMessageManagerComplex::removeReceiver(CCObject* receiver,SEL_MessageHandl
  */
 void removeReceiverList(CCArray* list,SEL_MessageHandler handle,CCObject* handleObject)
 {
-	CCObject* pObject = NULL;
-	CCARRAY_FOREACH(list,pObject){
-		CCMessageHandler* handler=(CCMessageHandler*) pObject;
-		if (handler->getHandle()==handle && handler->getTarget()==handleObject) {
-			list->removeObject(handler);
-		}
-	}
+	if (list && list->data->num > 0){         
+        int len=list->data->num;
+        CCObject** arr = list->data->arr;
+        for(int i=0;i<len;){
+		    CCMessageHandler* handler=(CCMessageHandler*)(*(arr+i));
+		    if (handler->getHandle()==handle && handler->getTarget()==handleObject) {
+			    list->removeObjectAtIndex(i);
+                --len;
+		    }else{
+                ++i;
+            }
+	    }
+    }
 }
 
 void CCMessageManagerComplex::removeReceiverList(CCArray* list,SEL_MessageHandler handle){
-	CCObject* pObject = NULL;
-	CCARRAY_FOREACH(list,pObject){
-		CCMessageHandler* handler=(CCMessageHandler*) pObject;
-		if (handler->getHandle()==handle) {
-			list->removeObject(handler);
-		}
-	}
+	if (list && list->data->num > 0){         
+        int len=list->data->num;
+        CCObject** arr = list->data->arr;
+        for(int i=0;i<len;){
+		    CCMessageHandler* handler=(CCMessageHandler*)(*(arr+i));
+		    if (handler->getHandle()==handle) {
+			    list->removeObjectAtIndex(i);
+                --len;
+		    }else{
+                ++i;
+            }
+	    }
+    }
 }
 
 void CCMessageManagerComplex::removeReceiverList(CCArray* list){
-	CCObject* pObject = NULL;
-	CCARRAY_FOREACH(list,pObject){
-		list->removeObject(pObject);
-	}
+	list->removeAllObjects();
 }
 
 /**
@@ -484,10 +493,13 @@ void CCMessageManagerComplex::execRegisterReceiverList(CCArray* receiverList ,CC
 	
 	CCAssert(receiverList!=NULL,"CCMessageManagerComplex:execRegisterReceiverList:receiverList can't be null!");
 	CCObject* pObject = NULL;
-    CCARRAY_FOREACH(receiverList,pObject){
+	CCArray* receiverListCopy=new CCArray();
+	receiverListCopy->initWithArray(receiverList);
+    CCARRAY_FOREACH(receiverListCopy,pObject){
         CCMessageHandler* handler=(CCMessageHandler*) pObject;
 		handler->execute(message);
     }
+	receiverListCopy->release();
 }
 
 
