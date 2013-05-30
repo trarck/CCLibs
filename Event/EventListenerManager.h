@@ -23,6 +23,10 @@ public:
     void addEventListener(CCNode* target,const char* type,CCObject* handleObject,yhlib::SEL_EventHandle handle);
         
     void removeEventListener(CCNode* target,const char* type,CCObject* handleObject,yhlib::SEL_EventHandle handle);
+
+	void removeEventListener(CCNode* target,const char* type,CCObject* handleObject);
+
+	void removeEventListenerForHandle(CCNode* target,const char* type,yhlib::SEL_EventHandle handle);
         
     void dispatchEvent(CCNode* target,yhlib::Event* evt);
 
@@ -35,9 +39,14 @@ public:
     void trigger(CCNode* target,const char* type,CCDictionary* data,bool bubbles);
   
 protected:
-    void removeListeners(CCDictionary* listeners,CCObject* handleObject);
+
     void removeListeners(CCArray* listeners,CCObject* handleObject);
     void removeListeners(CCArray* listeners,CCObject* handleObject,yhlib::SEL_EventHandle handle);
+	void removeListenersForHandle(CCArray* listeners,yhlib::SEL_EventHandle handle);
+
+	void removeListenerMap(CCDictionary* listenerMap,CCObject* handleObject);
+	void removeListenerMap(CCDictionary* listenerMap,CCObject* handleObject,yhlib::SEL_EventHandle handle);
+	void removeListenerMapForHandle(CCDictionary* listenerMap,yhlib::SEL_EventHandle handle);
 
 protected:
 	CCDictionary* m_pListeners;
