@@ -16,7 +16,7 @@ NS_CC_YHLIB_BEGIN
  * @{
  */
 
-class CC_DLL CCPointValue : public cocos2d::CCObject
+class CCPointValue : public cocos2d::CCObject
 {
 public:
 	inline CCPointValue()
@@ -78,7 +78,7 @@ private:
 	cocos2d::CCPoint m_tPoint;
 };
 
-class CC_DLL CCSizeValue : public cocos2d::CCObject
+class CCSizeValue : public cocos2d::CCObject
 {
 public:
     inline CCSizeValue()
@@ -139,7 +139,7 @@ private:
     cocos2d::CCSize m_tSize;
 };
 
-class CC_DLL CCRectValue : public cocos2d::CCObject
+class CCRectValue : public cocos2d::CCObject
 {
     
 public:

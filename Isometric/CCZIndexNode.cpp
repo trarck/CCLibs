@@ -7,26 +7,23 @@ NS_CC_YHLIB_BEGIN
 
 CCZIndexNode::CCZIndexNode()
 :m_pEntity(NULL)
-,m_pRect(NULL)
 {
 
 }
 
 CCZIndexNode::~CCZIndexNode()
 {
-    CC_SAFE_RELEASE(m_pRect);
+
 }
 
-void CCZIndexNode::setRect(CCRect* rect)
+void CCZIndexNode::setRect(const CCRect& rect)
 {
-    CC_SAFE_RETAIN(rect);
-    CC_SAFE_RELEASE(m_pRect);
-    m_pRect=rect;
+    m_tRect=rect;
 }
 
-CCRect* CCZIndexNode::getRect()
+const CCRect& CCZIndexNode::getRect()
 {
-    return m_pRect;
+    return m_tRect;
 }
 
 void CCZIndexNode::setEntity(CCObject* entity)

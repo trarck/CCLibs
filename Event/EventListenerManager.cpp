@@ -112,7 +112,7 @@ void EventListenerManager::removeEventListenerForHandle(CCNode* target,const cha
             CCArray* eventListeners=static_cast<CCArray*>(targetListeners->objectForKey(type));
             if(eventListeners) {
                 //删除事件中的handler
-                removeListeners(eventListeners,handle);
+                removeListenersForHandle(eventListeners,handle);
             }
         } else {
            //删除target的所有监听者
@@ -279,7 +279,7 @@ CCArray* EventListenerManager::getEventListeners(CCNode* target,const char* type
 }
 
 //把new EventObject和dispatchEvent和起来，提供简便方法
-void EventListenerManager::trigger(CCNode* target,const char* type,CCDictionary* data,bool bubbles)
+void EventListenerManager::trigger(CCNode* target,const char* type,CCObject* data,bool bubbles)
 {
     yhlib::Event* e=new yhlib::Event();
 	e->initEvent(type,bubbles,true);

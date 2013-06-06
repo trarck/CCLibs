@@ -12,7 +12,7 @@ NS_CC_YHLIB_BEGIN
 
 //瀹氫箟澶勭悊鍑芥暟绫诲瀷
 typedef void (CCObject::*SEL_EventHandleD)(yhlib::Event* evt,CCObject* data);
-#define yh_event_selector(_SELECTOR) (SEL_EventHandleD)(&_SELECTOR)
+#define YH_EVENT_HANDLED_SELECTOR(_SELECTOR) (SEL_EventHandleD)(&_SELECTOR)
 
 class EventHandleWrap : public CCObject {
 public:

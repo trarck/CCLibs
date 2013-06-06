@@ -14,7 +14,7 @@ class Event;
 
 //定义处理函数类型
 typedef void (CCObject::*SEL_EventHandle)(yhlib::Event*);
-#define yh_event_selector(_SELECTOR) (SEL_EventHandle)(&_SELECTOR)
+#define YH_EVENT_SELECTOR(_SELECTOR) (SEL_EventHandle)(&_SELECTOR)
 
 class EventHandle : public CCObject {
 public:

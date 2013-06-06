@@ -92,15 +92,16 @@ void CCZIndex::removeDynamic(CCZIndexNode* node)
 
 CCArray* CCZIndex::insertSort(CCZIndexNode* node ,CCArray* rects)
 {
-	CCRect* src;
-    CCRect* rect=node->getRect();
+	CCRect src;
+    CCRect rect=node->getRect();
 	int side,l=rects->count();
 	bool maxAppear=false;
 	CCArray* results=NULL;
 
     if(l>0){
 		CCZIndexNode* fromNode=(CCZIndexNode*)rects->objectAtIndex(l-1);
-		side=caculateSideFrom(fromNode->getRect(),rect);
+		CCRect from=fromNode->getRect();
+		side=caculateSideFrom(&from,&rect);
 		
 		if(side<0){
 			results=new CCArray(l+1);
@@ -114,7 +115,7 @@ CCArray* CCZIndex::insertSort(CCZIndexNode* node ,CCArray* rects)
 	        CCARRAY_FOREACH(rects,pObject){
 			    CCZIndexNode*it=(CCZIndexNode*)pObject;
 				src=it->getRect();
-				side=caculateSideFrom(src,rect);
+				side=caculateSideFrom(&src,&rect);
 				//NSLog(@"side:%d,from:%f,%f to:%f,%f",side,src.origin.x,src.origin.y,rect.origin.x,rect.origin.y);
 				switch (side) {
 					case -1:

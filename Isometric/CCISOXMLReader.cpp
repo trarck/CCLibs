@@ -76,7 +76,7 @@ void CCISOXMLReader::internalInit(const char* tmxFileName, const char* resourceP
     
     if (tmxFileName != NULL)
     {
-        m_sTMXFileName = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(tmxFileName);
+        m_sTMXFileName = CCFileUtils::sharedFileUtils()->fullPathForFilename(tmxFileName);
     }
     
     if (resourcePath != NULL)
@@ -190,7 +190,7 @@ void CCISOXMLReader::startElement(void *ctx, const char *name, const char **atts
             {
                 externalTilesetFilename = m_sResources + "/" + externalTilesetFilename;
             }
-            externalTilesetFilename = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(externalTilesetFilename.c_str());
+            externalTilesetFilename = CCFileUtils::sharedFileUtils()->fullPathForFilename(externalTilesetFilename.c_str());
             
             this->parseXMLFile(externalTilesetFilename.c_str());
         }

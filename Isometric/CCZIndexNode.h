@@ -16,15 +16,15 @@ public:
     CCZIndexNode();
     ~CCZIndexNode();
     
-    void setRect(CCRect* rect);
-    CCRect* getRect();
+    void setRect(const CCRect& rect);
+    const CCRect& getRect();
     
     //弱引用
     void setEntity(CCObject* entity);
     CCObject* getEntity();
 protected:
     CCObject* m_pEntity;
-    CCRect* m_pRect;
+    CCRect m_tRect;
 };
 
 

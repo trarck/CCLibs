@@ -2,6 +2,7 @@
 #include "YHLibMacros.h"
 #include "CCAstarNode.h"
 #include "CCAstar.h"
+#include "CocosExt/CCGeometryVaule.h"
 
 NS_CC_YHLIB_BEGIN
 
@@ -375,7 +376,7 @@ CCArray* CCAstar::getPath()
 	CCAstarNode* node=m_current;
 	
 	while (node && node->getParent()!=NULL) {
-		CCPoint* p=new CCPoint(node->getX(),node->getY());
+		CCPointValue* p=new CCPointValue(node->getX(),node->getY());
 		paths->addObject(p);
 		p->release();
 		node=node->getParent();
@@ -390,7 +391,7 @@ CCArray* CCAstar::getPathWithStart()
 	CCAstarNode* node=m_current;
 	
 	while (node) {
-		CCPoint* p=new CCPoint(node->getX(),node->getY());
+		CCPointValue* p=new CCPointValue(node->getX(),node->getY());
 		paths->addObject(p);
 		p->release();
 		node=node->getParent();
@@ -402,7 +403,7 @@ CCArray* CCAstar::getPathWithStart()
 CCArray* CCAstar::getPathWithEnd()
 {
 	CCArray* paths=getPath();
-	CCPoint* p=new CCPoint(m_end->getX(),m_end->getY());
+	CCPointValue* p=new CCPointValue(m_end->getX(),m_end->getY());
 	paths->insertObject(p,0);
 	p->release();
 	return paths;
@@ -412,7 +413,7 @@ CCArray* CCAstar::getPathWithEnd()
 CCArray* CCAstar::getPathWithStartEnd()
 {
 	CCArray* paths=getPathWithStart();
-	CCPoint* p=new CCPoint(m_end->getX(),m_end->getY());
+	CCPointValue* p=new CCPointValue(m_end->getX(),m_end->getY());
 	paths->insertObject(p,0);
 	p->release();
 	paths->insertObject(p,0);

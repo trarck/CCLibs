@@ -36,7 +36,7 @@ public:
 
     CCArray* getEventListeners(CCNode* target,const char* type);
     //把new EventObject和dispatchEvent和起来，提供简便方法
-    void trigger(CCNode* target,const char* type,CCDictionary* data,bool bubbles);
+    void trigger(CCNode* target,const char* type,CCObject* data,bool bubbles);
   
 protected:
 
