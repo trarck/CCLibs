@@ -14,10 +14,11 @@ NS_CC_YHLIB_BEGIN
 CCMessage::~CCMessage(void)
 {
     CCLOG("Message destroy begin");
-    CC_SAFE_RELEASE(m_sender);
-    CC_SAFE_RELEASE(m_receiver);
+    CC_SAFE_RELEASE_NULL(m_sender);
+    CC_SAFE_RELEASE_NULL(m_receiver);
 //    CC_SAFE_RELEASE(m_dData);
-    CC_SAFE_RELEASE(m_pData);
+    CC_SAFE_RELEASE_NULL(m_pData);
+	CC_SAFE_RELEASE_NULL(m_pExtData);
     CCLOG("Message destroy end");
 }
 

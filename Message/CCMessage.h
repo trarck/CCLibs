@@ -16,11 +16,12 @@ class CCMessage : public CCObject {
 
 public:
     CCMessage()
-		:m_type(0),
-		 m_sender(NULL),
-		 m_receiver(NULL),
-		 m_pData(NULL),
-		 m_timeStamp(0.0f)
+	:m_type(0)
+	,m_sender(NULL)
+	,m_receiver(NULL)
+	,m_pData(NULL)
+	,m_timeStamp(0.0f)
+	,m_pExtData(NULL)
 	{
 		
 	}
@@ -89,10 +90,14 @@ public:
 		 return (CCDictionary*) m_pData;
 	}
 
-    void setDictionary(CCDictionary* data){
-		CC_SAFE_RETAIN(data);
-		CC_SAFE_RELEASE(m_pData);
-		m_pData=data;
+	CCObject* getExtData(){
+		return m_pExtData;
+	}
+
+    void setExtData(CCObject* ExtData){
+		CC_SAFE_RETAIN(ExtData);
+		CC_SAFE_RELEASE(m_pExtData);
+		m_pExtData=ExtData;
 	}
 
 private:
@@ -101,6 +106,7 @@ private:
 	CCObject* m_receiver;//消息的接收者
     float m_timeStamp;//发送时间
     CCObject* m_pData;
+	CCObject* m_pExtData;//附加数据。
 };
 
 NS_CC_YHLIB_END
