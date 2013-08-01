@@ -1,4 +1,4 @@
-#include "CCGeometryVaule.h"
+#include "CCGeometryValue.h"
 
 NS_CC_YHLIB_BEGIN
 
