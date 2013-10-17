@@ -32,6 +32,13 @@ public:
 	virtual bool registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle);
 	
 	/**
+	 * 检查是否已经注册某个消息。
+	 */
+	virtual bool isRegisterReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle ,CCObject*  handleObject);
+
+	virtual bool isRegisterReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle);
+
+	/**
 	 * 取消注册到接收者的处理对象的处理方法，该方法注册到发送者的某个消息。
 	 */
 	virtual void removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle,CCObject*  handleObject);

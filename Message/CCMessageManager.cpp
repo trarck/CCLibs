@@ -23,8 +23,8 @@ CCMessageManager::CCMessageManager()
 CCMessageManager::~CCMessageManager()
 {
 	CCLOG("CCMessageManager destroy begin");
-	CC_SAFE_RELEASE(m_messages);
-	CC_SAFE_RELEASE(m_globalObject);
+	CC_SAFE_RELEASE_NULL(m_messages);
+	CC_SAFE_RELEASE_NULL(m_globalObject);
 	//CC_SAFE_RELEASE(m_regiesterMap);
 	CCLOG("CCMessageManager destroy end");
 }
@@ -78,6 +78,15 @@ bool CCMessageManager::registerReceiver(CCObject* receiver ,unsigned int type ,C
 		handleList->release();
 	}
 
+#ifdef MESSAGE_REGIEST_REPEAT
+	CCMessageHandler *handler=new CCMessageHandler();
+	handler->initWithTarget(handleObject,handle);
+	handleList->addObject(handler);
+	handler->release();
+	
+	return true;
+	
+#elif
 	//检查是否已经注册过
     bool isRegisted=false;
     CCObject* pObject = NULL;
@@ -99,6 +108,7 @@ bool CCMessageManager::registerReceiver(CCObject* receiver ,unsigned int type ,C
         handler->release();
     }
 	return !isRegisted;
+#endif
 }
 
 //使receiver可以接收sender发送过来的叫type的消息，并用handle来处理
@@ -106,6 +116,54 @@ bool CCMessageManager::registerReceiver(CCObject* receiver ,unsigned int type ,C
 bool CCMessageManager::registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle)
 {
 	return registerReceiver(receiver,type ,sender  ,handle,receiver);
+}
+
+/**
+ * 检查是否已经注册某个消息。
+ */
+bool CCMessageManager::isRegisterReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle ,CCObject*  handleObject)
+{
+	CCAssert(receiver!=NULL,"MessageManage:registerReceiver:receiver can't be null");
+	CCAssert(handle!=NULL,"MessageManage:registerReceiver:handle");
+	CCAssert(handleObject!=NULL,"MessageManage:registerReceiver:handleObject");
+
+	//type等于0，则所有消息都会发送
+	//register for type
+	CCDictionary *msgMap=(CCDictionary*) m_messages->objectForKey(type);
+	if (msgMap==NULL) {
+		return false;
+	}
+    //register for receiver
+	unsigned int receiverKey=receiver->m_uID;
+    CCDictionary *receiverMap=(CCDictionary*)msgMap->objectForKey(receiverKey);
+	if (!receiverMap) {
+		return false;
+	}
+
+	//register for sender
+	//sender 为空，则注册到全局对象上
+	unsigned int senderKey=sender==NULL?kNullObjectId:sender->m_uID;
+	CCArray *handleList=(CCArray*)receiverMap->objectForKey(senderKey);
+	if (!handleList) {
+       return false;
+	}
+
+	bool isRegisted=false;
+    CCObject* pObject = NULL;
+    CCARRAY_FOREACH(handleList,pObject){
+        CCMessageHandler* handler=(CCMessageHandler*) pObject;
+        if (handler->getHandle()==handle && handler->getTarget()==handleObject) {
+            isRegisted=true;
+            break;
+		}
+    }
+
+	return isRegisted;
+}
+
+bool CCMessageManager::isRegisterReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle)
+{
+	return isRegisterReceiver(receiver,type,sender,handle,receiver);
 }
 
 /**

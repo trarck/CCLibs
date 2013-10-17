@@ -9,7 +9,9 @@
 
 NS_CC_YHLIB_BEGIN
 
-static CCMessageManagerSenderPredominate* s_sharedMessageManagerInstance=NULL;
+const int kNullObjectId=0;
+
+static CCMessageManagerSenderPredominate* s_sharedMessageManagerSenderPredominateInstance=NULL;
 
 CCMessageManagerSenderPredominate::CCMessageManagerSenderPredominate()
 :m_messages(NULL)
@@ -21,19 +23,19 @@ CCMessageManagerSenderPredominate::CCMessageManagerSenderPredominate()
 CCMessageManagerSenderPredominate::~CCMessageManagerSenderPredominate()
 {
 	CCLOG("CCMessageManagerSenderPredominate destroy begin");
-	CC_SAFE_RELEASE(m_messages);
-	CC_SAFE_RELEASE(m_globalObject);
+	CC_SAFE_RELEASE_NULL(m_messages);
+	CC_SAFE_RELEASE_NULL(m_globalObject);
 	//CC_SAFE_RELEASE(m_regiesterMap);
 	CCLOG("CCMessageManagerSenderPredominate destroy end");
 }
 
 CCMessageManagerSenderPredominate* CCMessageManagerSenderPredominate::defaultManager(void)
 {
-	if (!s_sharedMessageManagerInstance) {
-		s_sharedMessageManagerInstance=new CCMessageManagerSenderPredominate();
-		s_sharedMessageManagerInstance->init();
+	if (!s_sharedMessageManagerSenderPredominateInstance) {
+		s_sharedMessageManagerSenderPredominateInstance=new CCMessageManagerSenderPredominate();
+		s_sharedMessageManagerSenderPredominateInstance->init();
 	}
-	return s_sharedMessageManagerInstance;
+	return s_sharedMessageManagerSenderPredominateInstance;
 }
 
 bool CCMessageManagerSenderPredominate::init()
@@ -58,9 +60,8 @@ bool CCMessageManagerSenderPredominate::registerReceiver(CCObject* receiver ,uns
 		msgMap->release();
 	}
 	//register for sender
-	//sender 为空，则注册到全局对象上
-	sender=sender==NULL?m_globalObject:sender;
-	unsigned int senderKey=sender->m_uID;
+	//sender 为空，则注册到kNullObjectId上
+	unsigned int senderKey=sender==NULL?kNullObjectId:sender->m_uID;
 	CCDictionary *senderMap=(CCDictionary*)msgMap->objectForKey(senderKey);
 	if (!senderMap) {
 		senderMap=new CCDictionary();
@@ -75,7 +76,15 @@ bool CCMessageManagerSenderPredominate::registerReceiver(CCObject* receiver ,uns
 		senderMap->setObject(receiverList,receiverKey);
 		receiverList->release();
 	}
+#ifdef MESSAGE_REGIEST_REPEAT
+	CCMessageHandler *handler=new CCMessageHandler();
+	handler->initWithTarget(handleObject,handle);
+	receiverList->addObject(handler);
+	handler->release();
 	
+	return true;
+	
+#elif	
 	//检查是否已经注册过
     bool isRegisted=false;
     CCObject* pObject = NULL;
@@ -102,6 +111,7 @@ bool CCMessageManagerSenderPredominate::registerReceiver(CCObject* receiver ,uns
 //		addReceiverMap(receiver,handle,type,sender,handleObject);
     }
 	return !isRegisted;
+#endif
 }
 
 //使receiver可以接收sender发送过来的叫type的消息，并用handle来处理
@@ -110,6 +120,55 @@ bool CCMessageManagerSenderPredominate::registerReceiver(CCObject* receiver ,uns
 {
 	return registerReceiver(receiver ,type ,sender ,handle,receiver);
 }
+
+
+/**
+ * 检查是否已经注册某个消息。
+ */
+bool CCMessageManagerSenderPredominate::isRegisterReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle ,CCObject*  handleObject)
+{
+	CCAssert(receiver!=NULL,"MessageManage:registerReceiver:receiver can't be null");
+	CCAssert(handle!=NULL,"MessageManage:registerReceiver:handle");
+	CCAssert(handleObject!=NULL,"MessageManage:registerReceiver:handleObject");
+
+	//type等于0，则所有消息都会发送
+	//register for type
+	CCDictionary *msgMap=(CCDictionary*) m_messages->objectForKey(type);
+	if (msgMap==NULL) {
+		return false;
+	}
+	//register for sender
+	//sender 为空，则注册到kNullObjectId上
+	unsigned int senderKey=sender==NULL?kNullObjectId:sender->m_uID;
+	CCDictionary *senderMap=(CCDictionary*)msgMap->objectForKey(senderKey);
+	if (!senderMap) {
+		return false;
+	}
+	//register for receiver
+	unsigned int receiverKey=receiver->m_uID;
+	CCArray *receiverList=(CCArray*)senderMap->objectForKey(receiverKey);
+	if (!receiverList) {
+		return false;
+	}
+
+	bool isRegisted=false;
+    CCObject* pObject = NULL;
+    CCARRAY_FOREACH(handleList,pObject){
+        CCMessageHandler* handler=(CCMessageHandler*) pObject;
+        if (handler->getHandle()==handle && handler->getTarget()==handleObject) {
+            isRegisted=true;
+            break;
+		}
+    }
+
+	return isRegisted;
+}
+
+bool CCMessageManagerSenderPredominate::isRegisterReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle)
+{
+	return isRegisterReceiver(receiver,type,sender,handle,receiver);
+}
+
 
 /**
  * 取消注册到接收者的处理对象的处理方法，该方法注册到发送者的某个消息。
@@ -279,7 +338,7 @@ void CCMessageManagerSenderPredominate::removeReceiver(CCObject* receiver,SEL_Me
 /**
  * 删除接收者的处理方法列表的处理方法为参数指定的函数。
  */
-void removeReceiverList(CCArray* list,SEL_MessageHandler handle,CCObject* handleObject)
+void CCMessageManagerSenderPredominate::removeReceiverList(CCArray* list,SEL_MessageHandler handle,CCObject* handleObject)
 {
 	if (list && list->data->num > 0){         
         int len=list->data->num;
@@ -419,47 +478,37 @@ void CCMessageManagerSenderPredominate::dispatchMessage(CCMessage* message ,CCOb
 		//message for global
 		CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(m_globalObject->m_uID);
 		if (msgMap) {
-			//parse for sender
-			//如果sender不为空，则还要触发一次全局消息。
-			CCObject* sender=message->getSender();
-			if (sender) {
-				//执行注册到sender的消息的处理方法
-				CCDictionary* senderMap=(CCDictionary*)msgMap->objectForKey(sender->m_uID);
-				//如果注册则执行
-				if (senderMap)  execRegisterWithSenderMap(senderMap,message,receiver);
-				//执行注册到global的消息的处理方法
-				CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
-				//如果注册则执行
-				if (globalMap)  execRegisterWithSenderMap(globalMap ,message ,receiver);
-			}else {
-				//执行注册到global的消息的处理方法
-				CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
-				//如果注册则执行
-				if (globalMap)  execRegisterWithSenderMap(globalMap ,message ,receiver);
-			}
+			dispatchMessageMap(msgMap,message);
 		}
 	}
 	//message for type
 	CCDictionary* msgMap=(CCDictionary*)m_messages->objectForKey(message->getType());
 	if (msgMap) {
-		//parse for sender
-		//如果sender不为空，则还要触发一次全局消息。
-		CCObject* sender=message->getSender();
-		if (sender) {
-			//执行注册到sender的消息的处理方法
-			CCDictionary* senderMap=(CCDictionary*)msgMap->objectForKey(sender->m_uID);
-			//如果注册则执行
-			if (senderMap)  execRegisterWithSenderMap(senderMap ,message ,receiver);
-			//执行注册到global的消息的处理方法
-			CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
-			//如果注册则执行
-			if (globalMap)  execRegisterWithSenderMap(globalMap ,message ,receiver);
-		}else {
-			//执行注册到global的消息的处理方法
-			CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
-			//如果注册则执行
-			if (globalMap)  execRegisterWithSenderMap(globalMap ,message ,receiver);
-		}
+		dispatchMessageMap(msgMap,message);
+	}
+}
+
+void CCMessageManagerSenderPredominate::dispatchMessageMap(CCDictionary* msgMap,CCMessage* message)
+{
+	CCAssert(msgMap!=NULL,"CCMessageManager:dispatchMessageMap:msgMap can't be null!");
+	CCObject* receiver=message->getReceiver();
+	CCObject* sender=message->getSender();
+	//parse for sender
+	//如果sender不为空，则还要触发一次全局消息。
+	if (sender) {
+		//执行注册到sender的消息的处理方法
+		CCDictionary* senderMap=(CCDictionary*)msgMap->objectForKey(sender->m_uID);
+		//如果注册则执行
+		if (senderMap)  execRegisterWithSenderMap(senderMap ,message ,receiver);
+		//执行注册到global的消息的处理方法
+		CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
+		//如果注册则执行
+		if (globalMap)  execRegisterWithSenderMap(globalMap ,message ,receiver);
+	}else {
+		//执行注册到global的消息的处理方法
+		CCDictionary* globalMap=(CCDictionary*)msgMap->objectForKey(m_globalObject->m_uID);
+		//如果注册则执行
+		if (globalMap)  execRegisterWithSenderMap(globalMap ,message ,receiver);
 	}
 }
 

@@ -12,6 +12,13 @@
 
 NS_CC_YHLIB_BEGIN
 
+/**
+ * 消息管理类
+ * 存储结构hash(消息).hash(发送者).hash(接收者).array(处理单元)
+ * 这种方式对发送消息友好，但对取消注册时，发送者发空时会有性能影响。通常注册的消息都没有发送者或者多个发送者。
+ * 对于这种取消注册时，发送者为空没有好的解决办法，只能尽量避免
+ * 所以推荐使用另外一种存储结构的消息管理器。
+ */
 class CCMessageManagerSenderPredominate : public CCObject {
 
 public:
@@ -34,7 +41,14 @@ public:
 
 	bool registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle);
 	
-   /**
+	/**
+	 * 检查是否已经注册某个消息。
+	 */
+	bool isRegisterReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle ,CCObject*  handleObject);
+
+	bool isRegisterReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle);
+
+    /**
 	 * 取消注册到接收者的处理对象的处理方法，该方法注册到发送者的某个消息。
 	 */
 	void removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle,CCObject*  handleObject);
@@ -111,7 +125,17 @@ public:
 		GlobalMessageType=0
 	};
 
+	inline CCObject* getGlobalObject()
+	{
+		return m_globalObject;
+	}
+
 protected:
+
+	/**
+	 * 发送消息。
+	 */
+	void dispatchMessageMap(CCDictionary* msgMap,CCMessage* message);
     // /**
 	// * 添加接收者的注册表。
 	// */
