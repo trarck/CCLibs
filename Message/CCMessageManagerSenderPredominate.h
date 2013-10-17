@@ -2,8 +2,8 @@
 //  TODO:对消息优先级的支持
 //
 
-#ifndef YHLIB_MESSAGE_CCMESSAGEMANAGER_H_
-#define YHLIB_MESSAGE_CCMESSAGEMANAGER_H_
+#ifndef YHLIB_MESSAGE_CCMESSAGEMANAGERSENDERPREDOMINATE_H_
+#define YHLIB_MESSAGE_CCMESSAGEMANAGERSENDERPREDOMINATE_H_
 
 #include "cocos2d.h"
 #include "YHLibMacros.h"
@@ -12,15 +12,15 @@
 
 NS_CC_YHLIB_BEGIN
 
-class CCMessageManagerComplex : public CCObject {
+class CCMessageManagerSenderPredominate : public CCObject {
 
 public:
 
-    CCMessageManagerComplex();
+    CCMessageManagerSenderPredominate();
 
-    ~CCMessageManagerComplex();
+    ~CCMessageManagerSenderPredominate();
 
-    static CCMessageManagerComplex* defaultManager();
+    static CCMessageManagerSenderPredominate* defaultManager();
 
     bool init();
     
@@ -189,4 +189,4 @@ protected:
 
 NS_CC_YHLIB_END
 
-#endif // YHLIB_MESSAGE_CCMESSAGEMANAGER_H_
+#endif // YHLIB_MESSAGE_CCMESSAGEMANAGERSENDERPREDOMINATE_H_

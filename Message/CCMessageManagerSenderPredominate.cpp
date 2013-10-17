@@ -5,45 +5,45 @@
 //  Created by trarck on 11-11-27.
 //
 
-#include "CCMessageManagerComplex.h"
+#include "CCMessageManagerSenderPredominate.h"
 
 NS_CC_YHLIB_BEGIN
 
-static CCMessageManagerComplex* s_sharedMessageManagerInstance=NULL;
+static CCMessageManagerSenderPredominate* s_sharedMessageManagerInstance=NULL;
 
-CCMessageManagerComplex::CCMessageManagerComplex()
+CCMessageManagerSenderPredominate::CCMessageManagerSenderPredominate()
 :m_messages(NULL)
 ,m_globalObject(NULL)
 {
-	CCLOG("CCMessageManagerComplex create");
+	CCLOG("CCMessageManagerSenderPredominate create");
 }
 
-CCMessageManagerComplex::~CCMessageManagerComplex()
+CCMessageManagerSenderPredominate::~CCMessageManagerSenderPredominate()
 {
-	CCLOG("CCMessageManagerComplex destroy begin");
+	CCLOG("CCMessageManagerSenderPredominate destroy begin");
 	CC_SAFE_RELEASE(m_messages);
 	CC_SAFE_RELEASE(m_globalObject);
 	//CC_SAFE_RELEASE(m_regiesterMap);
-	CCLOG("CCMessageManagerComplex destroy end");
+	CCLOG("CCMessageManagerSenderPredominate destroy end");
 }
 
-CCMessageManagerComplex* CCMessageManagerComplex::defaultManager(void)
+CCMessageManagerSenderPredominate* CCMessageManagerSenderPredominate::defaultManager(void)
 {
 	if (!s_sharedMessageManagerInstance) {
-		s_sharedMessageManagerInstance=new CCMessageManagerComplex();
+		s_sharedMessageManagerInstance=new CCMessageManagerSenderPredominate();
 		s_sharedMessageManagerInstance->init();
 	}
 	return s_sharedMessageManagerInstance;
 }
 
-bool CCMessageManagerComplex::init()
+bool CCMessageManagerSenderPredominate::init()
 {
 	m_messages=new CCDictionary();
 	m_globalObject=new CCObject();
 	return true;
 }
 
-bool CCMessageManagerComplex::registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle ,CCObject*  handleObject)
+bool CCMessageManagerSenderPredominate::registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle ,CCObject*  handleObject)
 {
 	CCAssert(receiver!=NULL,"MessageManage:registerReceiver:receiver can't be null");
 	CCAssert(handle!=NULL,"MessageManage:registerReceiver:handle");
@@ -106,7 +106,7 @@ bool CCMessageManagerComplex::registerReceiver(CCObject* receiver ,unsigned int 
 
 //使receiver可以接收sender发送过来的叫type的消息，并用handle来处理
 //关注的对象是receiver
-bool CCMessageManagerComplex::registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle)
+bool CCMessageManagerSenderPredominate::registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle)
 {
 	return registerReceiver(receiver ,type ,sender ,handle,receiver);
 }
@@ -114,7 +114,7 @@ bool CCMessageManagerComplex::registerReceiver(CCObject* receiver ,unsigned int 
 /**
  * 取消注册到接收者的处理对象的处理方法，该方法注册到发送者的某个消息。
  */
-void CCMessageManagerComplex::removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle,CCObject*  handleObject)
+void CCMessageManagerSenderPredominate::removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle,CCObject*  handleObject)
 {
 	    CCDictionary *msgMap=(CCDictionary*) m_messages->objectForKey(type);
 
@@ -124,11 +124,11 @@ void CCMessageManagerComplex::removeReceiver(CCObject* receiver,unsigned int typ
         }
 }
 
-void CCMessageManagerComplex::removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle)
+void CCMessageManagerSenderPredominate::removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender,SEL_MessageHandler handle)
 {
-    CCAssert(receiver!=NULL,"CCMessageManagerComplex:removeReceiver:receiver can't be null!");
-    CCAssert(sender!=NULL,"CCMessageManagerComplex:removeReceiver:sender can't be null!");
-	CCAssert(handle!=NULL,"CCMessageManagerComplex:removeReceiver:handle can't be null!");
+    CCAssert(receiver!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:receiver can't be null!");
+    CCAssert(sender!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:sender can't be null!");
+	CCAssert(handle!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:handle can't be null!");
     
     //if(sender==NULL){
     //    removeReceiver(receiver, type, handle);
@@ -144,10 +144,10 @@ void CCMessageManagerComplex::removeReceiver(CCObject* receiver,unsigned int typ
     //}
 }
 
-void CCMessageManagerComplex::removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender)
+void CCMessageManagerSenderPredominate::removeReceiver(CCObject* receiver,unsigned int type ,CCObject* sender)
 {
-    CCAssert(receiver!=NULL,"CCMessageManagerComplex:removeReceiver:receiver can't be null!");
-    CCAssert(sender!=NULL,"CCMessageManagerComplex:removeReceiver:sender can't be null!");
+    CCAssert(receiver!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:receiver can't be null!");
+    CCAssert(sender!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:sender can't be null!");
 
     //if(sender==NULL){
     //    removeReceiver(receiver,type);
@@ -160,10 +160,10 @@ void CCMessageManagerComplex::removeReceiver(CCObject* receiver,unsigned int typ
     //}
 }
 
-void CCMessageManagerComplex::removeReceiver(CCObject* receiver,unsigned int type ,SEL_MessageHandler handle)
+void CCMessageManagerSenderPredominate::removeReceiver(CCObject* receiver,unsigned int type ,SEL_MessageHandler handle)
 {
-    CCAssert(receiver!=NULL,"CCMessageManagerComplex:removeReceiver:receiver can't be null!");
-	CCAssert(handle!=NULL,"CCMessageManagerComplex:removeReceiver:handle can't be null!");
+    CCAssert(receiver!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:receiver can't be null!");
+	CCAssert(handle!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:handle can't be null!");
     
     //if(handle==NULL){
     //    removeReceiver(receiver,type);
@@ -179,9 +179,9 @@ void CCMessageManagerComplex::removeReceiver(CCObject* receiver,unsigned int typ
     //}
 }
 
-void CCMessageManagerComplex::removeReceiver(CCObject* receiver,unsigned int type)
+void CCMessageManagerSenderPredominate::removeReceiver(CCObject* receiver,unsigned int type)
 {
-    CCAssert(receiver!=NULL,"CCMessageManagerComplex:removeReceiver:receiver can't be null!");
+    CCAssert(receiver!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:receiver can't be null!");
 
 	CCDictionary *msgMap=(CCDictionary*) m_messages->objectForKey(type);
 	if(msgMap){
@@ -194,9 +194,9 @@ void CCMessageManagerComplex::removeReceiver(CCObject* receiver,unsigned int typ
     }
 }
 
-void CCMessageManagerComplex::removeReceiver(CCObject* receiver)
+void CCMessageManagerSenderPredominate::removeReceiver(CCObject* receiver)
 {
-    CCAssert(receiver!=NULL,"CCMessageManagerComplex:removeReceiver:receiver can't be null!");
+    CCAssert(receiver!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:receiver can't be null!");
     
     CCDictElement* msgMapElement = NULL;
     CCDictElement* senderMapElement = NULL;
@@ -215,11 +215,11 @@ void CCMessageManagerComplex::removeReceiver(CCObject* receiver)
 }
 
 
-void CCMessageManagerComplex::removeReceiver(CCObject* receiver,CCObject* sender,SEL_MessageHandler handle)
+void CCMessageManagerSenderPredominate::removeReceiver(CCObject* receiver,CCObject* sender,SEL_MessageHandler handle)
 {
-    CCAssert(receiver!=NULL,"CCMessageManagerComplex:removeReceiver:receiver can't be null!");
-	CCAssert(sender!=NULL,"CCMessageManagerComplex:removeReceiver:sender can't be null!");
-	CCAssert(handle!=NULL,"CCMessageManagerComplex:removeReceiver:handle can't be null!");
+    CCAssert(receiver!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:receiver can't be null!");
+	CCAssert(sender!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:sender can't be null!");
+	CCAssert(handle!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:handle can't be null!");
 
     //if(sender==NULL){
     //    removeReceiver(receiver, handle);
@@ -237,10 +237,10 @@ void CCMessageManagerComplex::removeReceiver(CCObject* receiver,CCObject* sender
     
 }
 
-void CCMessageManagerComplex::removeReceiver(CCObject* receiver,CCObject* sender)
+void CCMessageManagerSenderPredominate::removeReceiver(CCObject* receiver,CCObject* sender)
 {
-    CCAssert(receiver!=NULL,"CCMessageManagerComplex:removeReceiver:receiver can't be null!");
-    CCAssert(sender!=NULL,"CCMessageManagerComplex:removeReceiver:sender can't be null!");
+    CCAssert(receiver!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:receiver can't be null!");
+    CCAssert(sender!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:sender can't be null!");
 
     //if(sender==NULL){
     //    removeReceiver(receiver);
@@ -255,10 +255,10 @@ void CCMessageManagerComplex::removeReceiver(CCObject* receiver,CCObject* sender
     //}
 }
 
-void CCMessageManagerComplex::removeReceiver(CCObject* receiver,SEL_MessageHandler handle)
+void CCMessageManagerSenderPredominate::removeReceiver(CCObject* receiver,SEL_MessageHandler handle)
 {
-    CCAssert(receiver!=NULL,"CCMessageManagerComplex:removeReceiver:receiver can't be null!");
-	CCAssert(handle!=NULL,"CCMessageManagerComplex:removeReceiver:handle can't be null!");
+    CCAssert(receiver!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:receiver can't be null!");
+	CCAssert(handle!=NULL,"CCMessageManagerSenderPredominate:removeReceiver:handle can't be null!");
 
 	CCDictElement* msgMapElement = NULL;
     CCDictElement* senderMapElement = NULL;
@@ -296,7 +296,7 @@ void removeReceiverList(CCArray* list,SEL_MessageHandler handle,CCObject* handle
     }
 }
 
-void CCMessageManagerComplex::removeReceiverList(CCArray* list,SEL_MessageHandler handle){
+void CCMessageManagerSenderPredominate::removeReceiverList(CCArray* list,SEL_MessageHandler handle){
 	if (list && list->data->num > 0){         
         int len=list->data->num;
         CCObject** arr = list->data->arr;
@@ -312,7 +312,7 @@ void CCMessageManagerComplex::removeReceiverList(CCArray* list,SEL_MessageHandle
     }
 }
 
-void CCMessageManagerComplex::removeReceiverList(CCArray* list){
+void CCMessageManagerSenderPredominate::removeReceiverList(CCArray* list){
 	list->removeAllObjects();
 }
 
@@ -321,7 +321,7 @@ void CCMessageManagerComplex::removeReceiverList(CCArray* list){
  */
 void removeReceiverMap(CCObject* receiver,CCDictionary* map,SEL_MessageHandler handle,CCObject* handleObject)
 {
-	CCAssert(receiver!=NULL,"CCMessageManagerComplex:removeReceiverMap:receiver can't be null!");
+	CCAssert(receiver!=NULL,"CCMessageManagerSenderPredominate:removeReceiverMap:receiver can't be null!");
 	if (map) {
         CCArray *receiverList=(CCArray*)map->objectForKey(receiver->m_uID);
         if(receiverList){
@@ -330,8 +330,8 @@ void removeReceiverMap(CCObject* receiver,CCDictionary* map,SEL_MessageHandler h
     }
 }
 
-void CCMessageManagerComplex::removeReceiverMap(CCObject* receiver,CCDictionary* map,SEL_MessageHandler handle){
-	CCAssert(receiver!=NULL,"CCMessageManagerComplex:removeReceiverMap:receiver can't be null!");
+void CCMessageManagerSenderPredominate::removeReceiverMap(CCObject* receiver,CCDictionary* map,SEL_MessageHandler handle){
+	CCAssert(receiver!=NULL,"CCMessageManagerSenderPredominate:removeReceiverMap:receiver can't be null!");
 	if (map) {
         CCArray *receiverList=(CCArray*)map->objectForKey(receiver->m_uID);
         if(receiverList){
@@ -341,8 +341,8 @@ void CCMessageManagerComplex::removeReceiverMap(CCObject* receiver,CCDictionary*
 
 }
 
-void CCMessageManagerComplex::removeReceiverMap(CCObject* receiver,CCDictionary* map){
-	CCAssert(receiver!=NULL,"CCMessageManagerComplex:removeReceiverMap:receiver can't be null!");
+void CCMessageManagerSenderPredominate::removeReceiverMap(CCObject* receiver,CCDictionary* map){
+	CCAssert(receiver!=NULL,"CCMessageManagerSenderPredominate:removeReceiverMap:receiver can't be null!");
 	if (map) {
         CCArray *receiverList=(CCArray*)map->objectForKey(receiver->m_uID);
         if(receiverList){
@@ -352,9 +352,9 @@ void CCMessageManagerComplex::removeReceiverMap(CCObject* receiver,CCDictionary*
 }
 
 //
-void CCMessageManagerComplex::dispatchMessage(CCMessage* message)
+void CCMessageManagerSenderPredominate::dispatchMessage(CCMessage* message)
 {
-	CCAssert(message!=NULL,"CCMessageManagerComplex:dispatchMessage:message can't be null!");
+	CCAssert(message!=NULL,"CCMessageManagerSenderPredominate:dispatchMessage:message can't be null!");
 
 	CCObject* sender;
 	//CCAssert(message.type!=0,)
@@ -410,10 +410,10 @@ void CCMessageManagerComplex::dispatchMessage(CCMessage* message)
 
 
 //适应message中没有receiver的情况
-void CCMessageManagerComplex::dispatchMessage(CCMessage* message ,CCObject*  receiver)
+void CCMessageManagerSenderPredominate::dispatchMessage(CCMessage* message ,CCObject*  receiver)
 {
-	CCAssert(message!=NULL,"CCMessageManagerComplex:dispatchMessage:message can't be null!");
-	CCAssert(receiver!=NULL,"CCMessageManagerComplex:dispatchMessage:receiver can't be null!");
+	CCAssert(message!=NULL,"CCMessageManagerSenderPredominate:dispatchMessage:message can't be null!");
+	CCAssert(receiver!=NULL,"CCMessageManagerSenderPredominate:dispatchMessage:receiver can't be null!");
 
 	if (message->getType()!=GlobalMessageType) {
 		//message for global
@@ -464,7 +464,7 @@ void CCMessageManagerComplex::dispatchMessage(CCMessage* message ,CCObject*  rec
 }
 
 
-void CCMessageManagerComplex::dispatchMessage(unsigned int type ,CCObject* sender ,CCObject* receiver,CCObject* data)
+void CCMessageManagerSenderPredominate::dispatchMessage(unsigned int type ,CCObject* sender ,CCObject* receiver,CCObject* data)
 {
 	CCMessage* message=new CCMessage();
 	message->initWithType(type ,sender ,receiver ,data);
@@ -472,7 +472,7 @@ void CCMessageManagerComplex::dispatchMessage(unsigned int type ,CCObject* sende
 	message->release();
 }
 
-void CCMessageManagerComplex::dispatchMessage(unsigned int type ,CCObject* sender ,CCObject* receiver)
+void CCMessageManagerSenderPredominate::dispatchMessage(unsigned int type ,CCObject* sender ,CCObject* receiver)
 {
 	CCMessage* message=new CCMessage();
 	message->initWithType(type ,sender ,receiver);
@@ -480,7 +480,7 @@ void CCMessageManagerComplex::dispatchMessage(unsigned int type ,CCObject* sende
 	message->release();
 }
 
-void CCMessageManagerComplex::dispatchMessageWithDictionary(unsigned int type ,CCObject* sender ,CCObject* receiver,CCDictionary* data)
+void CCMessageManagerSenderPredominate::dispatchMessageWithDictionary(unsigned int type ,CCObject* sender ,CCObject* receiver,CCDictionary* data)
 {
 	CCMessage* message=new CCMessage();
 	message->initWithType(type ,sender ,receiver ,data);
@@ -488,10 +488,10 @@ void CCMessageManagerComplex::dispatchMessageWithDictionary(unsigned int type ,C
 	message->release();
 }
 
-void CCMessageManagerComplex::execRegisterReceiverList(CCArray* receiverList ,CCMessage* message)
+void CCMessageManagerSenderPredominate::execRegisterReceiverList(CCArray* receiverList ,CCMessage* message)
 {
 	
-	CCAssert(receiverList!=NULL,"CCMessageManagerComplex:execRegisterReceiverList:receiverList can't be null!");
+	CCAssert(receiverList!=NULL,"CCMessageManagerSenderPredominate:execRegisterReceiverList:receiverList can't be null!");
 	CCObject* pObject = NULL;
 	CCArray* receiverListCopy=new CCArray();
 	receiverListCopy->initWithArray(receiverList);
@@ -503,9 +503,9 @@ void CCMessageManagerComplex::execRegisterReceiverList(CCArray* receiverList ,CC
 }
 
 
-void CCMessageManagerComplex::execAllRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message)
+void CCMessageManagerSenderPredominate::execAllRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message)
 {
-	CCAssert(senderMap!=NULL,"CCMessageManagerComplex:execAllRegisterWithSenderMap:senderMap can't be null!");
+	CCAssert(senderMap!=NULL,"CCMessageManagerSenderPredominate:execAllRegisterWithSenderMap:senderMap can't be null!");
 	//send to all
 	CCDictElement* pElement = NULL;
 	CCDICT_FOREACH(senderMap,pElement){
@@ -513,7 +513,7 @@ void CCMessageManagerComplex::execAllRegisterWithSenderMap(CCDictionary* senderM
 	}
 }
 
-void CCMessageManagerComplex::execRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message)
+void CCMessageManagerSenderPredominate::execRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message)
 {
 	CCObject* receiver=message->getReceiver();
 	if (receiver) {
@@ -526,10 +526,10 @@ void CCMessageManagerComplex::execRegisterWithSenderMap(CCDictionary* senderMap,
 	}
 }
 
-void CCMessageManagerComplex::execRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message,CCObject*  receiver)
+void CCMessageManagerSenderPredominate::execRegisterWithSenderMap(CCDictionary* senderMap,CCMessage* message,CCObject*  receiver)
 {
-	CCAssert(senderMap!=NULL,"CCMessageManagerComplex:execRegisterWithSenderMap:senderMap can't be null!");
-	CCAssert(receiver!=NULL,"CCMessageManagerComplex:execRegisterWithSenderMap:receiver can't be null!");
+	CCAssert(senderMap!=NULL,"CCMessageManagerSenderPredominate:execRegisterWithSenderMap:senderMap can't be null!");
+	CCAssert(receiver!=NULL,"CCMessageManagerSenderPredominate:execRegisterWithSenderMap:receiver can't be null!");
 	CCArray* receiverList=(CCArray*)senderMap->objectForKey(receiver->m_uID);
 	if(receiverList) 
 		execRegisterReceiverList(receiverList,message);
