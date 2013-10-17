@@ -13,8 +13,11 @@
 NS_CC_YHLIB_BEGIN
 
 /**
- *
+ * 消息管理类
  * 存储结构hash(消息).hash(接收者).hash(发送者).array(处理单元)
+ * 这种方式对取消注册消息友好，但对发送时，接收者为空性能会有影响。
+ * 可以使用GlobalObject代替空的接收者，注册消息时，则要注册接收者为GlobalObject(其它对象为收不到接收者是GlobalObject)。
+ * 这样需要对消息把控能力强，知道什么时候发全局，什么时候发给具体对象。
  */
 class CCMessageManager : public CCObject {
 
@@ -123,12 +126,6 @@ public:
 	 * 发送消息的工具方法。
 	 */
     void dispatchMessage(unsigned int type ,CCObject* sender ,CCObject* receiver);
-
-	/**
-	 * 发送消息的工具方法。
-	 * 数据是一个字典
-	 */
-	void dispatchMessageWithDictionary(unsigned int type ,CCObject* sender ,CCObject* receiver,CCDictionary* data);
          
 	enum{
 		GlobalMessageType=0

@@ -559,14 +559,6 @@ void CCMessageManager::dispatchMessage(unsigned int type ,CCObject* sender ,CCOb
 	message->release();
 }
 
-void CCMessageManager::dispatchMessageWithDictionary(unsigned int type ,CCObject* sender ,CCObject* receiver,CCDictionary* data)
-{
-	CCMessage* message=new CCMessage();
-	message->initWithType(type ,sender ,receiver ,data);
-	dispatchMessage(message);
-	message->release();
-}
-
 void CCMessageManager::dispatchMessageMap(CCDictionary* msgMap,CCMessage* message)
 {
         CCAssert(msgMap!=NULL,"CCMessageManager:dispatchMessageMap:msgMap can't be null!");
