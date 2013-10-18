@@ -41,6 +41,8 @@ public:
 
 	bool registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,SEL_MessageHandler handle);
 	
+	bool registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,CCMessageHandler* handler);
+	
 	/**
 	 * 检查是否已经注册某个消息。
 	 */

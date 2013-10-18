@@ -118,6 +118,63 @@ bool CCMessageManager::registerReceiver(CCObject* receiver ,unsigned int type ,C
 	return registerReceiver(receiver,type ,sender  ,handle,receiver);
 }
 
+bool CCMessageManager::registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,CCMessageHandler* handler)
+{
+	CCAssert(receiver!=NULL,"MessageManage:registerReceiver:receiver can't be null");
+	CCAssert(handle!=NULL,"MessageManage:registerReceiver:handle");
+	CCAssert(handleObject!=NULL,"MessageManage:registerReceiver:handleObject");
+
+	//type等于0，则所有消息都会发送
+	//register for type
+	CCDictionary *msgMap=(CCDictionary*) m_messages->objectForKey(type);
+	if (msgMap==NULL) {
+		msgMap=new CCDictionary();
+		m_messages->setObject(msgMap,type);
+		msgMap->release();
+	}
+    //register for receiver
+	unsigned int receiverKey=receiver->m_uID;
+    CCDictionary *receiverMap=(CCDictionary*)msgMap->objectForKey(receiverKey);
+	if (!receiverMap) {
+		receiverMap=new CCDictionary();
+	    msgMap->setObject(receiverMap ,receiverKey);
+		receiverMap->release();
+	}
+
+	//register for sender
+	//sender 为空，则注册到全局对象上
+	unsigned int senderKey=sender==NULL?kNullObjectId:sender->m_uID;
+	CCArray *handleList=(CCArray*)receiverMap->objectForKey(senderKey);
+	if (!handleList) {
+        handleList=new CCArray();
+		receiverMap->setObject(handleList,senderKey);
+		handleList->release();
+	}
+
+#ifdef MESSAGE_REGIEST_REPEAT
+	handleList->addObject(handler);
+	return true;
+#elif
+	//检查是否已经注册过
+    bool isRegisted=false;
+    CCObject* pObject = NULL;
+    CCARRAY_FOREACH(handleList,pObject){
+        CCMessageHandler* handler=(CCMessageHandler*) pObject;
+        if (handler->getHandle()==handle && handler->getTarget()==handleObject) {
+			CCAssert(0,"Handle has register");
+            isRegisted=true;
+            break;
+		}
+    }
+
+    if(!isRegisted){
+        //register for handler
+        handleList->addObject(handler);
+    }
+	return !isRegisted;
+#endif
+}
+
 /**
  * 检查是否已经注册某个消息。
  */
