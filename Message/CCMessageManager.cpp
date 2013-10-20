@@ -243,11 +243,19 @@ void CCMessageManager::removeReceiver(CCObject* receiver,unsigned int type ,CCOb
                 CCArray* handleList=(CCArray*)receiverMap->objectForKey(sender->m_uID);
                 if(handleList){
                     removeHandleList(handleList, handle,handleObject);
+					//删除没有数据的记录
+					if(handleList->count()==0){
+						receiverMap->removeObjectForKey(sender->m_uID);
+					}
                 }
             }else{
                 //移除所有receiver记录
                 removeReceiverMap(receiverMap, handle,handleObject);
             }
+			//删除没有数据的记录
+			if(receiverMap->count()==0){
+				msgMap->removeObjectForKey(receiver->m_uID);
+			}
         }
     }
 }
@@ -270,11 +278,19 @@ void CCMessageManager::removeReceiver(CCObject* receiver,unsigned int type ,CCOb
                 CCArray* handleList=(CCArray*)receiverMap->objectForKey(sender->m_uID);
                 if(handleList){
                     removeHandleList(handleList, handle);
+					//删除没有数据的记录
+					if(handleList->count()==0){
+						receiverMap->removeObjectForKey(sender->m_uID);
+					}
                 }
             }else{
                 //移除所有receiver记录
                 removeReceiverMap(receiverMap, handle);
             }
+			//删除没有数据的记录
+			if(receiverMap->count()==0){
+				msgMap->removeObjectForKey(receiver->m_uID);
+			}
         }
     }
 }
@@ -296,11 +312,17 @@ void CCMessageManager::removeReceiver(CCObject* receiver,unsigned int type ,CCOb
                 CCArray* handleList=(CCArray*)receiverMap->objectForKey(sender->m_uID);
                 if(handleList){
                      removeHandleList(handleList);
+					 //删除没有数据的记录
+					 receiverMap->removeObjectForKey(sender->m_uID);
                 }
-            }else{
+	        }else{
                 //移除所有receiver记录
                 removeReceiverMap(receiverMap);
             }
+			//删除没有数据的记录
+			if(receiverMap->count()==0){
+				msgMap->removeObjectForKey(receiver->m_uID);
+			}
         }
     }
 }
@@ -319,6 +341,8 @@ void CCMessageManager::removeReceiver(CCObject* receiver,unsigned int type)
         if(receiverMap){
             //移除所有receiver记录
             removeReceiverMap(receiverMap);
+			//删除没有数据的记录
+			msgMap->removeObjectForKey(receiver->m_uID);
         }
     }
 }
@@ -340,6 +364,8 @@ void CCMessageManager::removeReceiver(CCObject* receiver)
         if(receiverMap){
             //移除所有receiver记录
             removeReceiverMap(receiverMap);
+			//删除没有数据的记录
+			msgMap->removeObjectForKey(receiver->m_uID);
         }
     }
 }
@@ -356,6 +382,10 @@ void CCMessageManager::removeReceiver(CCObject* receiver,unsigned int type ,SEL_
         if(receiverMap){
             //移除所有receiver记录
             removeReceiverMap(receiverMap,handle);
+			//删除没有数据的记录
+			if(receiverMap->count()==0){
+				msgMap->removeObjectForKey(receiver->m_uID);
+			}
         }
     }
 }
@@ -379,7 +409,15 @@ void CCMessageManager::removeReceiver(CCObject* receiver,CCObject* sender,SEL_Me
             if(handleList){
                 //移除所有receiver记录
                 removeHandleList(handleList,handle);
+				//删除没有数据的记录
+				if(handleList->count()==0){
+					receiverMap->removeObjectForKey(sender->m_uID);
+				}
             }
+			//删除没有数据的记录
+			if(receiverMap->count()==0){
+				msgMap->removeObjectForKey(receiver->m_uID);
+			}
         }
     }
 }
@@ -399,9 +437,17 @@ void CCMessageManager::removeReceiver(CCObject* receiver,CCObject* sender)
         receiverMap=(CCDictionary*)msgMap->objectForKey(receiver->m_uID);
         if(receiverMap){
             handleList=(CCArray*)receiverMap->objectForKey(sender->m_uID);
-            if(handleList)
+            if(handleList){
                 //移除所有receiver记录
                 removeHandleList(handleList);
+				//删除没有数据的记录
+				receiverMap->removeObjectForKey(sender->m_uID);
+			}
+
+			//删除没有数据的记录
+			if(receiverMap->count()==0){
+				msgMap->removeObjectForKey(receiver->m_uID);
+			}
         }
     }
 }
@@ -421,6 +467,11 @@ void CCMessageManager::removeReceiver(CCObject* receiver,SEL_MessageHandler hand
         if(receiverMap){
              //移除所有receiver记录
              removeReceiverMap(receiverMap,handle);
+
+			//删除没有数据的记录
+			if(receiverMap->count()==0){
+				msgMap->removeObjectForKey(receiver->m_uID);
+			}
         }
     }
 }
@@ -443,11 +494,20 @@ void CCMessageManager::removeReceiverAllHanldes(CCObject* receiver,unsigned int 
                 CCArray* handleList=(CCArray*)receiverMap->objectForKey(sender->m_uID);
                 if(handleList){
                     removeHandleListForTarget(handleList, handleObject);
+					//删除没有数据的记录
+					if(handleList->count()==0){
+						receiverMap->removeObjectForKey(sender->m_uID);
+					}
                 }
             }else{
                 //移除所有receiver记录
                 removeReceiverMapForTarget(receiverMap, handleObject);
             }
+
+			//删除没有数据的记录
+			if(receiverMap->count()==0){
+				msgMap->removeObjectForKey(receiver->m_uID);
+			}
         }
     }
 }
@@ -467,6 +527,10 @@ void CCMessageManager::removeReceiverAllHanldes(CCObject* receiver,unsigned int 
         if(receiverMap){
             //移除所有receiver记录
             removeReceiverMapForTarget(receiverMap,handleObject);
+			//删除没有数据的记录
+			if(receiverMap->count()==0){
+				msgMap->removeObjectForKey(receiver->m_uID);
+			}
         }
     }
 }
@@ -493,7 +557,17 @@ void CCMessageManager::removeReceiverAllHanldes(CCObject* receiver,CCObject* sen
             if(handleList){
                 //移除所有receiver记录
                 removeHandleListForTarget(handleList,handleObject);
+
+				//删除没有数据的记录
+				if(handleList->count()==0){
+					receiverMap->removeObjectForKey(sender->m_uID);
+				}
             }
+
+			//删除没有数据的记录
+			if(receiverMap->count()==0){
+				msgMap->removeObjectForKey(receiver->m_uID);
+			}
         }
     }
 }
@@ -516,6 +590,10 @@ void CCMessageManager::removeReceiverAllHanldes(CCObject* receiver,CCObject*  ha
         if(receiverMap){
              //移除所有receiver记录
              removeReceiverMapForTarget(receiverMap,handleObject);
+			 //删除没有数据的记录
+			if(receiverMap->count()==0){
+				msgMap->removeObjectForKey(receiver->m_uID);
+			}
         }
     }
 }
@@ -530,6 +608,10 @@ void CCMessageManager::removeReceiverMap(CCDictionary* receiverMap,SEL_MessageHa
         //移除所有receiver记录
         handleList=(CCArray*)msgMapElement->getObject();
         removeHandleList(handleList,handle,handleObject);
+		//删除没有数据的记录
+		if(handleList->count()==0){
+			receiverMap->removeObjectForKey(msgMapElement->getIntKey());
+		}
     }
 }
 
@@ -543,6 +625,10 @@ void CCMessageManager::removeReceiverMap(CCDictionary* receiverMap,SEL_MessageHa
         //移除所有receiver记录
         handleList=(CCArray*)msgMapElement->getObject();
         removeHandleList(handleList,handle);
+		//删除没有数据的记录
+		if(handleList->count()==0){
+			receiverMap->removeObjectForKey(msgMapElement->getIntKey());
+		}
     }
 }
 
@@ -565,6 +651,10 @@ void CCMessageManager::removeReceiverMapForTarget(CCDictionary* receiverMap,CCOb
         //移除所有receiver记录
         handleList=(CCArray*)msgMapElement->getObject();
         removeHandleListForTarget(handleList,handleObject);
+		//删除没有数据的记录
+		if(handleList->count()==0){
+			receiverMap->removeObjectForKey(msgMapElement->getIntKey());
+		}
     }
 }
 
