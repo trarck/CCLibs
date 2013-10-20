@@ -210,9 +210,6 @@
     <ClInclude Include="..\Message\ICCMessageManager.h">
       <Filter>Message</Filter>
     </ClInclude>
-    <ClInclude Include="..\Message\CCMessageManagerComplex.h">
-      <Filter>Message</Filter>
-    </ClInclude>
     <ClInclude Include="..\Message\CCAsyncMessageManager.h">
       <Filter>Message</Filter>
     </ClInclude>
@@ -257,6 +254,9 @@
     </ClInclude>
     <ClInclude Include="..\CocosExt\CCSelectorWrap.h">
       <Filter>CocosExt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Message\CCMessageManagerSenderPredominate.h">
+      <Filter>Message</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -386,9 +386,6 @@
     <ClCompile Include="..\Components\CCSimpleMoveComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\Message\CCMessageManagerComplex.cpp">
-      <Filter>Message</Filter>
-    </ClCompile>
     <ClCompile Include="..\Message\CCAsyncMessageManager.cpp">
       <Filter>Message</Filter>
     </ClCompile>
@@ -427,6 +424,9 @@
     </ClCompile>
     <ClCompile Include="..\CocosExt\CCSelectorWrap.cpp">
       <Filter>CocosExt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Message\CCMessageManagerSenderPredominate.cpp">
+      <Filter>Message</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

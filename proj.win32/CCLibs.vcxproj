@@ -79,7 +79,7 @@
     <ClInclude Include="..\Message\CCMessage.h" />
     <ClInclude Include="..\Message\CCMessageHandler.h" />
     <ClInclude Include="..\Message\CCMessageManager.h" />
-    <ClInclude Include="..\Message\CCMessageManagerComplex.h" />
+    <ClInclude Include="..\Message\CCMessageManagerSenderPredominate.h" />
     <ClInclude Include="..\Message\CCMessageTarget.h" />
     <ClInclude Include="..\Message\CCNormalMessageManager.h" />
     <ClInclude Include="..\Message\CCSimpleMessageManager.h" />
@@ -138,7 +138,7 @@
     <ClCompile Include="..\Message\CCMessage.cpp" />
     <ClCompile Include="..\Message\CCMessageHandler.cpp" />
     <ClCompile Include="..\Message\CCMessageManager.cpp" />
-    <ClCompile Include="..\Message\CCMessageManagerComplex.cpp" />
+    <ClCompile Include="..\Message\CCMessageManagerSenderPredominate.cpp" />
     <ClCompile Include="..\Message\CCMessageTarget.cpp" />
     <ClCompile Include="..\Message\CCNormalMessageManager.cpp" />
     <ClCompile Include="..\Message\CCSimpleMessageManager.cpp" />
@@ -153,12 +153,14 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

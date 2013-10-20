@@ -84,7 +84,7 @@ bool CCMessageManagerSenderPredominate::registerReceiver(CCObject* receiver ,uns
 	
 	return true;
 	
-#elif	
+#else	
 	//检查是否已经注册过
     bool isRegisted=false;
     CCObject* pObject = NULL;
@@ -153,7 +153,7 @@ bool CCMessageManagerSenderPredominate::isRegisterReceiver(CCObject* receiver ,u
 
 	bool isRegisted=false;
     CCObject* pObject = NULL;
-    CCARRAY_FOREACH(handleList,pObject){
+    CCARRAY_FOREACH(receiverList,pObject){
         CCMessageHandler* handler=(CCMessageHandler*) pObject;
         if (handler->getHandle()==handle && handler->getTarget()==handleObject) {
             isRegisted=true;
@@ -378,7 +378,7 @@ void CCMessageManagerSenderPredominate::removeReceiverList(CCArray* list){
 /**
  * 删除接收者的注册列表。
  */
-void removeReceiverMap(CCObject* receiver,CCDictionary* map,SEL_MessageHandler handle,CCObject* handleObject)
+void CCMessageManagerSenderPredominate::removeReceiverMap(CCObject* receiver,CCDictionary* map,SEL_MessageHandler handle,CCObject* handleObject)
 {
 	CCAssert(receiver!=NULL,"CCMessageManagerSenderPredominate:removeReceiverMap:receiver can't be null!");
 	if (map) {

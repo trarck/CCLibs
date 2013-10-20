@@ -86,7 +86,7 @@ bool CCMessageManager::registerReceiver(CCObject* receiver ,unsigned int type ,C
 	
 	return true;
 	
-#elif
+#else
 	//检查是否已经注册过
     bool isRegisted=false;
     CCObject* pObject = NULL;
@@ -121,8 +121,7 @@ bool CCMessageManager::registerReceiver(CCObject* receiver ,unsigned int type ,C
 bool CCMessageManager::registerReceiver(CCObject* receiver ,unsigned int type ,CCObject* sender,CCMessageHandler* handler)
 {
 	CCAssert(receiver!=NULL,"MessageManage:registerReceiver:receiver can't be null");
-	CCAssert(handle!=NULL,"MessageManage:registerReceiver:handle");
-	CCAssert(handleObject!=NULL,"MessageManage:registerReceiver:handleObject");
+	CCAssert(handler!=NULL,"MessageManage:registerReceiver:handle");
 
 	//type等于0，则所有消息都会发送
 	//register for type
@@ -154,13 +153,13 @@ bool CCMessageManager::registerReceiver(CCObject* receiver ,unsigned int type ,C
 #ifdef MESSAGE_REGIEST_REPEAT
 	handleList->addObject(handler);
 	return true;
-#elif
+#else
 	//检查是否已经注册过
     bool isRegisted=false;
     CCObject* pObject = NULL;
     CCARRAY_FOREACH(handleList,pObject){
         CCMessageHandler* handler=(CCMessageHandler*) pObject;
-        if (handler->getHandle()==handle && handler->getTarget()==handleObject) {
+        if (handler==pObject) {
 			CCAssert(0,"Handle has register");
             isRegisted=true;
             break;
@@ -771,23 +770,27 @@ void CCMessageManager::dispatchMessageMap(CCDictionary* msgMap,CCMessage* messag
         CCObject* sender=message->getSender();
         if(receiver){
                 CCDictionary* receiverMap=(CCDictionary *)msgMap->objectForKey(receiver->m_uID);
-                CCArray* handleList=NULL;
-                if(sender){
-                    //执行注册到送送者为sender的消息的处理方法
-                    handleList=(CCArray *)receiverMap->objectForKey(sender->m_uID);
-                    if(handleList)
-                        execHandleList(handleList,message);
-//                        //执行注册到送送者为null的消息的处理方法
-//
-//                    }else{
-//                        //执行注册到送送者为null的消息的处理方法
-//                    }
-                }
+				if(receiverMap){
+					CCArray* handleList=NULL;
+					if(sender){
+						//执行注册到送送者为sender的消息的处理方法
+						handleList=(CCArray *)receiverMap->objectForKey(sender->m_uID);
+						if(handleList)
+							execHandleList(handleList,message);
+	//                        //执行注册到送送者为null的消息的处理方法
+	//
+	//                    }else{
+	//                        //执行注册到送送者为null的消息的处理方法
+	//                    }
+					}
 
-                //执行注册到送送者为null的消息的处理方法
-                handleList=(CCArray *)receiverMap->objectForKey(kNullObjectId);
-                if(handleList!=NULL)
-                    execHandleList(handleList,message);
+					//执行注册到送送者为null的消息的处理方法
+					handleList=(CCArray *)receiverMap->objectForKey(kNullObjectId);
+					if(handleList)
+						execHandleList(handleList,message);
+				}else{
+					CCLOG("not regiester");
+				}
         }else{
                 //发送到注册时的接收者为sender的所有接收者
                 dispathMessageToAllReceiverWithSender(message,msgMap,sender);
