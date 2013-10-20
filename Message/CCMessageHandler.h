@@ -23,7 +23,7 @@ public:
 		:m_pTarget(NULL),
 		 m_handle(NULL)
 	{
-		CCLOG("CCMessageHandler create");
+		//CCLOG("CCMessageHandler create");
 	}
 
     ~CCMessageHandler();

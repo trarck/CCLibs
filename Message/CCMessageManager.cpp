@@ -17,16 +17,16 @@ CCMessageManager::CCMessageManager()
 :m_messages(NULL)
 ,m_globalObject(NULL)
 {
-	CCLOG("CCMessageManager create");
+	//CCLOG("CCMessageManager create");
 }
 
 CCMessageManager::~CCMessageManager()
 {
-	CCLOG("CCMessageManager destroy begin");
+	//CCLOG("CCMessageManager destroy begin");
 	CC_SAFE_RELEASE_NULL(m_messages);
 	CC_SAFE_RELEASE_NULL(m_globalObject);
 	//CC_SAFE_RELEASE(m_regiesterMap);
-	CCLOG("CCMessageManager destroy end");
+	//CCLOG("CCMessageManager destroy end");
 }
 
 CCMessageManager* CCMessageManager::defaultManager(void)
@@ -788,8 +788,6 @@ void CCMessageManager::dispatchMessageMap(CCDictionary* msgMap,CCMessage* messag
 					handleList=(CCArray *)receiverMap->objectForKey(kNullObjectId);
 					if(handleList)
 						execHandleList(handleList,message);
-				}else{
-					CCLOG("not regiester");
 				}
         }else{
                 //发送到注册时的接收者为sender的所有接收者
