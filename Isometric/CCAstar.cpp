@@ -2,7 +2,7 @@
 #include "YHLibMacros.h"
 #include "CCAstarNode.h"
 #include "CCAstar.h"
-#include "CocosExt/CCGeometryVaule.h"
+#include "CocosExt/CCGeometryValue.h"
 
 NS_CC_YHLIB_BEGIN
 
