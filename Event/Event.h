@@ -145,10 +145,13 @@ protected:
     /**event时间戳。精确到毫秒*/
     int m_nTimeStamp;
 
+    /**是否停止冒泡*/
     bool m_bDispatchStopped;
 
+    /**是否执行默认方法*/
     bool m_bNoDefault;
 
+    /**event数据*/
 	CCObject* m_pData;
 };
 

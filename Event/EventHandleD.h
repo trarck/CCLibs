@@ -2,8 +2,8 @@
 // 执行事件的函数句柄
 //
 
-#ifndef YHLIB_EVENT_CCEVENTHANDLER_H_
-#define YHLIB_EVENT_CCEVENTHANDLER_H_
+#ifndef YHLIB_EVENT_CCEVENTHANDLERD_H_
+#define YHLIB_EVENT_CCEVENTHANDLERD_H_
 
 #include "cocos2d.h"
 #include "EventHandle.h"
@@ -28,20 +28,20 @@ public:
 
     ~EventHandleD();
 
-	inline SEL_EventHandleD getHandle()
+	inline SEL_EventHandleD getHandleD()
 	{
-		return m_handle;
+		return m_handleD;
 	}
 
 	inline void setHandle(SEL_EventHandleD handle)
 	{
-		m_handle=handle;
+		m_handleD=handle;
 	}
 
 	inline bool initWithTarget(CCObject* pTarget,SEL_EventHandleD handle,CCObject* data)
 	{
 		setTarget(pTarget);
-		m_handle=handle;
+		m_handleD=handle;
         setData(data);
 		return true;
 	}
@@ -61,35 +61,10 @@ public:
 	virtual void execute(Event *event);
 
 protected:
-	SEL_EventHandleD m_handle;
+	SEL_EventHandleD m_handleD;
     CCObject* m_data;
 };
 
-//class EventHandleD : public EventHandle {
-//public:
-//    
-//	EventHandleD()
-//		:m_pTarget(NULL),
-//		 m_handle(NULL)
-//	{
-//		CCLOG("EventHandle create");
-//	}
-//
-//    ~EventHandleD();
-//
-//    inline void execute(Event *event)
-//	{
-//		if(m_handle){
-//			(m_pTarget->*m_handle)(event);
-//		}
-//	}
-//    
-//private:
-//
-//    CCObject* m_pData;
-//
-//};
-
 NS_CC_YHLIB_END
 
-#endif  // YHLIB_EVENT_CCEVENTHANDLER_H_
+#endif  // YHLIB_EVENT_CCEVENTHANDLERD_H_

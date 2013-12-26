@@ -6,11 +6,11 @@
 //  Copyright 2011 yitengku.com. All rights reserved.
 //
 
-#include "EventHandle.h"
+#include "EventHandleD.h"
 
 NS_CC_YHLIB_BEGIN
 
-EventHandleD::~EventHandle()
+EventHandleD::~EventHandleD()
 {
 	CCLOG("EventHandle destroy begin ");
     CC_SAFE_RELEASE(m_data);
@@ -20,7 +20,7 @@ EventHandleD::~EventHandle()
 void EventHandleD::execute(Event *event)
 {
 	if(m_handle){
-		(m_pTarget->*m_handle)(event,m_data);
+		(m_pTarget->*m_handleD)(event,m_data);
 	}
 }
 

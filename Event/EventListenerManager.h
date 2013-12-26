@@ -21,10 +21,14 @@ public:
     static EventListenerManager* sharedEventListenerManager();
 
     void addEventListener(CCNode* target,const char* type,CCObject* handleObject,yhlib::SEL_EventHandle handle);
-        
+    
     void removeEventListener(CCNode* target,const char* type,CCObject* handleObject,yhlib::SEL_EventHandle handle);
-
-	void removeEventListener(CCNode* target,const char* type,CCObject* handleObject);
+    
+    void removeEventListener(CCNode* target,const char* type,CCObject* handleObject);
+    
+    void removeEventListener(CCNode* target,const char* type);
+    
+    void removeEventListener(CCNode* target);
 
 	void removeEventListenerForHandle(CCNode* target,const char* type,yhlib::SEL_EventHandle handle);
         
@@ -35,6 +39,7 @@ public:
     bool isListened(CCArray* listeners,yhlib::SEL_EventHandle handle,CCObject* handleObject) ;
 
     CCArray* getEventListeners(CCNode* target,const char* type);
+    
     //把new EventObject和dispatchEvent和起来，提供简便方法
     void trigger(CCNode* target,const char* type,CCObject* data,bool bubbles);
   

@@ -2,19 +2,18 @@
 // 执行事件的函数句柄
 //
 
-#ifndef YHLIB_EVENT_CCEVENTHANDLER_H_
-#define YHLIB_EVENT_CCEVENTHANDLER_H_
+#ifndef YHLIB_EVENT_EVENTHANDLE_H_
+#define YHLIB_EVENT_EVENTHANDLE_H_
 
 #include "cocos2d.h"
 #include "YHLibMacros.h"
+#include "Event.h"
 
 NS_CC_YHLIB_BEGIN
 
-class Event;
-
 //定义处理函数类型
 typedef void (CCObject::*SEL_EventHandle)(yhlib::Event*);
-#define YH_EVENT_SELECTOR(_SELECTOR) (SEL_EventHandle)(&_SELECTOR)
+#define YH_EVENT_SELECTOR(_SELECTOR) (yhlib::SEL_EventHandle)(&_SELECTOR)
 
 class EventHandle : public CCObject {
 public:
@@ -99,4 +98,4 @@ protected:
 
 NS_CC_YHLIB_END
 
-#endif  // YHLIB_EVENT_CCEVENTHANDLER_H_
+#endif  // YHLIB_EVENT_EVENTHANDLE_H_

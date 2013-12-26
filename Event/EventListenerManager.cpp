@@ -33,12 +33,12 @@ EventListenerManager* EventListenerManager::sharedEventListenerManager()
 void EventListenerManager::addEventListener(CCNode* target,const char* type,CCObject* handleObject,yhlib::SEL_EventHandle handle)
 {
 
-    unsigned int id=target->m_uID;
+    unsigned int targetId=target->m_uID;
 
-	CCDictionary* targetListeners=static_cast<CCDictionary*>(m_pListeners->objectForKey(m_uID));
+	CCDictionary* targetListeners=static_cast<CCDictionary*>(m_pListeners->objectForKey(targetId));
 	if(targetListeners==NULL){
 		targetListeners=new CCDictionary();
-		m_pListeners->setObject(targetListeners,m_uID);
+		m_pListeners->setObject(targetListeners,targetId);
         targetListeners->release();
 	}
 
@@ -100,6 +100,20 @@ void EventListenerManager::removeEventListener(CCNode* target,const char* type,C
 	removeEventListener(target,type,handleObject,NULL);
 }
 
+void EventListenerManager::removeEventListener(CCNode* target,const char* type)
+{
+    CCAssert(target!=NULL,"EventListenerManager::removeEventListener target is null.");
+    CCAssert(type!=NULL,"EventListenerManager::removeEventListener type is null.");
+    CCDictionary* targetListeners=static_cast<CCDictionary*>(m_pListeners->objectForKey(target->m_uID));
+    targetListeners->removeObjectForKey(type);
+}
+
+void EventListenerManager::removeEventListener(CCNode* target)
+{
+    CCAssert(target!=NULL,"EventListenerManager::removeEventListener target is null.");
+    m_pListeners->removeObjectForKey(target->m_uID);
+}
+
 void EventListenerManager::removeEventListenerForHandle(CCNode* target,const char* type,yhlib::SEL_EventHandle handle)
 {
 	CCAssert(target!=NULL,"EventListenerManager::removeEventListener target is null.");
@@ -120,6 +134,7 @@ void EventListenerManager::removeEventListenerForHandle(CCNode* target,const cha
         }
     }
 }
+
 
 void EventListenerManager::removeListeners(CCArray* listeners,CCObject* handleObject)
 {
@@ -229,7 +244,7 @@ void EventListenerManager::dispatchEvent(CCNode* target,yhlib::Event* evt)
     while(parent && !evt->isDispatchStopped()){
         //event.currentTarget=parent;
         handleEvent(parent,evt);
-        parent=target->getParent();
+        parent=parent->getParent();
     }
 }
 
@@ -280,10 +295,13 @@ CCArray* EventListenerManager::getEventListeners(CCNode* target,const char* type
 
 //把new EventObject和dispatchEvent和起来，提供简便方法
 void EventListenerManager::trigger(CCNode* target,const char* type,CCObject* data,bool bubbles)
-{
+{    
     yhlib::Event* e=new yhlib::Event();
 	e->initEvent(type,bubbles,true);
-	e->setData(data);
+    if (data) {
+        e->setData(data);
+    }
+	
     dispatchEvent(target,e);
 	e->release();
 }

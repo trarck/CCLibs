@@ -6,6 +6,13 @@ Event::Event()
 :m_sType("")
 ,m_pTarget(NULL)
 ,m_pCurrentTarget(NULL)
+,m_nEventPhase(0)
+,m_bBubbles(true)
+,m_bCancelable(true)
+,m_nTimeStamp(0)
+,m_bDispatchStopped(false)
+,m_bNoDefault(false)
+,m_pData(NULL)
 {
 
 }
